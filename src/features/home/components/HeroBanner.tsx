@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useBanners } from '../queries/useBanners';
+import { FallbackImage } from '../../../components/common/FallbackImage';
 
 export const HeroBanner: React.FC = () => {
     const { data: banners, isLoading } = useBanners();
@@ -49,9 +50,10 @@ export const HeroBanner: React.FC = () => {
                     <div className="absolute inset-0 bg-black/40 z-10"></div>
                     
                     {/* Background Image */}
-                    <img 
+                    <FallbackImage 
                         src={banner.imageUrl} 
                         alt={banner.title} 
+                        fallbackText="Banner Image"
                         className="absolute inset-0 w-full h-full object-cover"
                     />
 

@@ -93,7 +93,7 @@ export const Footer: React.FC = () => {
                 </div>
 
                 <div className="border-t border-slate-800 pt-8 text-center text-slate-500 text-sm">
-                    <p>&copy; {new Date().getFullYear()} Travel Booking. Đã đăng ký bản quyền.</p>
+                    <p>&copy; {new Date().getFullYear()} {siteName}. Đã đăng ký bản quyền.</p>
                 </div>
             </div>
         </footer>
