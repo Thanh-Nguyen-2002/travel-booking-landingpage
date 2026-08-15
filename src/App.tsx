@@ -20,20 +20,24 @@ import { AboutPage } from './features/pages/AboutPage';
 import { ContactPage } from './features/pages/ContactPage';
 import { TermsPage } from './features/pages/TermsPage';
 import { PrivacyPage } from './features/pages/PrivacyPage';
+import { PromotionsPage } from './features/pages/PromotionsPage';
 import { LoginPage } from './features/auth/LoginPage';
 import { ScrollToTop } from './components/common/ScrollToTop';
+import { Toaster } from 'sonner';
 
 function App() {
     return (
         <QueryClientProvider client={queryClient}>
             <Router>
                 <ScrollToTop />
+                <Toaster visibleToasts={3} position="top-right" richColors />
                 <Routes>
                     <Route path="/" element={<MainLayout />}>
                         <Route index element={<Home />} />
                         <Route path="destinations" element={<DestinationsPage />} />
                         <Route path="hotels" element={<HotelsPage />} />
                         <Route path="packages" element={<PackagesPage />} />
+                        <Route path="promotions" element={<PromotionsPage />} />
                         <Route path="about" element={<AboutPage />} />
                         <Route path="contact" element={<ContactPage />} />
                         <Route path="terms" element={<TermsPage />} />

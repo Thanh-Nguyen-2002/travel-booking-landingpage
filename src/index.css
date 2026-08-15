@@ -34,3 +34,19 @@
 .ant-btn-primary:hover {
     background-color: var(--color-primary-600) !important;
 }
+
+.footer-input {
+    background-color: #ffffff !important;
+    border-color: #e2e8f0 !important;
+    color: #0f172a !important;
+}
+
+.footer-input::placeholder {
+    color: #94a3b8 !important;
+}
+
+.footer-input:hover, .footer-input:focus {
+    border-color: var(--color-primary-500) !important;
+    background-color: #ffffff !important;
+    box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.2) !important;
+}

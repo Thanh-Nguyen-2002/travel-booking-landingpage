@@ -1,12 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Mail, Phone } from 'lucide-react';
+import { MapPin, Mail, Phone, Send } from 'lucide-react';
 import { useSettings } from '../../hooks/useSettings';
+import { useSubscribe } from '../../hooks/useSubscribe';
+import { toast } from 'sonner';
+import { CmsInput, CmsButton, CmsForm } from '../common';
+
+interface SubscribeFormInputs {
+    email: string;
+}
 
 export const Footer: React.FC = () => {
     const { data: settings } = useSettings();
-
-    console.log('settings', settings);
+    const { mutate: subscribe, isPending } = useSubscribe();
+    const [form] = CmsForm.useForm<SubscribeFormInputs>();
 
     const phone = settings?.hotline || '1900 1234 (Tổng đài hỗ trợ 24/7)';
     const email = settings?.contactEmail || 'support@travelbooking.com';
@@ -18,10 +25,22 @@ export const Footer: React.FC = () => {
     const twLink = settings?.social_twitter || '#';
     const igLink = settings?.social_instagram || '#';
 
+    const onSubscribe = (data: SubscribeFormInputs) => {
+        subscribe({ email: data.email }, {
+            onSuccess: () => {
+                toast.success('Đăng ký nhận bản tin thành công!');
+                form.resetFields();
+            },
+            onError: () => {
+                toast.error('Đăng ký thất bại, thử lại sau.');
+            }
+        });
+    };
+
     return (
         <footer className="bg-slate-900 text-slate-300 pt-16 pb-8">
             <div className="container mx-auto px-4">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
                     {/* Brand Info */}
                     <div>
                         <Link to="/" className="flex items-center gap-2 mb-6">
@@ -72,10 +91,10 @@ export const Footer: React.FC = () => {
                         </ul>
                     </div>
 
-                    {/* Contact */}
+                    {/* Contact & Newsletter */}
                     <div>
                         <h3 className="text-white font-bold text-lg mb-6">Liên hệ</h3>
-                        <ul className="space-y-4">
+                        <ul className="space-y-4 mb-8">
                             <li className="flex gap-3">
                                 <MapPin size={20} className="text-primary-500 shrink-0" />
                                 <span>{address}</span>
@@ -89,6 +108,32 @@ export const Footer: React.FC = () => {
                                 <span>{email}</span>
                             </li>
                         </ul>
+
+                        <h3 className="text-white font-bold text-lg mb-4">Nhận bản tin</h3>
+                        <CmsForm form={form} onFinish={onSubscribe} layout="vertical" className="w-full">
+                            <CmsForm.Item 
+                                name="email" 
+                                rules={[
+                                    { required: true, message: 'Vui lòng nhập email!' },
+                                    { type: 'email', message: 'Email không hợp lệ!' }
+                                ]}
+                                style={{ marginBottom: '8px' }}
+                            >
+                                <CmsInput 
+                                    placeholder="Email của bạn..." 
+                                    className="footer-input"
+                                />
+                            </CmsForm.Item>
+                            <CmsButton 
+                                type="primary" 
+                                htmlType="submit" 
+                                loading={isPending}
+                                className="w-full mt-2 !bg-primary-500 hover:!bg-primary-600 !border-none"
+                                icon={<Send size={18} />}
+                            >
+                                Đăng ký
+                            </CmsButton>
+                        </CmsForm>
                     </div>
                 </div>
 
