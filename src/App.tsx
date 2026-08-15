@@ -11,11 +11,8 @@ const queryClient = new QueryClient({
     },
 });
 
-const HomePlaceholder = () => (
-    <div className="flex items-center justify-center h-64 text-2xl font-semibold text-slate-400">
-        Home Page Content
-    </div>
-);
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { Home } from './features/home/Home';
 
 function App() {
     return (
@@ -23,11 +20,12 @@ function App() {
             <Router>
                 <Routes>
                     <Route path="/" element={<MainLayout />}>
-                        <Route index element={<HomePlaceholder />} />
+                        <Route index element={<Home />} />
                         {/* More routes will go here */}
                     </Route>
                 </Routes>
             </Router>
+            <ReactQueryDevtools initialIsOpen={false} position="bottom" />
         </QueryClientProvider>
     );
 }

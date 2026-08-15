@@ -1,8 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Mail, Phone } from 'lucide-react';
+import { useSettings } from '../../hooks/useSettings';
 
 export const Footer: React.FC = () => {
+    const { data: settings } = useSettings();
+
+    console.log('settings', settings);
+
+    const phone = settings?.hotline || '1900 1234 (Tổng đài hỗ trợ 24/7)';
+    const email = settings?.contactEmail || 'support@travelbooking.com';
+    const address = settings?.address || 'Hà Nội, Việt Nam';
+    const siteName = settings?.siteName || 'Travel Booking';
+    const logoUrl = settings?.logoUrl;
+
+    const fbLink = settings?.facebookUrl || '#';
+    const twLink = settings?.social_twitter || '#';
+    const igLink = settings?.social_instagram || '#';
+
     return (
         <footer className="bg-slate-900 text-slate-300 pt-16 pb-8">
             <div className="container mx-auto px-4">
@@ -10,23 +25,27 @@ export const Footer: React.FC = () => {
                     {/* Brand Info */}
                     <div>
                         <Link to="/" className="flex items-center gap-2 mb-6">
-                            <div className="w-8 h-8 bg-primary-500 rounded flex items-center justify-center text-white font-bold text-lg">
-                                TB
-                            </div>
-                            <span className="text-xl font-bold text-white">Travel Booking</span>
+                            {logoUrl ? (
+                                <img src={logoUrl} alt={siteName} className="h-8 w-auto object-contain bg-white rounded" />
+                            ) : (
+                                <div className="w-8 h-8 bg-primary-500 rounded flex items-center justify-center text-white font-bold text-lg uppercase">
+                                    {siteName.charAt(0)}
+                                </div>
+                            )}
+                            <span className="text-xl font-bold text-white">{siteName}</span>
                         </Link>
                         <p className="text-slate-400 mb-6">
                             Khám phá thế giới cùng chúng tôi. Mang đến những trải nghiệm du lịch tuyệt vời nhất cho bạn.
                         </p>
                         <div className="flex space-x-4">
-                            <a href="#" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-primary-500 hover:text-white transition-colors">
-                                {/* <Facebook size={18} /> */}
+                            <a href={fbLink} className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-primary-500 hover:text-white transition-colors">
+
                             </a>
-                            <a href="#" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-primary-500 hover:text-white transition-colors">
-                                {/* <Twitter size={18} /> */}
+                            <a href={twLink} className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-primary-500 hover:text-white transition-colors">
+
                             </a>
-                            <a href="#" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-primary-500 hover:text-white transition-colors">
-                                {/* <Instagram size={18} /> */}
+                            <a href={igLink} className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-primary-500 hover:text-white transition-colors">
+
                             </a>
                         </div>
                     </div>
@@ -59,15 +78,15 @@ export const Footer: React.FC = () => {
                         <ul className="space-y-4">
                             <li className="flex gap-3">
                                 <MapPin size={20} className="text-primary-500 shrink-0" />
-                                <span>123 Đường Tôn Đức Thắng, Quận 1, TP. Hồ Chí Minh</span>
+                                <span>{address}</span>
                             </li>
                             <li className="flex gap-3">
                                 <Phone size={20} className="text-primary-500 shrink-0" />
-                                <span>1900 1234 (Tổng đài hỗ trợ 24/7)</span>
+                                <span>{phone}</span>
                             </li>
                             <li className="flex gap-3">
                                 <Mail size={20} className="text-primary-500 shrink-0" />
-                                <span>support@travelbooking.com</span>
+                                <span>{email}</span>
                             </li>
                         </ul>
                     </div>

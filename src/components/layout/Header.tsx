@@ -1,8 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, User, Search, MapPin, Building, Package } from 'lucide-react';
+import { useSettings } from '../../hooks/useSettings';
 
 export const Header: React.FC = () => {
+    const { data: settings } = useSettings();
+
+    const phone = settings?.hotline || '1900 1234';
+    const email = settings?.contactEmail || 'contact@travelbooking.com';
+    const siteName = settings?.siteName || 'Travel Booking';
+    const logoUrl = settings?.logoUrl;
+
     return (
         <header className="bg-white sticky top-0 z-50 shadow-sm border-b border-slate-100">
             {/* Top Bar */}
@@ -10,9 +18,9 @@ export const Header: React.FC = () => {
                 <div className="container mx-auto px-4 flex justify-between items-center">
                     <div className="flex space-x-6">
                         <span className="flex items-center gap-2">
-                            <Phone size={14} /> 1900 1234
+                            <Phone size={14} /> {phone}
                         </span>
-                        <span className="hidden md:inline">contact@travelbooking.com</span>
+                        <span className="hidden md:inline">{email}</span>
                     </div>
                     <div className="flex space-x-4 items-center">
                         <Link to="/login" className="hover:text-primary-100 flex items-center gap-1">
@@ -25,10 +33,14 @@ export const Header: React.FC = () => {
             {/* Main Navigation */}
             <div className="container mx-auto px-4 py-4 flex justify-between items-center">
                 <Link to="/" className="flex items-center gap-2">
-                    <div className="w-10 h-10 bg-primary-500 rounded-lg flex items-center justify-center text-white font-bold text-xl">
-                        TB
-                    </div>
-                    <span className="text-2xl font-bold text-slate-800">Travel Booking</span>
+                    {logoUrl ? (
+                        <img src={logoUrl} alt={siteName} className="h-10 w-auto object-contain" />
+                    ) : (
+                        <div className="w-10 h-10 bg-primary-500 rounded-lg flex items-center justify-center text-white font-bold text-xl uppercase">
+                            {siteName.charAt(0)}
+                        </div>
+                    )}
+                    <span className="text-2xl font-bold text-slate-800">{siteName}</span>
                 </Link>
 
                 <nav className="hidden md:flex space-x-8">

@@ -6,9 +6,9 @@ Trạng thái các Module tính năng trong dự án dành cho Khách hàng:
 - [x] Cài đặt Thư viện & Công nghệ lõi (React Router, TanStack Query, Zustand, Tailwind).
 - [x] Khởi tạo Cấu trúc thư mục (Feature-First Architecture).
 - [x] Thiết lập `api-client.ts` Axios base.
-- [ ] Dựng Layout cơ bản (Header, Footer, MainLayout).
-- [ ] Tích hợp API Settings (Lấy thông tin công ty cho Footer/Header).
-- [ ] Phát triển nội dung Home Page (Hero Banners).
+- [x] Dựng Layout cơ bản (Header, Footer, MainLayout).
+- [x] Tích hợp API Settings (Lấy thông tin công ty cho Footer/Header).
+- [x] Phát triển nội dung Home Page (Hero Banners).
 - [ ] Component Danh sách Điểm đến nổi bật (Destinations).
 - [ ] Component Danh sách Khách sạn nổi bật (Hotels).
 - [ ] Component Blog / News.
