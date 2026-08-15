@@ -11,7 +11,7 @@ export const Footer: React.FC = () => {
     const phone = settings?.hotline || '1900 1234 (Tổng đài hỗ trợ 24/7)';
     const email = settings?.contactEmail || 'support@travelbooking.com';
     const address = settings?.address || 'Hà Nội, Việt Nam';
-    const siteName = settings?.siteName || 'Travel Booking';
+    const siteName = settings?.siteName || '---------';
     const logoUrl = settings?.logoUrl;
 
     const fbLink = settings?.facebookUrl || '#';

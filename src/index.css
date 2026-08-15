@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @theme {
     --color-primary-50: #ecfeff;
@@ -14,6 +15,10 @@
 }
 
 @layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+    
     body {
         color: var(--color-slate-800);
         background-color: var(--color-slate-50);

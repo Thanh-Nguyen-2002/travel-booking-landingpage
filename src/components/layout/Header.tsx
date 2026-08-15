@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Phone, User, Search, MapPin, Building, Package } from 'lucide-react';
+import { Phone, User, Search } from 'lucide-react';
 import { useSettings } from '../../hooks/useSettings';
+import { useScroll } from '../../hooks/useScroll';
 
 export const Header: React.FC = () => {
     const { data: settings } = useSettings();
+    const { isScrolled } = useScroll(20);
 
     const phone = settings?.hotline || '1900 1234';
     const email = settings?.contactEmail || 'contact@travelbooking.com';
@@ -12,7 +14,7 @@ export const Header: React.FC = () => {
     const logoUrl = settings?.logoUrl;
 
     return (
-        <header className="bg-white sticky top-0 z-50 shadow-sm border-b border-slate-100">
+        <header className={`bg-white sticky top-0 z-50 transition-shadow duration-300 ${isScrolled ? 'shadow-md border-transparent' : 'shadow-sm border-b border-slate-100'}`}>
             {/* Top Bar */}
             <div className="bg-primary-500 text-white py-2 text-sm">
                 <div className="container mx-auto px-4 flex justify-between items-center">
@@ -44,16 +46,11 @@ export const Header: React.FC = () => {
                 </Link>
 
                 <nav className="hidden md:flex space-x-8">
-                    <Link to="/" className="text-primary-500 font-medium">Trang chủ</Link>
-                    <Link to="/destinations" className="text-slate-600 hover:text-primary-500 flex items-center gap-1">
-                        <MapPin size={16} /> Điểm đến
-                    </Link>
-                    <Link to="/hotels" className="text-slate-600 hover:text-primary-500 flex items-center gap-1">
-                        <Building size={16} /> Khách sạn
-                    </Link>
-                    <Link to="/packages" className="text-slate-600 hover:text-primary-500 flex items-center gap-1">
-                        <Package size={16} /> Tour & Package
-                    </Link>
+                    <Link to="/destinations" className="text-slate-600 hover:text-primary-500 font-medium transition-colors">Điểm đến</Link>
+                    <Link to="/hotels" className="text-slate-600 hover:text-primary-500 font-medium transition-colors">Khách sạn</Link>
+                    <Link to="/packages" className="text-slate-600 hover:text-primary-500 font-medium transition-colors">Tour du lịch</Link>
+                    <Link to="/about" className="text-slate-600 hover:text-primary-500 font-medium transition-colors">Về chúng tôi</Link>
+                    <Link to="/contact" className="text-slate-600 hover:text-primary-500 font-medium transition-colors">Liên hệ</Link>
                 </nav>
 
                 <div className="flex items-center gap-4">

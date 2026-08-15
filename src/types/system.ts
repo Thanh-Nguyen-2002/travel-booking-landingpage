@@ -11,5 +11,8 @@ export interface SettingsMap {
     hotline?: string;
     facebookUrl?: string;
     address?: string;
+    aboutUs?: string;
+    termsOfService?: string;
+    privacyPolicy?: string;
     [key: string]: string | undefined;
 }
