@@ -24,9 +24,18 @@ export const PrivacyPage: React.FC = () => {
                             dangerouslySetInnerHTML={{ __html: privacyContent }} 
                         />
                     ) : (
-                        <div className="text-center py-12 text-slate-500">
-                            <p className="text-lg">Nội dung chính sách bảo mật đang được cập nhật...</p>
-                            <p className="text-sm mt-2">Vui lòng cấu hình trường "privacyPolicy" trong CMS Settings dưới dạng HTML.</p>
+                        <div className="prose prose-lg prose-slate max-w-none prose-headings:text-slate-800 prose-a:text-primary-500">
+                            <h2 className="text-2xl font-bold text-slate-800 mb-4">1. Thu thập thông tin</h2>
+                            <p>Chúng tôi thu thập các thông tin cá nhân của bạn như: Tên, địa chỉ email, số điện thoại, ngày sinh và thông tin thanh toán khi bạn tiến hành đặt dịch vụ. Thông tin này được thu thập nhằm mục đích xác nhận đặt phòng và cung cấp dịch vụ tốt nhất cho bạn.</p>
+                            
+                            <h2 className="text-2xl font-bold text-slate-800 mt-8 mb-4">2. Bảo vệ dữ liệu cá nhân</h2>
+                            <p>Bảo vệ quyền riêng tư của bạn là ưu tiên hàng đầu của chúng tôi. Chúng tôi sử dụng các công nghệ mã hóa tiêu chuẩn (SSL/TLS) để đảm bảo thông tin cá nhân và dữ liệu thanh toán của bạn luôn được an toàn trước các truy cập trái phép.</p>
+
+                            <h2 className="text-2xl font-bold text-slate-800 mt-8 mb-4">3. Chia sẻ thông tin</h2>
+                            <p>Chúng tôi <strong>không bao giờ</strong> bán hoặc cho thuê thông tin cá nhân của bạn cho bên thứ ba. Thông tin của bạn chỉ được chia sẻ với các đối tác (khách sạn, hãng hàng không, nhà cung cấp tour) ở mức độ cần thiết để hoàn tất việc đặt dịch vụ của bạn.</p>
+
+                            <h2 className="text-2xl font-bold text-slate-800 mt-8 mb-4">4. Quyền của bạn</h2>
+                            <p>Bạn có toàn quyền truy cập, chỉnh sửa hoặc yêu cầu xóa thông tin cá nhân của mình khỏi hệ thống của chúng tôi bất kỳ lúc nào. Hãy liên hệ với trung tâm hỗ trợ qua email nếu bạn có bất kỳ câu hỏi nào về quyền riêng tư.</p>
                         </div>
                     )}
                 </div>
