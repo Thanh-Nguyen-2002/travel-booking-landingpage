@@ -3,7 +3,7 @@ import type { ApiResponse } from '../../../types/common';
 import type { LoginResponse, RegisterRequest } from '../../../types/auth';
 
 export const authService = {
-    login: async (credentials: { username: string; password: string }) => {
+    login: async (credentials: { email: string; password: string }) => {
         const response = await apiClient.post<any, ApiResponse<LoginResponse>>('/auth/login', credentials);
         return response.data;
     },

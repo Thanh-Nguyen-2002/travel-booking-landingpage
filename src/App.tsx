@@ -14,6 +14,7 @@ const queryClient = new QueryClient({
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Home } from './features/home/Home';
 import { DestinationsPage } from './features/destinations/DestinationsPage';
+import { DestinationDetailPage } from './features/destinations/DestinationDetailPage';
 import { HotelsPage } from './features/hotels/HotelsPage';
 import { HotelDetailPage } from './features/hotels/HotelDetailPage';
 import { PackagesPage } from './features/packages/PackagesPage';
@@ -37,9 +38,13 @@ function App() {
                 <ScrollToTop />
                 <Toaster visibleToasts={3} position="top-right" richColors />
                 <Routes>
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/register" element={<RegisterPage />} />
+                    
                     <Route path="/" element={<MainLayout />}>
                         <Route index element={<Home />} />
                         <Route path="destinations" element={<DestinationsPage />} />
+                        <Route path="destinations/:id" element={<DestinationDetailPage />} />
                         <Route path="hotels" element={<HotelsPage />} />
                         <Route path="hotels/:id" element={<HotelDetailPage />} />
                         <Route path="packages" element={<PackagesPage />} />
@@ -48,8 +53,6 @@ function App() {
                         <Route path="contact" element={<ContactPage />} />
                         <Route path="terms" element={<TermsPage />} />
                         <Route path="privacy" element={<PrivacyPage />} />
-                        <Route path="login" element={<LoginPage />} />
-                        <Route path="register" element={<RegisterPage />} />
                         <Route path="checkout" element={<CheckoutPage />} />
                         <Route path="profile" element={<ProfilePage />} />
                         <Route path="bookings" element={<BookingsPage />} />

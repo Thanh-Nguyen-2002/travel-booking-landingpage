@@ -60,7 +60,7 @@ export const DestinationsPage: React.FC = () => {
                             {pageData.data.map((dest) => (
                                 <Link
                                     key={dest.id}
-                                    to={`/destinations/${dest.slug}`}
+                                    to={`/destinations/${dest.id}`}
                                     className="group block bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 overflow-hidden hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] transition-all duration-300"
                                 >
                                     <div className="relative h-64 overflow-hidden">

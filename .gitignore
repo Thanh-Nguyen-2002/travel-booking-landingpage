@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Skill tracking files
+/skill
+/TODO_BUGS.md

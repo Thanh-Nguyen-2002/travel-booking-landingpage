@@ -63,7 +63,7 @@ export const HotelsPage: React.FC = () => {
                                 return (
                                     <Link
                                         key={hotel.id}
-                                        to={`/hotels/${hotel.slug}`}
+                                        to={`/hotels/${hotel.id}`}
                                         className="group block bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 overflow-hidden hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] transition-all duration-300 flex flex-col h-full"
                                     >
                                         <div className="relative h-56 overflow-hidden shrink-0">
