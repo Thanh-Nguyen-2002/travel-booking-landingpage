@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, message, Steps, Divider, Radio } from 'antd';
-import { CreditCard, MapPin, User, Mail, Phone, Calendar, ArrowLeft, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { CreditCard, User, Mail, Phone, ArrowLeft, ArrowRight } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/useAuthStore';
 import { useBookingStore } from '../../store/useBookingStore';
+import { EmptyBooking } from './components/EmptyBooking';
+import { SuccessStep } from './components/SuccessStep';
+import { OrderSummary } from './components/OrderSummary';
 
 export const CheckoutPage: React.FC = () => {
     const navigate = useNavigate();
@@ -12,18 +15,7 @@ export const CheckoutPage: React.FC = () => {
     const [step, setStep] = useState(0);
 
     if (!bookingInfo) {
-        return (
-            <div className="min-h-[70vh] flex flex-col items-center justify-center bg-slate-50">
-                <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mb-6">
-                    <CheckCircle2 size={40} className="text-slate-300" />
-                </div>
-                <h2 className="text-2xl font-bold text-slate-800 mb-2">Chưa có thông tin đặt phòng</h2>
-                <p className="text-slate-500 mb-8">Vui lòng chọn khách sạn và phòng trước khi thanh toán.</p>
-                <Link to="/hotels" className="px-6 py-3 bg-primary-600 text-white font-medium rounded-xl hover:bg-primary-700 transition-colors">
-                    Khám phá Khách sạn
-                </Link>
-            </div>
-        );
+        return <EmptyBooking />;
     }
 
     const onFinish = (_values: any) => {
@@ -33,27 +25,13 @@ export const CheckoutPage: React.FC = () => {
             return;
         }
         
-        // Mock successful booking
         message.success('Đặt phòng thành công! Cảm ơn bạn đã sử dụng dịch vụ.');
         clearBookingInfo();
-        setStep(1); // Move to success step
+        setStep(1);
     };
 
     if (step === 1) {
-        return (
-            <div className="min-h-[70vh] flex flex-col items-center justify-center bg-slate-50">
-                <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mb-6">
-                    <CheckCircle2 size={40} className="text-emerald-500" />
-                </div>
-                <h2 className="text-3xl font-bold text-slate-800 mb-4">Đặt phòng thành công!</h2>
-                <p className="text-slate-500 mb-8 max-w-md text-center">
-                    Mã đặt chỗ của bạn đã được gửi qua email. Vui lòng kiểm tra hộp thư để xem chi tiết.
-                </p>
-                <Link to="/" className="px-8 py-3 bg-slate-900 text-white font-medium rounded-xl hover:bg-primary-600 transition-all duration-300 shadow-lg shadow-slate-900/20">
-                    Về Trang Chủ
-                </Link>
-            </div>
-        );
+        return <SuccessStep />;
     }
 
     return (
@@ -165,57 +143,7 @@ export const CheckoutPage: React.FC = () => {
 
                     {/* Right Column: Order Summary */}
                     <div className="lg:col-span-1">
-                        <div className="sticky top-24 bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 overflow-hidden">
-                            <div className="h-48 overflow-hidden relative">
-                                <img 
-                                    src={bookingInfo.coverImage || 'https://images.unsplash.com/photo-1566073171589-236237eff6dd?q=80&w=1000'} 
-                                    alt={bookingInfo.hotelName} 
-                                    className="w-full h-full object-cover"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
-                                <div className="absolute bottom-4 left-4 right-4 text-white">
-                                    <h3 className="text-lg font-bold line-clamp-2 mb-1">{bookingInfo.hotelName}</h3>
-                                    <div className="flex items-center gap-1.5 text-sm text-slate-200">
-                                        <MapPin size={14} /> Việt Nam
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="p-6">
-                                <h4 className="font-bold text-slate-800 mb-4">{bookingInfo.roomName}</h4>
-                                
-                                <div className="space-y-3 text-sm text-slate-600 mb-6">
-                                    <div className="flex justify-between">
-                                        <span className="flex items-center gap-2"><Calendar size={16} className="text-slate-400" /> Nhận phòng</span>
-                                        <span className="font-medium text-slate-800">{bookingInfo.checkIn || '14:00 - Tự chọn'}</span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                        <span className="flex items-center gap-2"><Calendar size={16} className="text-slate-400" /> Trả phòng</span>
-                                        <span className="font-medium text-slate-800">{bookingInfo.checkOut || '12:00 - Tự chọn'}</span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                        <span className="flex items-center gap-2"><User size={16} className="text-slate-400" /> Khách</span>
-                                        <span className="font-medium text-slate-800">{bookingInfo.guests || 2} người lớn</span>
-                                    </div>
-                                </div>
-
-                                <Divider className="my-4" />
-
-                                <div className="flex justify-between items-center mb-2">
-                                    <span className="text-slate-600">Giá phòng (1 đêm)</span>
-                                    <span className="font-medium">{bookingInfo.price.toLocaleString()}đ</span>
-                                </div>
-                                <div className="flex justify-between items-center mb-4 text-emerald-600">
-                                    <span>Thuế & Phí</span>
-                                    <span>Đã bao gồm</span>
-                                </div>
-
-                                <div className="flex justify-between items-end">
-                                    <span className="text-lg font-bold text-slate-800">Tổng cộng</span>
-                                    <span className="text-3xl font-bold text-primary-600">{bookingInfo.price.toLocaleString()}đ</span>
-                                </div>
-                            </div>
-                        </div>
+                        <OrderSummary bookingInfo={bookingInfo} />
                     </div>
                 </div>
             </div>

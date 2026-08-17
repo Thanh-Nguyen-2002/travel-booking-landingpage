@@ -46,7 +46,13 @@ src/
 - Bắt buộc tạo Custom Hook bọc `useQuery` hoặc `useMutation` bên trong thư mục `queries` của từng Feature. *(Ví dụ: `src/features/hotels/queries/useHotels.ts`)*.
 - **Quy tắc TypeScript (Strict Typing)**: Khi làm bất kỳ module nào, **luôn phải đọc/tham chiếu Backend (DTOs/Entities)** để viết các interface/type chuẩn xác nhất ở Frontend. **BẮT BUỘC** luôn dùng định nghĩa Type rõ ràng, **TUYỆT ĐỐI KHÔNG BAO GIỜ** được dùng `any`.
 
-### 2.3. UI/UX & Design System
+### 2.3. Trách Nhiệm Của Page vs Components (Page Composition Rule)
+Giống với quy định nghiêm ngặt từ dự án CMS, hệ thống Frontend phải phân tách rõ ràng vai trò:
+- **Pages (Trang chính)**: Ví dụ `HotelsPage.tsx`, `ProfilePage.tsx`. Trang chính **CHỈ ĐƯỢC PHÉP** đóng vai trò là "vỏ bọc" (Container) để lắp ghép (stitch) các UI components nhỏ lại với nhau, quản lý global state hoặc định tuyến. **Tuyệt đối cấm** viết các khối HTML quá dài hoặc nhồi nhét logic hiển thị phức tạp trực tiếp vào file Page.
+- **Components**: Chứa các thành phần UI nhỏ gọn, tái sử dụng (Ví dụ: `HotelCard.tsx`, `SearchForm.tsx`, `BookingSidebar.tsx`). Mọi logic về hiển thị chi tiết phải được đẩy xuống cấp Component.
+- **Tách biệt Logic và UI**: Mọi hàm gọi API phải được đưa vào thư mục `queries/`, tuyệt đối không viết chung vào file giao diện.
+
+### 2.4. UI/UX & Design System
 - Landing Page hướng tới khách hàng nên giao diện phải **WOW**, màu sắc tươi sáng (kế thừa màu Cyan `#06b6d4` chủ đạo).
 - **Quy tắc thiết kế cao cấp (Premium UI)**: Tận dụng các xu hướng thiết kế hiện đại như Glassmorphism (Kính mờ `backdrop-blur`), Split-card layout, và các Micro-animations (hiệu ứng shadow, color fade) để tạo chiều sâu và độ sang trọng cho trang web.
 - **Quy tắc Hover (No physical movement)**: Tuyệt đối **KHÔNG BAO GIỜ** sử dụng các hiệu ứng vật lý như `scale` (phóng to/thu nhỏ) hoặc dịch chuyển `translate-x`, `translate-y` (nhảy lên/xuống) khi hover. Các hiệu ứng này đã lỗi thời và làm UI trông rất rẻ tiền. Chỉ sử dụng thay đổi về màu sắc (color), độ mờ (opacity), hoặc bóng đổ (shadow) để tạo phản hồi tương tác (feedback).
