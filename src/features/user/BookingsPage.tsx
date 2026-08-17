@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Tag, Button, Modal, Rate, Input, message } from 'antd';
+import { Tag, Button, Modal, Rate, Input } from 'antd';
+import { toast } from 'sonner';
 import { Calendar, Search } from 'lucide-react';
 
 
@@ -21,11 +22,11 @@ export const BookingsPage: React.FC = () => {
 
     const handleSubmitReview = () => {
         if (!comment.trim()) {
-            message.warning('Vui lòng nhập nội dung đánh giá!');
+            toast.warning('Vui lòng nhập nội dung đánh giá!');
             return;
         }
         
-        message.success('Cảm ơn bạn đã gửi đánh giá!');
+        toast.success('Cảm ơn bạn đã gửi đánh giá!');
         setReviewModalVisible(false);
     };
 

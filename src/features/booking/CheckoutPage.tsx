@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, message, Steps, Divider, Radio } from 'antd';
+import { Form, Input, Button, Steps, Divider, Radio } from 'antd';
+import { toast } from 'sonner';
 import { CreditCard, User, Mail, Phone, ArrowLeft, ArrowRight } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/useAuthStore';
@@ -23,7 +24,7 @@ export const CheckoutPage: React.FC = () => {
 
     const onFinish = (values: any) => {
         if (!isAuthenticated) {
-            message.warning('Vui lòng đăng nhập để tiếp tục thanh toán');
+            toast.warning('Vui lòng đăng nhập để tiếp tục thanh toán');
             navigate('/login');
             return;
         }
@@ -43,12 +44,12 @@ export const CheckoutPage: React.FC = () => {
         
         createBooking(request, {
             onSuccess: () => {
-                message.success('Đặt phòng thành công! Cảm ơn bạn đã sử dụng dịch vụ.');
+                toast.success('Đặt phòng thành công! Cảm ơn bạn đã sử dụng dịch vụ.');
                 clearBookingInfo();
                 setStep(1);
             },
             onError: () => {
-                message.error('Có lỗi xảy ra khi đặt phòng. Vui lòng kiểm tra lại!');
+                toast.error('Có lỗi xảy ra khi đặt phòng. Vui lòng kiểm tra lại!');
             }
         });
     };

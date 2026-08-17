@@ -1,5 +1,6 @@
 import React from 'react';
-import { Form, Input, Button, message } from 'antd';
+import { Form, Input, Button } from 'antd';
+import { toast } from 'sonner';
 import { User, Mail, Lock, Phone, UserPlus, ArrowRight } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
@@ -11,11 +12,11 @@ export const RegisterPage: React.FC = () => {
     const registerMutation = useMutation({
         mutationFn: authService.register,
         onSuccess: () => {
-            message.success('Đăng ký thành công! Vui lòng đăng nhập.');
+            toast.success('Đăng ký thành công! Vui lòng đăng nhập.');
             navigate('/login');
         },
         onError: (error: any) => {
-            message.error(error?.response?.data?.message || 'Đăng ký thất bại. Vui lòng kiểm tra lại thông tin.');
+            toast.error(error?.response?.data?.message || 'Đăng ký thất bại. Vui lòng kiểm tra lại thông tin.');
         }
     });
 

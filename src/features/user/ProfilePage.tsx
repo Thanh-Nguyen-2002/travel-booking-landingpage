@@ -1,5 +1,6 @@
 import React from 'react';
-import { Form, Input, Button, Tabs, message, Avatar, Upload } from 'antd';
+import { Form, Input, Button, Tabs, Avatar, Upload } from 'antd';
+import { toast } from 'sonner';
 import { User, Lock, Upload as UploadIcon, Mail, Phone, Shield } from 'lucide-react';
 import { useAuthStore } from '../../store/useAuthStore';
 
@@ -14,11 +15,11 @@ export const ProfilePage: React.FC = () => {
 
     const onUpdateProfile = (values: any) => {
         updateUser({ fullName: values.fullName, phone: values.phone });
-        message.success('Cập nhật thông tin thành công!');
+        toast.success('Cập nhật thông tin thành công!');
     };
 
     const onChangePassword = (_values: any) => {
-        message.success('Đổi mật khẩu thành công!');
+        toast.success('Đổi mật khẩu thành công!');
         passwordForm.resetFields();
     };
 

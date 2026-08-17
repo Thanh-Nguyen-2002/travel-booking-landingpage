@@ -1,5 +1,6 @@
 import React from 'react';
-import { Form, Input, Button, message } from 'antd';
+import { Form, Input, Button } from 'antd';
+import { toast } from 'sonner';
 import { Mail, Lock, LogIn, ArrowRight } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
@@ -14,11 +15,11 @@ export const LoginPage: React.FC = () => {
         mutationFn: authService.login,
         onSuccess: (data) => {
             login(data);
-            message.success('Đăng nhập thành công!');
+            toast.success('Đăng nhập thành công!');
             navigate('/');
         },
         onError: (error: any) => {
-            message.error(error?.response?.data?.message || 'Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.');
+            toast.error(error?.response?.data?.message || 'Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.');
         }
     });
 
