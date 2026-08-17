@@ -8,26 +8,29 @@ export const TermsPage: React.FC = () => {
     return (
         <div className="bg-slate-50 min-h-screen">
             {/* Hero Section */}
-            <div className="bg-gradient-to-r from-slate-700 to-slate-900 py-16 text-center text-white">
-                <div className="container mx-auto px-4">
-                    <h1 className="text-4xl font-bold mb-4">Điều khoản dịch vụ</h1>
-                    <p className="text-slate-300">Cập nhật lần cuối: {new Date().toLocaleDateString('vi-VN')}</p>
+            <div className="relative bg-gradient-to-br from-primary-900 via-primary-700 to-primary-800 py-24 text-center text-white overflow-hidden">
+                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
+                <div className="absolute -top-24 -left-24 w-96 h-96 bg-primary-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+                <div className="absolute top-12 -right-24 w-96 h-96 bg-teal-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+                <div className="container mx-auto px-4 relative z-10">
+                    <h1 className="text-4xl md:text-5xl font-bold mb-4">Điều khoản dịch vụ</h1>
+                    <p className="text-primary-100 text-lg">Cập nhật lần cuối: {new Date().toLocaleDateString('vi-VN')}</p>
                 </div>
             </div>
 
             {/* Content Section */}
-            <div className="container mx-auto px-4 py-16">
-                <div className="max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-slate-100">
+            <div className="container mx-auto px-4 py-16 -mt-8 relative z-20">
+                <div className="max-w-6xl mx-auto backdrop-blur-md bg-white/95 p-8 md:p-14 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50">
                     {termsContent ? (
-                        <div 
+                        <div
                             className="prose prose-lg prose-slate max-w-none prose-headings:text-slate-800 prose-a:text-primary-500"
-                            dangerouslySetInnerHTML={{ __html: termsContent }} 
+                            dangerouslySetInnerHTML={{ __html: termsContent }}
                         />
                     ) : (
                         <div className="prose prose-lg prose-slate max-w-none prose-headings:text-slate-800 prose-a:text-primary-500">
                             <h2 className="text-2xl font-bold text-slate-800 mb-4">1. Chấp nhận các điều khoản</h2>
                             <p>Bằng việc truy cập và sử dụng trang web này, bạn đồng ý tuân thủ các Điều khoản Dịch vụ của chúng tôi. Nếu bạn không đồng ý với bất kỳ phần nào của các điều khoản này, vui lòng không sử dụng dịch vụ của chúng tôi.</p>
-                            
+
                             <h2 className="text-2xl font-bold text-slate-800 mt-8 mb-4">2. Đặt phòng và Thanh toán</h2>
                             <p>Tất cả các đặt phòng và tour du lịch đều phụ thuộc vào tình trạng sẵn có. Giá cả có thể thay đổi mà không cần báo trước, nhưng mức giá bạn đã xác nhận tại thời điểm đặt sẽ luôn được giữ nguyên. Chúng tôi yêu cầu thanh toán đầy đủ hoặc đặt cọc theo tỷ lệ phần trăm được quy định tùy từng gói dịch vụ.</p>
 
