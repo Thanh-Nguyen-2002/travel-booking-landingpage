@@ -1,0 +1,224 @@
+import React, { useState } from 'react';
+import { Form, Input, Button, message, Steps, Divider, Radio } from 'antd';
+import { CreditCard, MapPin, User, Mail, Phone, Calendar, ArrowLeft, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuthStore } from '../../store/useAuthStore';
+import { useBookingStore } from '../../store/useBookingStore';
+
+export const CheckoutPage: React.FC = () => {
+    const navigate = useNavigate();
+    const { user, isAuthenticated } = useAuthStore();
+    const { bookingInfo, clearBookingInfo } = useBookingStore();
+    const [step, setStep] = useState(0);
+
+    if (!bookingInfo) {
+        return (
+            <div className="min-h-[70vh] flex flex-col items-center justify-center bg-slate-50">
+                <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mb-6">
+                    <CheckCircle2 size={40} className="text-slate-300" />
+                </div>
+                <h2 className="text-2xl font-bold text-slate-800 mb-2">Chưa có thông tin đặt phòng</h2>
+                <p className="text-slate-500 mb-8">Vui lòng chọn khách sạn và phòng trước khi thanh toán.</p>
+                <Link to="/hotels" className="px-6 py-3 bg-primary-600 text-white font-medium rounded-xl hover:bg-primary-700 transition-colors">
+                    Khám phá Khách sạn
+                </Link>
+            </div>
+        );
+    }
+
+    const onFinish = (_values: any) => {
+        if (!isAuthenticated) {
+            message.warning('Vui lòng đăng nhập để tiếp tục thanh toán');
+            navigate('/login');
+            return;
+        }
+        
+        // Mock successful booking
+        message.success('Đặt phòng thành công! Cảm ơn bạn đã sử dụng dịch vụ.');
+        clearBookingInfo();
+        setStep(1); // Move to success step
+    };
+
+    if (step === 1) {
+        return (
+            <div className="min-h-[70vh] flex flex-col items-center justify-center bg-slate-50">
+                <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mb-6">
+                    <CheckCircle2 size={40} className="text-emerald-500" />
+                </div>
+                <h2 className="text-3xl font-bold text-slate-800 mb-4">Đặt phòng thành công!</h2>
+                <p className="text-slate-500 mb-8 max-w-md text-center">
+                    Mã đặt chỗ của bạn đã được gửi qua email. Vui lòng kiểm tra hộp thư để xem chi tiết.
+                </p>
+                <Link to="/" className="px-8 py-3 bg-slate-900 text-white font-medium rounded-xl hover:bg-primary-600 transition-all duration-300 shadow-lg shadow-slate-900/20">
+                    Về Trang Chủ
+                </Link>
+            </div>
+        );
+    }
+
+    return (
+        <div className="bg-slate-50 min-h-screen pb-24 pt-12">
+            <div className="container mx-auto px-4 max-w-5xl">
+                <div className="flex items-center gap-2 text-slate-500 mb-8">
+                    <Link to={`/hotels/${bookingInfo.hotelId}`} className="hover:text-primary-600 flex items-center gap-1">
+                        <ArrowLeft size={16} /> Quay lại khách sạn
+                    </Link>
+                </div>
+
+                <div className="mb-12">
+                    <Steps
+                        current={0}
+                        items={[
+                            { title: 'Thông tin & Thanh toán' },
+                            { title: 'Hoàn tất' },
+                        ]}
+                    />
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    {/* Left Column: Form */}
+                    <div className="lg:col-span-2">
+                        <div className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 p-8">
+                            <h2 className="text-2xl font-bold text-slate-800 mb-6">Thông tin liên hệ</h2>
+                            
+                            {!isAuthenticated && (
+                                <div className="bg-primary-50 text-primary-700 p-4 rounded-xl mb-8 flex items-center justify-between border border-primary-100">
+                                    <div className="flex items-center gap-3">
+                                        <User size={20} className="text-primary-600" />
+                                        <span className="font-medium">Bạn đã có tài khoản? Đăng nhập để thanh toán nhanh hơn.</span>
+                                    </div>
+                                    <Link to="/login" className="px-4 py-1.5 bg-white text-primary-600 font-bold rounded-lg shadow-sm border border-primary-100 hover:bg-primary-600 hover:text-white transition-colors">
+                                        Đăng nhập
+                                    </Link>
+                                </div>
+                            )}
+
+                            <Form 
+                                layout="vertical" 
+                                onFinish={onFinish} 
+                                initialValues={{
+                                    fullName: user?.fullName,
+                                    email: user?.email,
+                                    phone: user?.phone
+                                }}
+                                requiredMark={false}
+                            >
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <Form.Item 
+                                        label={<span className="font-medium text-slate-700">Họ và Tên</span>}
+                                        name="fullName"
+                                        rules={[{ required: true, message: 'Vui lòng nhập họ tên' }]}
+                                    >
+                                        <Input size="large" prefix={<User className="text-slate-400 mr-2" size={18} />} className="rounded-xl border-slate-200" />
+                                    </Form.Item>
+                                    
+                                    <Form.Item 
+                                        label={<span className="font-medium text-slate-700">Email</span>}
+                                        name="email"
+                                        rules={[{ required: true, type: 'email', message: 'Vui lòng nhập email hợp lệ' }]}
+                                    >
+                                        <Input size="large" prefix={<Mail className="text-slate-400 mr-2" size={18} />} className="rounded-xl border-slate-200" />
+                                    </Form.Item>
+                                    
+                                    <Form.Item 
+                                        label={<span className="font-medium text-slate-700">Số điện thoại</span>}
+                                        name="phone"
+                                        rules={[{ required: true, message: 'Vui lòng nhập số điện thoại' }]}
+                                    >
+                                        <Input size="large" prefix={<Phone className="text-slate-400 mr-2" size={18} />} className="rounded-xl border-slate-200" />
+                                    </Form.Item>
+                                </div>
+
+                                <Divider className="my-8" />
+
+                                <h2 className="text-2xl font-bold text-slate-800 mb-6">Phương thức thanh toán</h2>
+                                <Form.Item name="paymentMethod" initialValue="credit_card">
+                                    <Radio.Group className="w-full space-y-4">
+                                        <div className="flex items-center justify-between p-4 border border-slate-200 rounded-xl hover:border-primary-400 cursor-pointer transition-colors bg-white">
+                                            <Radio value="credit_card" className="font-medium text-slate-800">Thẻ Tín dụng / Ghi nợ (Credit/Debit Card)</Radio>
+                                            <CreditCard size={24} className="text-slate-400" />
+                                        </div>
+                                        <div className="flex items-center justify-between p-4 border border-slate-200 rounded-xl hover:border-primary-400 cursor-pointer transition-colors bg-white">
+                                            <Radio value="momo" className="font-medium text-slate-800">Ví MoMo</Radio>
+                                            <div className="w-6 h-6 bg-pink-500 rounded-full flex items-center justify-center text-white text-xs font-bold">M</div>
+                                        </div>
+                                        <div className="flex items-center justify-between p-4 border border-slate-200 rounded-xl hover:border-primary-400 cursor-pointer transition-colors bg-white">
+                                            <Radio value="vnpay" className="font-medium text-slate-800">VNPay</Radio>
+                                            <div className="text-blue-600 font-bold text-sm">VNPay</div>
+                                        </div>
+                                    </Radio.Group>
+                                </Form.Item>
+
+                                <div className="mt-8">
+                                    <Button 
+                                        type="primary" 
+                                        htmlType="submit"
+                                        size="large"
+                                        className="w-full bg-primary-600 hover:!bg-primary-700 h-14 text-lg font-bold rounded-xl shadow-lg shadow-primary-500/30 flex items-center justify-center gap-2"
+                                    >
+                                        Xác nhận Đặt phòng <ArrowRight size={20} />
+                                    </Button>
+                                </div>
+                            </Form>
+                        </div>
+                    </div>
+
+                    {/* Right Column: Order Summary */}
+                    <div className="lg:col-span-1">
+                        <div className="sticky top-24 bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 overflow-hidden">
+                            <div className="h-48 overflow-hidden relative">
+                                <img 
+                                    src={bookingInfo.coverImage || 'https://images.unsplash.com/photo-1566073171589-236237eff6dd?q=80&w=1000'} 
+                                    alt={bookingInfo.hotelName} 
+                                    className="w-full h-full object-cover"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
+                                <div className="absolute bottom-4 left-4 right-4 text-white">
+                                    <h3 className="text-lg font-bold line-clamp-2 mb-1">{bookingInfo.hotelName}</h3>
+                                    <div className="flex items-center gap-1.5 text-sm text-slate-200">
+                                        <MapPin size={14} /> Việt Nam
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="p-6">
+                                <h4 className="font-bold text-slate-800 mb-4">{bookingInfo.roomName}</h4>
+                                
+                                <div className="space-y-3 text-sm text-slate-600 mb-6">
+                                    <div className="flex justify-between">
+                                        <span className="flex items-center gap-2"><Calendar size={16} className="text-slate-400" /> Nhận phòng</span>
+                                        <span className="font-medium text-slate-800">{bookingInfo.checkIn || '14:00 - Tự chọn'}</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span className="flex items-center gap-2"><Calendar size={16} className="text-slate-400" /> Trả phòng</span>
+                                        <span className="font-medium text-slate-800">{bookingInfo.checkOut || '12:00 - Tự chọn'}</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span className="flex items-center gap-2"><User size={16} className="text-slate-400" /> Khách</span>
+                                        <span className="font-medium text-slate-800">{bookingInfo.guests || 2} người lớn</span>
+                                    </div>
+                                </div>
+
+                                <Divider className="my-4" />
+
+                                <div className="flex justify-between items-center mb-2">
+                                    <span className="text-slate-600">Giá phòng (1 đêm)</span>
+                                    <span className="font-medium">{bookingInfo.price.toLocaleString()}đ</span>
+                                </div>
+                                <div className="flex justify-between items-center mb-4 text-emerald-600">
+                                    <span>Thuế & Phí</span>
+                                    <span>Đã bao gồm</span>
+                                </div>
+
+                                <div className="flex justify-between items-end">
+                                    <span className="text-lg font-bold text-slate-800">Tổng cộng</span>
+                                    <span className="text-3xl font-bold text-primary-600">{bookingInfo.price.toLocaleString()}đ</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};

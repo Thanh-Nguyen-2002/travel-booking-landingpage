@@ -1,12 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, User, Search } from 'lucide-react';
+import { Dropdown, Avatar } from 'antd';
 import { useSettings } from '../../hooks/useSettings';
 import { useScroll } from '../../hooks/useScroll';
+import { useAuthStore } from '../../store/useAuthStore';
 
 export const Header: React.FC = () => {
     const { data: settings } = useSettings();
     const { isScrolled } = useScroll(20);
+    const { user, isAuthenticated, logout } = useAuthStore();
 
     const phone = settings?.hotline || '1900 1234';
     const email = settings?.contactEmail || 'contact@travelbooking.com';
@@ -25,9 +28,31 @@ export const Header: React.FC = () => {
                         <span className="hidden md:inline">{email}</span>
                     </div>
                     <div className="flex space-x-4 items-center">
-                        <Link to="/login" className="hover:text-primary-100 flex items-center gap-1">
-                            <User size={14} /> Đăng nhập
-                        </Link>
+                        {isAuthenticated && user ? (
+                            <Dropdown menu={{
+                                items: [
+                                    { key: 'profile', label: <Link to="/profile">Thông tin cá nhân</Link> },
+                                    { key: 'bookings', label: <Link to="/bookings">Lịch sử đặt phòng</Link> },
+                                    { type: 'divider' },
+                                    { key: 'logout', label: <span onClick={() => { logout(); window.location.href = '/'; }}>Đăng xuất</span>, danger: true }
+                                ]
+                            }} placement="bottomRight">
+                                <div className="flex items-center gap-2 cursor-pointer hover:text-primary-100 transition-colors">
+                                    <Avatar size="small" src={user.avatar} icon={!user.avatar && <User size={14} />} className="bg-primary-400" />
+                                    <span className="font-medium text-sm hidden md:inline">{user.fullName}</span>
+                                </div>
+                            </Dropdown>
+                        ) : (
+                            <>
+                                <Link to="/login" className="hover:text-primary-100 flex items-center gap-1 transition-colors">
+                                    <User size={14} /> Đăng nhập
+                                </Link>
+                                <span className="text-primary-300">|</span>
+                                <Link to="/register" className="hover:text-primary-100 transition-colors">
+                                    Đăng ký
+                                </Link>
+                            </>
+                        )}
                     </div>
                 </div>
             </div>
