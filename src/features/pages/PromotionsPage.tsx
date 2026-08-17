@@ -6,14 +6,14 @@ export const PromotionsPage: React.FC = () => {
     const { data: promotions, isLoading, isError } = usePromotions();
 
     const renderPromoCard = (promo: Promotion) => (
-        <div key={promo.id} className="group bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 overflow-hidden hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] hover:-translate-y-2 transition-all duration-300 flex flex-col h-full">
+        <div key={promo.id} className="group bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 overflow-hidden hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] transition-all duration-300 flex flex-col h-full">
             <div className="h-48 bg-gradient-to-br from-primary-100 to-primary-50 relative overflow-hidden shrink-0">
-                <div className="absolute -right-8 -top-8 w-32 h-32 bg-primary-200 rounded-full mix-blend-multiply filter blur-2xl opacity-50 group-hover:scale-150 transition-transform duration-700"></div>
-                <div className="absolute -left-8 -bottom-8 w-32 h-32 bg-amber-200 rounded-full mix-blend-multiply filter blur-2xl opacity-50 group-hover:scale-150 transition-transform duration-700"></div>
-                <div className="absolute inset-0 flex items-center justify-center text-primary-400/50 group-hover:scale-110 transition-transform duration-500">
+                <div className="absolute -right-8 -top-8 w-32 h-32 bg-primary-200 rounded-full mix-blend-multiply filter blur-2xl opacity-50 group-hover:opacity-80 transition-opacity duration-700"></div>
+                <div className="absolute -left-8 -bottom-8 w-32 h-32 bg-amber-200 rounded-full mix-blend-multiply filter blur-2xl opacity-50 group-hover:opacity-80 transition-opacity duration-700"></div>
+                <div className="absolute inset-0 flex items-center justify-center text-primary-400/50 group-hover:text-primary-500/80 transition-colors duration-500">
                     <Tag size={80} strokeWidth={1} />
                 </div>
-                <div className="absolute top-4 right-4 bg-gradient-to-br from-rose-500 via-red-500 to-rose-600 p-[2px] rounded-lg shadow-[0_8px_20px_rgba(244,63,94,0.4)] group-hover:-translate-y-1 transition-transform duration-300">
+                <div className="absolute top-4 right-4 bg-gradient-to-br from-rose-500 via-red-500 to-rose-600 p-[2px] rounded-lg shadow-[0_8px_20px_rgba(244,63,94,0.4)] transition-all duration-300">
                     <div className="bg-gradient-to-br from-rose-500 to-red-500 h-full w-full rounded-lg border border-dashed border-white/60 px-3 py-1.5 flex items-center gap-1.5">
                         <Sparkles size={16} className="text-yellow-200 animate-pulse" />
                         <span className="text-white font-bold text-sm drop-shadow-md">
@@ -29,7 +29,7 @@ export const PromotionsPage: React.FC = () => {
                     <Calendar size={18} className="text-primary-500" />
                     Áp dụng đến: <span className="text-slate-700">{promo.endDate ? new Date(promo.endDate).toLocaleDateString('vi-VN') : 'Không thời hạn'}</span>
                 </div>
-                <button className="w-full mt-auto bg-gradient-to-r from-primary-50 to-slate-50 text-primary-600 hover:from-primary-500 hover:to-primary-600 hover:text-white font-semibold py-3.5 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md active:scale-[0.98]">
+                <button className="w-full mt-auto bg-gradient-to-r from-primary-50 to-slate-50 text-primary-600 hover:from-primary-500 hover:to-primary-600 hover:text-white font-semibold py-3.5 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md">
                     Sử dụng mã {promo.code}
                 </button>
             </div>

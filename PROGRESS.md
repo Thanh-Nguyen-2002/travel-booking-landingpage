@@ -9,6 +9,7 @@ Trạng thái các Module tính năng trong dự án dành cho Khách hàng:
 - [x] Dựng Layout cơ bản (Header, Footer, MainLayout).
 - [x] Tích hợp API Settings (Lấy thông tin công ty cho Footer/Header).
 - [x] Phát triển nội dung Home Page (Hero Banners).
+- [x] Xây dựng và chuẩn hóa UI các trang thông tin (Giới thiệu, Liên hệ, Khuyến mãi, Chính sách, Điều khoản).
 - [ ] Component Danh sách Điểm đến nổi bật (Destinations).
 - [ ] Component Danh sách Khách sạn nổi bật (Hotels).
 - [ ] Component Blog / News.

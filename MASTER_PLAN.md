@@ -41,13 +41,19 @@ src/
     ┗ profile/      # Lịch sử đặt phòng, thông tin cá nhân
 ```
 
-### 2.2. Data Fetching Rule
+### 2.2. Data Fetching & TypeScript Rule
 - KHÔNG gọi `axios.get` trực tiếp bên trong `useEffect` của Component.
-- Bắt buộc tạo Custom Hook bọc `useQuery` hoặc `useMutation` bên trong thư mục `queries` của từng Feature. 
-*(Ví dụ: `src/features/hotels/queries/useHotels.ts`)*.
+- Bắt buộc tạo Custom Hook bọc `useQuery` hoặc `useMutation` bên trong thư mục `queries` của từng Feature. *(Ví dụ: `src/features/hotels/queries/useHotels.ts`)*.
+- **Quy tắc TypeScript (Strict Typing)**: Khi làm bất kỳ module nào, **luôn phải đọc/tham chiếu Backend (DTOs/Entities)** để viết các interface/type chuẩn xác nhất ở Frontend. **BẮT BUỘC** luôn dùng định nghĩa Type rõ ràng, **TUYỆT ĐỐI KHÔNG BAO GIỜ** được dùng `any`.
 
-### 2.3. UI/UX & SEO
+### 2.3. UI/UX & Design System
 - Landing Page hướng tới khách hàng nên giao diện phải **WOW**, màu sắc tươi sáng (kế thừa màu Cyan `#06b6d4` chủ đạo).
+- **Quy tắc thiết kế cao cấp (Premium UI)**: Tận dụng các xu hướng thiết kế hiện đại như Glassmorphism (Kính mờ `backdrop-blur`), Split-card layout, và các Micro-animations (hiệu ứng shadow, color fade) để tạo chiều sâu và độ sang trọng cho trang web.
+- **Quy tắc Hover (No physical movement)**: Tuyệt đối **KHÔNG BAO GIỜ** sử dụng các hiệu ứng vật lý như `scale` (phóng to/thu nhỏ) hoặc dịch chuyển `translate-x`, `translate-y` (nhảy lên/xuống) khi hover. Các hiệu ứng này đã lỗi thời và làm UI trông rất rẻ tiền. Chỉ sử dụng thay đổi về màu sắc (color), độ mờ (opacity), hoặc bóng đổ (shadow) để tạo phản hồi tương tác (feedback).
+- **Quy tắc Bo góc (Border Radius)**: Bắt buộc tuân thủ mức bo góc tiêu chuẩn từ **8px đến 12px** (`rounded-lg` hoặc `rounded-xl`) đối với các thành phần như Card, Form, Input, Button. Tuyệt đối không lạm dụng bo góc quá lớn (`rounded-2xl`, `rounded-3xl` hoặc `rounded-full` trên container) để giữ sự thanh lịch, cứng cáp và chuyên nghiệp. (Ngoại trừ Avatar hoặc các viền trang trí dạng tròn).
+- **Quy tắc Typography & Layout**:
+  - Container chính của các trang phải được giới hạn ở mức `max-w-6xl mx-auto` để đảm bảo nội dung không bị quá loãng trên màn hình lớn.
+  - Phông chữ phải kế thừa đồng nhất từ thiết lập chung (Tailwind default/Google Fonts). Hạn chế lạm dụng các class như `font-extrabold`, `font-light` hay ép khoảng cách `tracking-tight`/`tracking-wide` làm sai lệch tỷ lệ hiển thị chữ toàn cục.
 - Tối ưu Responsive 100% trên thiết bị di động.
 - Mọi trang phải có thẻ `title` và `meta description` phù hợp để tối ưu SEO.
 
