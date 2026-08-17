@@ -29,8 +29,8 @@ Trạng thái các Module tính năng trong dự án dành cho Khách hàng:
 - [ ] Tích hợp Thanh toán.
 
 ## ⏳ Phase 4: Quản Lý Cá Nhân (User Portal)
-- [ ] Modal / Trang thay đổi Thông tin & Mật khẩu.
-- [ ] Trang Lịch sử Đặt phòng (My Bookings).
-- [ ] Chức năng Viết đánh giá sau chuyến đi.
+- [x] Modal / Trang thay đổi Thông tin & Mật khẩu.
+- [x] Trang Lịch sử Đặt phòng (My Bookings).
+- [x] Chức năng Viết đánh giá sau chuyến đi.
 
 *(Được cập nhật liên tục)*

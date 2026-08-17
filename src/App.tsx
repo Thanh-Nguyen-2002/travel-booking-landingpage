@@ -25,6 +25,8 @@ import { PromotionsPage } from './features/pages/PromotionsPage';
 import { LoginPage } from './features/auth/LoginPage';
 import { RegisterPage } from './features/auth/RegisterPage';
 import { CheckoutPage } from './features/booking/CheckoutPage';
+import { ProfilePage } from './features/user/ProfilePage';
+import { BookingsPage } from './features/user/BookingsPage';
 import { ScrollToTop } from './components/common/ScrollToTop';
 import { Toaster } from 'sonner';
 
@@ -49,6 +51,8 @@ function App() {
                         <Route path="login" element={<LoginPage />} />
                         <Route path="register" element={<RegisterPage />} />
                         <Route path="checkout" element={<CheckoutPage />} />
+                        <Route path="profile" element={<ProfilePage />} />
+                        <Route path="bookings" element={<BookingsPage />} />
                         {/* More routes will go here */}
                     </Route>
                 </Routes>
