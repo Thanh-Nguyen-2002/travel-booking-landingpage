@@ -4,6 +4,8 @@ import { CreditCard, User, Mail, Phone, ArrowLeft, ArrowRight } from 'lucide-rea
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/useAuthStore';
 import { useBookingStore } from '../../store/useBookingStore';
+import { useCreateBooking } from './queries/useCreateBooking';
+import type { BookingCreationRequest } from '../../types/booking';
 import { EmptyBooking } from './components/EmptyBooking';
 import { SuccessStep } from './components/SuccessStep';
 import { OrderSummary } from './components/OrderSummary';
@@ -13,21 +15,42 @@ export const CheckoutPage: React.FC = () => {
     const { user, isAuthenticated } = useAuthStore();
     const { bookingInfo, clearBookingInfo } = useBookingStore();
     const [step, setStep] = useState(0);
+    const { mutate: createBooking, isPending } = useCreateBooking();
 
     if (!bookingInfo) {
         return <EmptyBooking />;
     }
 
-    const onFinish = (_values: any) => {
+    const onFinish = (values: any) => {
         if (!isAuthenticated) {
             message.warning('Vui lòng đăng nhập để tiếp tục thanh toán');
             navigate('/login');
             return;
         }
         
-        message.success('Đặt phòng thành công! Cảm ơn bạn đã sử dụng dịch vụ.');
-        clearBookingInfo();
-        setStep(1);
+        const request: BookingCreationRequest = {
+            checkIn: bookingInfo.checkIn || new Date().toISOString().split('T')[0],
+            checkOut: bookingInfo.checkOut || new Date(Date.now() + 86400000).toISOString().split('T')[0],
+            customerName: values.fullName,
+            customerPhone: values.phone,
+            customerEmail: values.email,
+            guests: bookingInfo.guests || 2,
+            items: [{
+                roomId: bookingInfo.roomId,
+                quantity: 1
+            }]
+        };
+        
+        createBooking(request, {
+            onSuccess: () => {
+                message.success('Đặt phòng thành công! Cảm ơn bạn đã sử dụng dịch vụ.');
+                clearBookingInfo();
+                setStep(1);
+            },
+            onError: () => {
+                message.error('Có lỗi xảy ra khi đặt phòng. Vui lòng kiểm tra lại!');
+            }
+        });
     };
 
     if (step === 1) {
@@ -132,9 +155,10 @@ export const CheckoutPage: React.FC = () => {
                                         type="primary" 
                                         htmlType="submit"
                                         size="large"
+                                        loading={isPending}
                                         className="w-full bg-primary-600 hover:!bg-primary-700 h-14 text-lg font-bold rounded-xl shadow-lg shadow-primary-500/30 flex items-center justify-center gap-2"
                                     >
-                                        Xác nhận Đặt phòng <ArrowRight size={20} />
+                                        {isPending ? 'Đang xử lý...' : <>Xác nhận Đặt phòng <ArrowRight size={20} /></>}
                                     </Button>
                                 </div>
                             </Form>

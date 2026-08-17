@@ -1,49 +1,12 @@
 import React, { useState } from 'react';
 import { Tag, Button, Modal, Rate, Input, message } from 'antd';
-import { Calendar, Search, CheckCircle2 } from 'lucide-react';
+import { Calendar, Search } from 'lucide-react';
 
 
-const MOCK_BOOKINGS = [
-    {
-        id: 'BKG-98213',
-        hotelName: 'Vinpearl Resort & Spa Phú Quốc',
-        roomName: 'Deluxe Ocean View',
-        checkIn: '15/09/2026',
-        checkOut: '18/09/2026',
-        guests: 2,
-        price: 4500000,
-        status: 'COMPLETED',
-        coverImage: 'https://images.unsplash.com/photo-1566073171589-236237eff6dd?q=80&w=500',
-        hasReviewed: false
-    },
-    {
-        id: 'BKG-98255',
-        hotelName: 'InterContinental Danang Sun Peninsula',
-        roomName: 'Classic Resort Classic Room',
-        checkIn: '25/12/2026',
-        checkOut: '28/12/2026',
-        guests: 2,
-        price: 12500000,
-        status: 'CONFIRMED',
-        coverImage: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=500',
-        hasReviewed: false
-    },
-    {
-        id: 'BKG-98101',
-        hotelName: 'Muong Thanh Luxury Nha Trang',
-        roomName: 'Executive Suite',
-        checkIn: '01/05/2026',
-        checkOut: '04/05/2026',
-        guests: 4,
-        price: 3200000,
-        status: 'CANCELLED',
-        coverImage: 'https://images.unsplash.com/photo-1522798514-97ceb8c4f1c8?q=80&w=500',
-        hasReviewed: false
-    }
-];
+import { useMyBookings } from './queries/useMyBookings';
 
 export const BookingsPage: React.FC = () => {
-    const [bookings, setBookings] = useState(MOCK_BOOKINGS);
+    const { data: myBookings, isLoading } = useMyBookings();
     const [reviewModalVisible, setReviewModalVisible] = useState(false);
     const [selectedBooking, setSelectedBooking] = useState<any>(null);
     const [rating, setRating] = useState(5);
@@ -63,7 +26,6 @@ export const BookingsPage: React.FC = () => {
         }
         
         message.success('Cảm ơn bạn đã gửi đánh giá!');
-        setBookings(prev => prev.map(b => b.id === selectedBooking.id ? { ...b, hasReviewed: true } : b));
         setReviewModalVisible(false);
     };
 
@@ -88,59 +50,62 @@ export const BookingsPage: React.FC = () => {
                 </div>
 
                 <div className="space-y-6">
-                    {bookings.map((booking) => (
-                        <div key={booking.id} className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 overflow-hidden flex flex-col md:flex-row transition-all hover:shadow-md">
-                            <div className="w-full md:w-72 h-48 md:h-auto shrink-0 relative">
-                                <img src={booking.coverImage} alt={booking.hotelName} className="w-full h-full object-cover" />
-                                <div className="absolute top-3 left-3">
-                                    {getStatusTag(booking.status)}
-                                </div>
-                            </div>
-                            <div className="p-6 flex flex-col grow">
-                                <div className="flex justify-between items-start mb-2">
-                                    <div className="pr-4">
-                                        <h3 className="text-xl font-bold text-slate-800 mb-1 line-clamp-1 hover:text-primary-600 transition-colors cursor-pointer">{booking.hotelName}</h3>
-                                        <div className="text-primary-600 font-medium mb-3">{booking.roomName}</div>
-                                    </div>
-                                    <div className="text-right shrink-0 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100">
-                                        <div className="text-xs text-slate-500 uppercase font-bold tracking-wider mb-0.5">Mã Đặt Chỗ</div>
-                                        <div className="font-bold text-slate-700">{booking.id}</div>
+                    {isLoading ? (
+                        <div className="text-center py-12 text-slate-500 font-medium">Đang tải lịch sử đặt phòng...</div>
+                    ) : !myBookings || myBookings.length === 0 ? (
+                        <div className="text-center py-12 text-slate-500 font-medium bg-white rounded-2xl border border-slate-100">Bạn chưa có chuyến đi nào.</div>
+                    ) : (
+                        myBookings.map((booking) => (
+                            <div key={booking.id} className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 overflow-hidden flex flex-col md:flex-row transition-all hover:shadow-md">
+                                <div className="w-full md:w-72 h-48 md:h-auto shrink-0 relative">
+                                    <img src="https://images.unsplash.com/photo-1566073171589-236237eff6dd?q=80&w=500" alt={booking.packageName || 'Khách sạn'} className="w-full h-full object-cover" />
+                                    <div className="absolute top-3 left-3">
+                                        {getStatusTag(booking.status)}
                                     </div>
                                 </div>
+                                <div className="p-6 flex flex-col grow">
+                                    <div className="flex justify-between items-start mb-2">
+                                        <div className="pr-4">
+                                            <h3 className="text-xl font-bold text-slate-800 mb-1 line-clamp-1 hover:text-primary-600 transition-colors cursor-pointer">{booking.packageName || 'Phòng Khách sạn'}</h3>
+                                            <div className="text-primary-600 font-medium mb-3">{booking.rooms && booking.rooms.length > 0 ? booking.rooms[0].roomName : 'Phòng tiêu chuẩn'}</div>
+                                        </div>
+                                        <div className="text-right shrink-0 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100">
+                                            <div className="text-xs text-slate-500 uppercase font-bold tracking-wider mb-0.5">Mã Đặt Chỗ</div>
+                                            <div className="font-bold text-slate-700">{booking.id.substring(0, 8).toUpperCase()}</div>
+                                        </div>
+                                    </div>
 
-                                <div className="flex flex-wrap gap-8 text-sm text-slate-600 mb-6">
-                                    <div className="flex items-center gap-2">
-                                        <Calendar size={16} className="text-slate-400" />
-                                        <span><span className="font-medium text-slate-800">In:</span> {booking.checkIn}</span>
+                                    <div className="flex flex-wrap gap-8 text-sm text-slate-600 mb-6">
+                                        <div className="flex items-center gap-2">
+                                            <Calendar size={16} className="text-slate-400" />
+                                            <span><span className="font-medium text-slate-800">In:</span> {booking.checkIn}</span>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <Calendar size={16} className="text-slate-400" />
+                                            <span><span className="font-medium text-slate-800">Out:</span> {booking.checkOut}</span>
+                                        </div>
                                     </div>
-                                    <div className="flex items-center gap-2">
-                                        <Calendar size={16} className="text-slate-400" />
-                                        <span><span className="font-medium text-slate-800">Out:</span> {booking.checkOut}</span>
-                                    </div>
-                                </div>
 
-                                <div className="mt-auto pt-4 border-t border-slate-100 flex flex-wrap gap-4 items-center justify-between">
-                                    <div className="text-lg font-bold text-slate-800">
-                                        Tổng tiền: <span className="text-primary-600 ml-1">{booking.price.toLocaleString()}đ</span>
-                                    </div>
-                                    
-                                    <div className="flex items-center gap-3">
-                                        {booking.status === 'COMPLETED' && !booking.hasReviewed && (
-                                            <Button type="primary" onClick={() => handleOpenReview(booking)} className="bg-amber-500 hover:!bg-amber-600 border-none rounded-lg font-semibold shadow-md shadow-amber-500/20 h-10 px-5">
-                                                Viết Đánh Giá
+                                    <div className="mt-auto pt-4 border-t border-slate-100 flex flex-wrap gap-4 items-center justify-between">
+                                        <div className="text-lg font-bold text-slate-800">
+                                            Tổng tiền: <span className="text-primary-600 ml-1">{booking.total.toLocaleString()}đ</span>
+                                        </div>
+                                        
+                                        <div className="flex items-center gap-3">
+                                            {booking.status === 'COMPLETED' && (
+                                                <Button type="primary" onClick={() => handleOpenReview(booking)} className="bg-amber-500 hover:!bg-amber-600 border-none rounded-lg font-semibold shadow-md shadow-amber-500/20 h-10 px-5">
+                                                    Viết Đánh Giá
+                                                </Button>
+                                            )}
+                                            <Button className="rounded-lg h-10 px-5 border-slate-200 font-medium hover:text-primary-600 hover:border-primary-400 shadow-sm">
+                                                Xem chi tiết
                                             </Button>
-                                        )}
-                                        {booking.status === 'COMPLETED' && booking.hasReviewed && (
-                                            <span className="text-emerald-600 font-medium text-sm flex items-center gap-1.5 bg-emerald-50 px-3 py-1.5 rounded-lg"><CheckCircle2 size={16}/> Đã đánh giá</span>
-                                        )}
-                                        <Button className="rounded-lg h-10 px-5 border-slate-200 font-medium hover:text-primary-600 hover:border-primary-400 shadow-sm">
-                                            Xem chi tiết
-                                        </Button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        ))
+                    )}
                 </div>
             </div>
 
@@ -159,10 +124,10 @@ export const BookingsPage: React.FC = () => {
                 {selectedBooking && (
                     <div className="py-4">
                         <div className="flex items-center gap-4 mb-6 p-4 bg-slate-50 rounded-xl border border-slate-100">
-                            <img src={selectedBooking.coverImage} className="w-16 h-16 rounded-lg object-cover shadow-sm" alt="hotel" />
+                            <img src="https://images.unsplash.com/photo-1566073171589-236237eff6dd?q=80&w=500" className="w-16 h-16 rounded-lg object-cover shadow-sm" alt="hotel" />
                             <div>
-                                <h4 className="font-bold text-slate-800 line-clamp-1 mb-1">{selectedBooking.hotelName}</h4>
-                                <div className="text-sm text-primary-600 font-medium">{selectedBooking.roomName}</div>
+                                <h4 className="font-bold text-slate-800 line-clamp-1 mb-1">{selectedBooking.packageName || 'Phòng Khách sạn'}</h4>
+                                <div className="text-sm text-primary-600 font-medium">{selectedBooking.rooms && selectedBooking.rooms.length > 0 ? selectedBooking.rooms[0].roomName : 'Phòng tiêu chuẩn'}</div>
                             </div>
                         </div>
 
