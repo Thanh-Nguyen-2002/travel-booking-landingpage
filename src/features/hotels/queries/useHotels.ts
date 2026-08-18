@@ -7,16 +7,35 @@ export const useHotels = (page = 0, size = 6, search?: string) => {
     return useQuery({
         queryKey: ['hotels', page, size, search],
         queryFn: async () => {
-            const params = new URLSearchParams({
-                page: page.toString(),
-                size: size.toString(),
-                status: 'ACTIVE' // Only fetch active hotels for public landing page
-            });
+            const response = await apiClient.get<any, ApiResponse<HotelResponse[]>>('/hotels');
+            const allHotels = response.data || [];
+
+            // Perform client-side search if search term is provided
+            let filtered = allHotels;
             if (search) {
-                params.append('search', search);
+                const query = search.toLowerCase();
+                filtered = allHotels.filter(h => 
+                    h.name.toLowerCase().includes(query) || 
+                    (h.address && h.address.toLowerCase().includes(query))
+                );
             }
-            const response = await apiClient.get<any, ApiResponse<PageResponse<HotelResponse>>>('/hotels', { params });
-            return response.data; // Because interceptor returns response.data, response is ApiResponse, so response.data is PageResponse
+
+            // Perform client-side pagination
+            const totalElements = filtered.length;
+            const totalPages = Math.ceil(totalElements / size);
+            const startIndex = page * size;
+            const endIndex = startIndex + size;
+            const paginatedData = filtered.slice(startIndex, endIndex);
+
+            const pageResponse: PageResponse<HotelResponse> = {
+                currentPage: page,
+                pageSize: size,
+                totalPages: totalPages,
+                totalElements: totalElements,
+                data: paginatedData
+            };
+
+            return pageResponse;
         },
     });
 };

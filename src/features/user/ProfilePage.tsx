@@ -51,7 +51,7 @@ export const ProfilePage: React.FC = () => {
     const profileTab = (
         <div className="p-6 md:p-8">
             <div className="flex flex-col md:flex-row gap-8 items-start">
-                <div className="w-full md:w-1/3 flex flex-col items-center justify-center p-6 bg-slate-50 rounded-2xl border border-slate-100">
+                <div className="w-full md:w-1/3 flex flex-col items-center justify-center p-6 bg-slate-50 rounded-xl border border-slate-100">
                     <Avatar size={120} src={user.avatar} icon={<User size={60} className="mt-4" />} className="mb-4 bg-primary-100 text-primary-600" />
                     <Upload showUploadList={false}>
                         <Button icon={<UploadIcon size={16} />} className="rounded-xl font-medium">Thay đổi Ảnh đại diện</Button>
@@ -145,7 +145,7 @@ export const ProfilePage: React.FC = () => {
         <div className="bg-slate-50 min-h-screen py-12">
             <div className="container mx-auto px-4 max-w-5xl">
                 <h1 className="text-3xl font-bold text-slate-800 mb-8">Tài khoản của tôi</h1>
-                <div className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 overflow-hidden">
+                <div className="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 overflow-hidden">
                     <Tabs defaultActiveKey="1" items={tabItems} className="custom-profile-tabs px-2 pt-2" />
                 </div>
             </div>

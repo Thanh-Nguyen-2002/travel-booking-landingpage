@@ -7,6 +7,7 @@ import { FallbackImage } from '../../components/common/FallbackImage';
 import { DatePicker, InputNumber, Button, Tabs, Divider } from 'antd';
 import { toast } from 'sonner';
 import dayjs from 'dayjs';
+import { getImageUrls } from '../../utils/image';
 
 export const PackageDetailPage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -38,7 +39,8 @@ export const PackageDetailPage: React.FC = () => {
         );
     }
 
-    const imagesList = pkg.images ? pkg.images.split(',') : ['https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1200'];
+    const imagesList = getImageUrls(pkg.images);
+    const slideImages = imagesList.length > 0 ? imagesList : ['https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1200'];
     const activePrice = pkg.promotionalPrice && pkg.promotionalPrice < pkg.price ? pkg.promotionalPrice : pkg.price;
     const hasPromotion = pkg.promotionalPrice && pkg.promotionalPrice < pkg.price;
 
@@ -61,7 +63,7 @@ export const PackageDetailPage: React.FC = () => {
             checkIn: checkIn,
             checkOut: checkOut,
             guests: guests,
-            coverImage: imagesList[0]
+            coverImage: slideImages[0]
         });
 
         toast.success('Đang chuyển đến trang thanh toán...');
@@ -87,7 +89,7 @@ export const PackageDetailPage: React.FC = () => {
             label: 'Dịch vụ bao gồm',
             children: (
                 <div className="py-4 space-y-4">
-                    <div className="bg-emerald-50/50 border border-emerald-100/50 rounded-2xl p-6">
+                    <div className="bg-emerald-50/50 border border-emerald-100/50 rounded-xl p-6">
                         <h4 className="font-bold text-emerald-800 mb-4 flex items-center gap-2">
                             <span className="w-2 h-2 rounded-full bg-emerald-500"></span> Bao gồm trong chi phí
                         </h4>
@@ -105,7 +107,7 @@ export const PackageDetailPage: React.FC = () => {
             label: 'Không bao gồm',
             children: (
                 <div className="py-4 space-y-4">
-                    <div className="bg-rose-50/50 border border-rose-100/50 rounded-2xl p-6">
+                    <div className="bg-rose-50/50 border border-rose-100/50 rounded-xl p-6">
                         <h4 className="font-bold text-rose-800 mb-4 flex items-center gap-2">
                             <span className="w-2 h-2 rounded-full bg-rose-500"></span> Không bao gồm trong chi phí
                         </h4>
@@ -133,7 +135,7 @@ export const PackageDetailPage: React.FC = () => {
                 {/* Left Column: Details */}
                 <div className="lg:col-span-2 space-y-8">
                     {/* Title & Info Card */}
-                    <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-100 shadow-sm">
+                    <div className="bg-white rounded-xl p-6 md:p-8 border border-slate-100 shadow-sm">
                         <div className="flex flex-wrap items-center gap-2 mb-4">
                             {pkg.destination?.name && (
                                 <span className="inline-flex items-center gap-1 px-3 py-1 bg-primary-50 text-primary-600 text-xs font-bold rounded-lg">
@@ -155,10 +157,10 @@ export const PackageDetailPage: React.FC = () => {
 
                         {/* Image Gallery */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div className="md:col-span-3 h-96 rounded-2xl overflow-hidden shadow-sm">
-                                <FallbackImage src={imagesList[0]} alt={pkg.name} className="w-full h-full object-cover" />
+                            <div className="md:col-span-3 h-96 rounded-xl overflow-hidden shadow-sm">
+                                <FallbackImage src={slideImages[0]} alt={pkg.name} className="w-full h-full object-cover" />
                             </div>
-                            {imagesList.slice(1, 4).map((img, idx) => (
+                            {slideImages.slice(1, 4).map((img, idx) => (
                                 <div key={idx} className="h-32 rounded-xl overflow-hidden shadow-sm">
                                     <FallbackImage src={img} alt={`${pkg.name} ${idx + 2}`} className="w-full h-full object-cover" />
                                 </div>
@@ -167,14 +169,14 @@ export const PackageDetailPage: React.FC = () => {
                     </div>
 
                     {/* Detailed Content Tabs */}
-                    <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-100 shadow-sm">
+                    <div className="bg-white rounded-xl p-6 md:p-8 border border-slate-100 shadow-sm">
                         <Tabs defaultActiveKey="itinerary" items={tabItems} className="custom-tabs" />
                     </div>
                 </div>
 
                 {/* Right Column: Sidebar Booking */}
                 <div className="lg:col-span-1">
-                    <div className="bg-white rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-6 md:p-8 sticky top-24">
+                    <div className="bg-white rounded-xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-6 md:p-8 sticky top-24">
                         <div className="mb-6">
                             <span className="text-xs font-bold text-slate-400 uppercase tracking-widest block mb-1">Giá vé từ</span>
                             <div className="flex items-baseline gap-2">
@@ -221,7 +223,7 @@ export const PackageDetailPage: React.FC = () => {
                         </div>
 
                         {/* Real-time total calculation */}
-                        <div className="bg-slate-50 rounded-2xl p-4 mb-6 border border-slate-100/50">
+                        <div className="bg-slate-50 rounded-xl p-4 mb-6 border border-slate-100/50">
                             <div className="flex justify-between text-sm text-slate-600 mb-2">
                                 <span>Giá vé tạm tính</span>
                                 <span>{activePrice.toLocaleString()}đ x {guests}</span>

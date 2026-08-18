@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useBlogDetail } from './queries/useBlogDetail';
 import { Loader2, Calendar, User, ArrowLeft, BookOpen, Tag } from 'lucide-react';
+import { FallbackImage } from '../../components/common/FallbackImage';
 
 export const BlogDetailPage: React.FC = () => {
     const { idOrSlug } = useParams<{ idOrSlug: string }>();
@@ -31,18 +32,18 @@ export const BlogDetailPage: React.FC = () => {
     return (
         <div className="bg-slate-50 min-h-screen pb-24">
             {/* Header section with back link */}
-            <div className="max-w-4xl mx-auto px-4 pt-8">
+            <div className="max-w-6xl mx-auto px-4 pt-8">
                 <Link to="/blogs" className="inline-flex items-center gap-2 text-slate-500 hover:text-primary-600 font-medium mb-8 transition-colors">
                     <ArrowLeft size={16} /> Quay lại danh sách bài viết
                 </Link>
             </div>
 
-            <article className="max-w-4xl mx-auto px-4">
+            <article className="max-w-6xl mx-auto px-4">
                 {/* Meta details */}
-                <div className="bg-white rounded-3xl p-6 md:p-10 border border-slate-100 shadow-sm overflow-hidden space-y-6">
+                <div className="bg-white rounded-xl p-6 md:p-10 border border-slate-100 shadow-sm overflow-hidden space-y-6">
                     <div className="flex flex-wrap gap-2">
                         {blog.categoryName && (
-                            <span className="px-3 py-1 bg-primary-50 text-primary-600 text-xs font-bold rounded-lg">
+                            <span className="px-3 py-2 bg-primary-50 text-primary-600 text-xs font-bold rounded-[6px]">
                                 {blog.categoryName}
                             </span>
                         )}
@@ -65,10 +66,10 @@ export const BlogDetailPage: React.FC = () => {
 
                     {/* Thumbnail */}
                     {blog.thumbnail && (
-                        <div className="rounded-2xl overflow-hidden h-[400px] shadow-sm">
-                            <img 
-                                src={blog.thumbnail} 
-                                alt={blog.title} 
+                        <div className="rounded-xl overflow-hidden h-[400px] shadow-sm">
+                            <FallbackImage
+                                src={blog.thumbnail}
+                                alt={blog.title}
                                 className="w-full h-full object-cover"
                             />
                         </div>
@@ -76,7 +77,7 @@ export const BlogDetailPage: React.FC = () => {
 
                     {/* Content body */}
                     <div className="prose prose-slate max-w-none prose-lg prose-headings:font-bold prose-a:text-primary-600 pt-4">
-                        <div 
+                        <div
                             className="text-slate-700 leading-relaxed space-y-4 whitespace-pre-line"
                             dangerouslySetInnerHTML={{ __html: blog.content }}
                         />
@@ -87,7 +88,7 @@ export const BlogDetailPage: React.FC = () => {
                         <div className="pt-8 border-t border-slate-100 flex flex-wrap items-center gap-2">
                             <span className="text-sm text-slate-400 font-bold flex items-center gap-1"><Tag size={14} /> Tags:</span>
                             {blog.tags.map((tag) => (
-                                <span key={tag.id} className="px-2.5 py-1 bg-slate-100 text-slate-600 text-xs font-semibold rounded-md">
+                                <span key={tag.id} className="px-3 py-2 bg-slate-100 text-slate-600 text-xs font-semibold rounded-md">
                                     #{tag.name}
                                 </span>
                             ))}

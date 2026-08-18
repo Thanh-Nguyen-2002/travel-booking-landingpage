@@ -58,6 +58,18 @@
     100% { transform: translate(0px, 0px) scale(1); }
 }
 
+@keyframes subtle-zoom {
+    0% {
+        transform: scale(1.02) translate(0px, 0px);
+    }
+    50% {
+        transform: scale(1.08) translate(3px, 2px);
+    }
+    100% {
+        transform: scale(1.02) translate(0px, 0px);
+    }
+}
+
 @layer utilities {
     .animate-blob {
         animation: blob 7s infinite;
@@ -65,5 +77,9 @@
 
     .animation-delay-2000 {
         animation-delay: 2s;
+    }
+
+    .animate-subtle-zoom {
+        animation: subtle-zoom 25s infinite ease-in-out;
     }
 }

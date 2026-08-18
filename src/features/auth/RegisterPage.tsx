@@ -47,7 +47,7 @@ export const RegisterPage: React.FC = () => {
             </div>
 
             {/* Form Container */}
-            <div className="relative z-20 w-full max-w-2xl bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl p-8 md:p-12">
+            <div className="relative z-20 w-full max-w-2xl bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl p-8 md:p-12">
                 <div className="mb-8 text-center mt-2">
                     <h1 className="text-3xl md:text-4xl font-bold text-slate-800 mb-2">Đăng ký tài khoản</h1>
                     <p className="text-slate-500">Điền thông tin bên dưới để tham gia với chúng tôi</p>

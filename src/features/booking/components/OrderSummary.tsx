@@ -28,7 +28,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({ bookingInfo }) => {
         : bookingInfo.price;
 
     return (
-        <div className="sticky top-24 bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 overflow-hidden">
+        <div className="sticky top-24 bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 overflow-hidden">
             <div className="h-48 overflow-hidden relative">
                 <img 
                     src={bookingInfo.coverImage || 'https://images.unsplash.com/photo-1566073171589-236237eff6dd?q=80&w=1000'} 

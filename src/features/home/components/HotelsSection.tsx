@@ -2,6 +2,8 @@ import React from 'react';
 import { Loader2, ArrowRight, Star, MapPin } from 'lucide-react';
 import { useHotels } from '../../hotels/queries/useHotels';
 import { Link } from 'react-router-dom';
+import { FallbackImage } from '../../../components/common/FallbackImage';
+import { getCoverImage } from '../../../utils/image';
 
 export const HotelsSection: React.FC = () => {
     const { data: pageData, isLoading, isError } = useHotels(0, 6);
@@ -38,17 +40,16 @@ export const HotelsSection: React.FC = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {hotels.map((hotel) => {
-                        const images = hotel.images ? hotel.images.split(',') : [];
-                        const coverImage = images.length > 0 ? images[0] : 'https://images.unsplash.com/photo-1566073171589-236237eff6dd?q=80&w=2000';
+                        const coverImage = getCoverImage(hotel.images, 'https://images.unsplash.com/photo-1566073171589-236237eff6dd?q=80&w=2000');
                         
                         return (
                             <Link 
                                 key={hotel.id} 
-                                to={`/hotels/${hotel.slug}`}
+                                to={`/hotels/${hotel.id}`}
                                 className="group block bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 overflow-hidden hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] transition-all duration-300 flex flex-col h-full"
                             >
                                 <div className="relative h-56 overflow-hidden shrink-0">
-                                    <img 
+                                    <FallbackImage 
                                         src={coverImage} 
                                         alt={hotel.name}
                                         className="w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-90"

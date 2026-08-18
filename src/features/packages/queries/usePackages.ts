@@ -8,12 +8,12 @@ export const usePackages = (page = 0, size = 12, search?: string) => {
         queryKey: ['packages', page, size, search],
         queryFn: async () => {
             const params = new URLSearchParams({
-                page: page.toString(),
+                page: (page + 1).toString(),
                 size: size.toString(),
                 status: 'ACTIVE'
             });
             if (search) {
-                params.append('search', search);
+                params.append('keyword', search);
             }
             const response = await apiClient.get<any, ApiResponse<PageResponse<PackageResponse>>>('/packages', { params });
             return response.data;

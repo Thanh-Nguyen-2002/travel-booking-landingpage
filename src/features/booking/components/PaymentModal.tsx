@@ -115,7 +115,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
                             {paymentMethod === 'credit_card' ? (
                                 <div className="space-y-6">
                                     {/* Credit card view */}
-                                    <div className="bg-gradient-to-br from-slate-800 to-slate-950 p-6 rounded-2xl text-white shadow-xl flex flex-col justify-between aspect-[1.58/1] h-48 mx-auto relative overflow-hidden">
+                                    <div className="bg-gradient-to-br from-slate-800 to-slate-950 p-6 rounded-xl text-white shadow-xl flex flex-col justify-between aspect-[1.58/1] h-48 mx-auto relative overflow-hidden">
                                         <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-8 -mt-8 pointer-events-none" />
                                         <div className="flex justify-between items-start">
                                             <div className="text-xs uppercase tracking-wider text-slate-400 font-bold">Thẻ tín dụng</div>
@@ -228,7 +228,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
 
                         {/* Right column: QR Code and Timer (only for QR payments) */}
                         {paymentMethod !== 'credit_card' && (
-                            <div className="md:col-span-5 flex flex-col items-center justify-center p-6 border border-slate-100 rounded-2xl bg-white shadow-sm self-stretch">
+                            <div className="md:col-span-5 flex flex-col items-center justify-center p-6 border border-slate-100 rounded-xl bg-white shadow-sm self-stretch">
                                 <div className="flex items-center gap-1 text-slate-400 text-sm mb-4 font-bold">
                                     <Timer size={16} />
                                     <span>Hết hạn sau:</span>

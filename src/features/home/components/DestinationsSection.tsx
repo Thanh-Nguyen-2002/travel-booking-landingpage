@@ -2,6 +2,7 @@ import React from 'react';
 import { MapPin, Loader2, ArrowRight } from 'lucide-react';
 import { useDestinations } from '../../destinations/queries/useDestinations';
 import { Link } from 'react-router-dom';
+import { FallbackImage } from '../../../components/common/FallbackImage';
 
 export const DestinationsSection: React.FC = () => {
     // Fetch 6 destinations for the home page
@@ -22,7 +23,7 @@ export const DestinationsSection: React.FC = () => {
     const destinations = pageData.data;
 
     return (
-        <section className="py-24 bg-slate-50 relative overflow-hidden">
+        <section className="py-24 bg-white relative overflow-hidden">
             {/* Background Blob */}
             <div className="absolute top-0 right-0 w-96 h-96 bg-primary-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 -translate-y-1/2 translate-x-1/2"></div>
             
@@ -46,7 +47,7 @@ export const DestinationsSection: React.FC = () => {
                         >
                             <div className="relative h-64 overflow-hidden">
                                 {/* Image with overlay instead of scale */}
-                                <img 
+                                <FallbackImage 
                                     src={dest.coverImage || 'https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=2000'} 
                                     alt={dest.name}
                                     className="w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-90"

@@ -4,6 +4,7 @@ import { useDestinations } from './queries/useDestinations';
 import { Link } from 'react-router-dom';
 import { Pagination } from 'antd';
 import { useDebounce } from '../../hooks/useDebounce';
+import { FallbackImage } from '../../components/common/FallbackImage';
 
 export const DestinationsPage: React.FC = () => {
     const [page, setPage] = useState(0);
@@ -64,7 +65,7 @@ export const DestinationsPage: React.FC = () => {
                                     className="group block bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 overflow-hidden hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] transition-all duration-300"
                                 >
                                     <div className="relative h-64 overflow-hidden">
-                                        <img
+                                        <FallbackImage
                                             src={dest.coverImage || 'https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=2000'}
                                             alt={dest.name}
                                             className="w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-90"

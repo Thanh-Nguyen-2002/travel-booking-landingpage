@@ -26,3 +26,6 @@ dist-ssr
 # Skill tracking files
 /skill
 /TODO_BUGS.md
+
+#Test
+/test

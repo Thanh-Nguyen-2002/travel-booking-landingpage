@@ -75,10 +75,10 @@ export const BookingsPage: React.FC = () => {
                     {isLoading ? (
                         <div className="text-center py-12 text-slate-500 font-medium">Đang tải lịch sử đặt phòng...</div>
                     ) : !myBookings || myBookings.length === 0 ? (
-                        <div className="text-center py-12 text-slate-500 font-medium bg-white rounded-2xl border border-slate-100">Bạn chưa có chuyến đi nào.</div>
+                        <div className="text-center py-12 text-slate-500 font-medium bg-white rounded-xl border border-slate-100">Bạn chưa có chuyến đi nào.</div>
                     ) : (
                         myBookings.map((booking) => (
-                            <div key={booking.id} className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 overflow-hidden flex flex-col md:flex-row transition-all hover:shadow-md">
+                            <div key={booking.id} className="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 overflow-hidden flex flex-col md:flex-row transition-all hover:shadow-md">
                                 <div className="w-full md:w-72 h-48 md:h-auto shrink-0 relative">
                                     <img src="https://images.unsplash.com/photo-1566073171589-236237eff6dd?q=80&w=500" alt={booking.packageName || 'Khách sạn'} className="w-full h-full object-cover" />
                                     <div className="absolute top-3 left-3">

@@ -2,18 +2,19 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Star, MapPin } from 'lucide-react';
 import type { HotelResponse } from '../../../types/hotel';
+import { FallbackImage } from '../../../components/common/FallbackImage';
+import { getCoverImage } from '../../../utils/image';
 
 interface HotelGalleryProps {
     hotel: HotelResponse;
 }
 
 export const HotelGallery: React.FC<HotelGalleryProps> = ({ hotel }) => {
-    const images = hotel.images ? hotel.images.split(',') : [];
-    const coverImage = images.length > 0 ? images[0] : 'https://images.unsplash.com/photo-1566073171589-236237eff6dd?q=80&w=2000';
+    const coverImage = getCoverImage(hotel.images, 'https://images.unsplash.com/photo-1566073171589-236237eff6dd?q=80&w=2000');
 
     return (
         <div className="relative h-[60vh] min-h-[400px] w-full">
-            <img src={coverImage} alt={hotel.name} className="w-full h-full object-cover" />
+            <FallbackImage src={coverImage} alt={hotel.name} className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-slate-900/30"></div>
             
             <div className="absolute top-8 left-8">

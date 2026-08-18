@@ -33,7 +33,7 @@ export const ContactPage: React.FC = () => {
 
             <div className="container mx-auto px-4 mt-[-60px] relative z-20">
                 <div className="max-w-6xl mx-auto">
-                    <div className="bg-white rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] p-2 md:p-3 overflow-hidden border border-slate-100">
+                    <div className="bg-white rounded-xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] p-2 md:p-3 overflow-hidden border border-slate-100">
                         <div className="grid md:grid-cols-5 gap-0 md:gap-4 h-full">
                             {/* Info Column (Dark/Primary Gradient) */}
                             <div className="md:col-span-2 relative bg-gradient-to-br from-primary-600 via-primary-700 to-primary-900 p-10 rounded-xl text-white overflow-hidden shadow-inner">

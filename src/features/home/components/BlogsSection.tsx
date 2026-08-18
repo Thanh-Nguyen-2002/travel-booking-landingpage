@@ -2,6 +2,7 @@ import React from 'react';
 import { Loader2, ArrowRight, Calendar, User } from 'lucide-react';
 import { useBlogs } from '../../blogs/queries/useBlogs';
 import { Link } from 'react-router-dom';
+import { FallbackImage } from '../../../components/common/FallbackImage';
 
 export const BlogsSection: React.FC = () => {
     // Fetch 3 latest blogs for the home page
@@ -22,7 +23,7 @@ export const BlogsSection: React.FC = () => {
     const blogs = pageData.data;
 
     return (
-        <section className="py-24 bg-slate-50 relative overflow-hidden">
+        <section className="py-24 bg-white relative overflow-hidden">
             {/* Background Blob */}
             <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 translate-y-1/2 -translate-x-1/2"></div>
             
@@ -45,7 +46,7 @@ export const BlogsSection: React.FC = () => {
                             className="group flex flex-col bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 overflow-hidden hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] transition-all duration-300 h-full"
                         >
                             <div className="relative h-56 overflow-hidden shrink-0">
-                                <img 
+                                <FallbackImage 
                                     src={blog.thumbnail || 'https://images.unsplash.com/photo-1488085061387-422e29b40080?q=80&w=2000'} 
                                     alt={blog.title}
                                     className="w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-90"

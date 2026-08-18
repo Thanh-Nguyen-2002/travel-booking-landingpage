@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Phone, User, Search } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { Phone, User } from 'lucide-react';
 import { Dropdown, Avatar } from 'antd';
 import { useSettings } from '../../hooks/useSettings';
 import { useScroll } from '../../hooks/useScroll';
@@ -10,17 +10,32 @@ export const Header: React.FC = () => {
     const { data: settings } = useSettings();
     const { isScrolled } = useScroll(20);
     const { user, isAuthenticated, logout } = useAuthStore();
+    const location = useLocation();
 
     const phone = settings?.hotline || '1900 1234';
     const email = settings?.contactEmail || 'contact@travelbooking.com';
     const siteName = settings?.siteName || 'Travel Booking';
     const logoUrl = settings?.logoUrl;
 
+    const isActive = (path: string) => {
+        if (path === '/') {
+            return location.pathname === '/';
+        }
+        return location.pathname.startsWith(path);
+    };
+
+    const getLinkClass = (path: string) => {
+        return `font-semibold text-sm transition-all duration-200 relative pb-1.5 ${isActive(path)
+            ? 'text-primary-600 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-primary-600'
+            : 'text-slate-600 hover:text-primary-600'
+            }`;
+    };
+
     return (
-        <header className={`bg-white sticky top-0 z-50 transition-shadow duration-300 ${isScrolled ? 'shadow-md border-transparent' : 'shadow-sm border-b border-slate-100'}`}>
+        <header className={`bg-white sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'shadow-md border-transparent' : 'shadow-sm border-b border-slate-100'}`}>
             {/* Top Bar */}
             <div className="bg-primary-500 text-white py-2 text-sm">
-                <div className="container mx-auto px-4 flex justify-between items-center">
+                <div className="max-w-6xl mx-auto px-4 flex justify-between items-center">
                     <div className="flex space-x-6">
                         <span className="flex items-center gap-2">
                             <Phone size={14} /> {phone}
@@ -58,7 +73,7 @@ export const Header: React.FC = () => {
             </div>
 
             {/* Main Navigation */}
-            <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
                 <Link to="/" className="flex items-center gap-2">
                     {logoUrl ? (
                         <img src={logoUrl} alt={siteName} className="h-10 w-auto object-contain" />
@@ -71,19 +86,15 @@ export const Header: React.FC = () => {
                 </Link>
 
                 <nav className="hidden md:flex space-x-8">
-                    <Link to="/destinations" className="text-slate-600 hover:text-primary-500 font-medium transition-colors">Điểm đến</Link>
-                    <Link to="/hotels" className="text-slate-600 hover:text-primary-500 font-medium transition-colors">Khách sạn</Link>
-                    <Link to="/packages" className="text-slate-600 hover:text-primary-500 font-medium transition-colors">Tour du lịch</Link>
-                    <Link to="/about" className="text-slate-600 hover:text-primary-500 font-medium transition-colors">Về chúng tôi</Link>
-                    <Link to="/contact" className="text-slate-600 hover:text-primary-500 font-medium transition-colors">Liên hệ</Link>
+                    <Link to="/" className={getLinkClass('/')}>Trang chủ</Link>
+                    <Link to="/destinations" className={getLinkClass('/destinations')}>Điểm đến</Link>
+                    <Link to="/hotels" className={getLinkClass('/hotels')}>Khách sạn</Link>
+                    <Link to="/packages" className={getLinkClass('/packages')}>Tour du lịch</Link>
+                    <Link to="/promotions" className={getLinkClass('/promotions')}>Khuyến mãi</Link>
+                    <Link to="/blogs" className={getLinkClass('/blogs')}>Cẩm nang</Link>
+                    <Link to="/about" className={getLinkClass('/about')}>Về chúng tôi</Link>
+                    <Link to="/contact" className={getLinkClass('/contact')}>Liên hệ</Link>
                 </nav>
-
-                <div className="flex items-center gap-4">
-                    <button className="p-2 text-slate-600 hover:text-primary-500 hover:bg-slate-50 rounded-full transition-colors">
-                        <Search size={20} />
-                    </button>
-                    {/* Mobile menu button could go here */}
-                </div>
             </div>
         </header>
     );

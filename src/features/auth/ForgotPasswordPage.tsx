@@ -68,11 +68,11 @@ export const ForgotPasswordPage: React.FC = () => {
             </div>
 
             {/* Form Container */}
-            <div className="relative z-20 w-full max-w-md bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl p-8 md:p-10">
+            <div className="relative z-20 w-full max-w-md bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl p-8 md:p-10">
                 {step === 0 ? (
                     <div>
                         <div className="mb-8 mt-2 justify-center items-center flex flex-col text-center">
-                            <div className="w-16 h-16 bg-primary-50 rounded-2xl flex items-center justify-center mb-4 text-primary-600">
+                            <div className="w-16 h-16 bg-primary-50 rounded-xl flex items-center justify-center mb-4 text-primary-600">
                                 <ShieldAlert size={32} />
                             </div>
                             <h1 className="text-3xl font-bold text-slate-800 mb-2">Quên mật khẩu?</h1>
@@ -112,7 +112,7 @@ export const ForgotPasswordPage: React.FC = () => {
                 ) : (
                     <div>
                         <div className="mb-8 mt-2 justify-center items-center flex flex-col text-center">
-                            <div className="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center mb-4 text-emerald-600">
+                            <div className="w-16 h-16 bg-emerald-50 rounded-xl flex items-center justify-center mb-4 text-emerald-600">
                                 <CheckCircle2 size={32} />
                             </div>
                             <h1 className="text-3xl font-bold text-slate-800 mb-2">Đặt lại mật khẩu</h1>

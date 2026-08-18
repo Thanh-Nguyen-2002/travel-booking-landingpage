@@ -3,10 +3,11 @@ import { useBlogs } from './queries/useBlogs';
 import { Link } from 'react-router-dom';
 import { Loader2, Calendar, User, Search, BookOpen, ArrowRight } from 'lucide-react';
 import { Input, Pagination } from 'antd';
+import { FallbackImage } from '../../components/common/FallbackImage';
 
 export const BlogsPage: React.FC = () => {
     const [search, setSearch] = useState('');
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     const pageSize = 9;
 
     const { data: pageData, isLoading, isError } = useBlogs(page, pageSize, search);
@@ -29,14 +30,14 @@ export const BlogsPage: React.FC = () => {
 
             <div className="max-w-6xl mx-auto px-4">
                 {/* Search Bar */}
-                <div className="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 mb-10 flex flex-col md:flex-row gap-4 items-center justify-between">
+                <div className="bg-white rounded-xl p-5 shadow-sm border border-slate-100 mb-10 flex flex-col md:flex-row gap-4 items-center justify-between">
                     <div className="w-full md:w-1/3">
                         <Input
                             size="large"
                             placeholder="Tìm kiếm bài viết..."
                             prefix={<Search className="text-slate-400 mr-2" size={18} />}
                             value={search}
-                            onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+                            onChange={(e) => { setSearch(e.target.value); setPage(0); }}
                             className="rounded-xl py-2.5"
                         />
                     </div>
@@ -51,13 +52,13 @@ export const BlogsPage: React.FC = () => {
                         <Loader2 className="w-12 h-12 animate-spin text-primary-600" />
                     </div>
                 ) : isError ? (
-                    <div className="text-center py-24 bg-white rounded-2xl border border-slate-100">
+                    <div className="text-center py-24 bg-white rounded-xl border border-slate-100">
                         <BookOpen className="w-16 h-16 text-slate-300 mx-auto mb-4" />
                         <h3 className="text-xl font-bold text-slate-800 mb-2">Đã xảy ra lỗi</h3>
                         <p className="text-slate-500">Vui lòng quay lại sau.</p>
                     </div>
                 ) : blogs.length === 0 ? (
-                    <div className="text-center py-24 bg-white rounded-2xl border border-slate-100">
+                    <div className="text-center py-24 bg-white rounded-xl border border-slate-100">
                         <BookOpen className="w-16 h-16 text-slate-300 mx-auto mb-4" />
                         <h3 className="text-xl font-bold text-slate-800 mb-2">Không tìm thấy bài viết</h3>
                         <p className="text-slate-500">Vui lòng thay đổi từ khóa tìm kiếm.</p>
@@ -69,10 +70,10 @@ export const BlogsPage: React.FC = () => {
                                 <Link
                                     key={blog.id}
                                     to={`/blogs/${blog.slug || blog.id}`}
-                                    className="group flex flex-col bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 h-full"
+                                    className="group flex flex-col bg-white rounded-xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 h-full"
                                 >
                                     <div className="relative h-52 overflow-hidden shrink-0">
-                                        <img
+                                        <FallbackImage
                                             src={blog.thumbnail || 'https://images.unsplash.com/photo-1488085061387-422e29b40080?q=80&w=1000'}
                                             alt={blog.title}
                                             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -112,10 +113,10 @@ export const BlogsPage: React.FC = () => {
                         {totalElements > pageSize && (
                             <div className="mt-12 flex justify-center">
                                 <Pagination
-                                    current={page}
+                                    current={page + 1}
                                     total={totalElements}
                                     pageSize={pageSize}
-                                    onChange={(p) => setPage(p)}
+                                    onChange={(p) => setPage(p - 1)}
                                     showSizeChanger={false}
                                 />
                             </div>

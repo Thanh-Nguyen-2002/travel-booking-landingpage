@@ -111,7 +111,7 @@ export const CheckoutPage: React.FC = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     {/* Left Column: Form */}
                     <div className="lg:col-span-2">
-                        <div className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 p-8">
+                        <div className="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 p-8">
                             <h2 className="text-2xl font-bold text-slate-800 mb-6">Thông tin liên hệ</h2>
                             
                             {!isAuthenticated && (

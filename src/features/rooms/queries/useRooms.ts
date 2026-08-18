@@ -8,7 +8,7 @@ export const useRooms = (hotelId: string | undefined) => {
         queryKey: ['rooms', hotelId],
         queryFn: async () => {
             if (!hotelId) throw new Error('Hotel ID is required');
-            const response = await apiClient.get<any, ApiResponse<RoomResponse[]>>('/rooms', { params: { hotelId } });
+            const response = await apiClient.get<any, ApiResponse<RoomResponse[]>>(`/hotels/${hotelId}/rooms`);
             return response.data;
         },
         enabled: !!hotelId,

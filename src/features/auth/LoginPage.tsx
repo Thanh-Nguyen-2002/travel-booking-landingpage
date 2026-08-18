@@ -49,7 +49,7 @@ export const LoginPage: React.FC = () => {
             </div>
 
             {/* Form Container */}
-            <div className="relative z-20 w-full max-w-md bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl p-8 md:p-10">
+            <div className="relative z-20 w-full max-w-md bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl p-8 md:p-10">
                 <div className="mb-8 mt-2 justify-center items-center flex flex-col">
                     <h1 className="text-3xl md:text-4xl font-bold text-slate-800 mb-2">Chào mừng trở lại</h1>
                     <p className="text-slate-500">Vui lòng đăng nhập để tiếp tục trải nghiệm</p>
