@@ -32,7 +32,7 @@ export const CheckoutPage: React.FC = () => {
             navigate('/login');
             return;
         }
-        
+
         const request: BookingCreationRequest = {
             checkIn: bookingInfo.checkIn || new Date().toISOString().split('T')[0],
             checkOut: bookingInfo.checkOut || new Date(Date.now() + 86400000).toISOString().split('T')[0],
@@ -50,7 +50,7 @@ export const CheckoutPage: React.FC = () => {
                 quantity: 1
             }];
         }
-        
+
         const method = values.paymentMethod || 'credit_card';
         setSelectedMethod(method);
 
@@ -85,7 +85,7 @@ export const CheckoutPage: React.FC = () => {
 
     return (
         <div className="bg-slate-50 min-h-screen pb-24 pt-12">
-            <div className="container mx-auto px-4 max-w-5xl">
+            <div className="container mx-auto px-4 max-w-6xl">
                 <div className="flex items-center gap-2 text-slate-500 mb-8">
                     {bookingInfo.type === 'package' ? (
                         <Link to={`/packages/${bookingInfo.packageId}`} className="hover:text-primary-600 flex items-center gap-1">
@@ -113,7 +113,7 @@ export const CheckoutPage: React.FC = () => {
                     <div className="lg:col-span-2">
                         <div className="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 p-8">
                             <h2 className="text-2xl font-bold text-slate-800 mb-6">Thông tin liên hệ</h2>
-                            
+
                             {!isAuthenticated && (
                                 <div className="bg-primary-50 text-primary-700 p-4 rounded-xl mb-8 flex items-center justify-between border border-primary-100">
                                     <div className="flex items-center gap-3">
@@ -126,9 +126,9 @@ export const CheckoutPage: React.FC = () => {
                                 </div>
                             )}
 
-                            <Form 
-                                layout="vertical" 
-                                onFinish={onFinish} 
+                            <Form
+                                layout="vertical"
+                                onFinish={onFinish}
                                 initialValues={{
                                     fullName: user?.fullName,
                                     email: user?.email,
@@ -137,23 +137,23 @@ export const CheckoutPage: React.FC = () => {
                                 requiredMark={false}
                             >
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <Form.Item 
+                                    <Form.Item
                                         label={<span className="font-medium text-slate-700">Họ và Tên</span>}
                                         name="fullName"
                                         rules={[{ required: true, message: 'Vui lòng nhập họ tên' }]}
                                     >
                                         <Input size="large" prefix={<User className="text-slate-400 mr-2" size={18} />} className="rounded-xl border-slate-200" />
                                     </Form.Item>
-                                    
-                                    <Form.Item 
+
+                                    <Form.Item
                                         label={<span className="font-medium text-slate-700">Email</span>}
                                         name="email"
                                         rules={[{ required: true, type: 'email', message: 'Vui lòng nhập email hợp lệ' }]}
                                     >
                                         <Input size="large" prefix={<Mail className="text-slate-400 mr-2" size={18} />} className="rounded-xl border-slate-200" />
                                     </Form.Item>
-                                    
-                                    <Form.Item 
+
+                                    <Form.Item
                                         label={<span className="font-medium text-slate-700">Số điện thoại</span>}
                                         name="phone"
                                         rules={[{ required: true, message: 'Vui lòng nhập số điện thoại' }]}
@@ -183,14 +183,18 @@ export const CheckoutPage: React.FC = () => {
                                 </Form.Item>
 
                                 <div className="mt-8">
-                                    <Button 
-                                        type="primary" 
+                                    <Button
+                                        type="primary"
                                         htmlType="submit"
                                         size="large"
                                         loading={isPending}
-                                        className="w-full bg-primary-600 hover:!bg-primary-700 h-14 text-lg font-bold rounded-xl shadow-lg shadow-primary-500/30 flex items-center justify-center gap-2"
+                                        className="w-full !bg-primary-600 hover:!bg-primary-700 h-14 text-lg font-bold rounded-xl shadow-lg shadow-primary-500/30"
                                     >
-                                        {isPending ? 'Đang xử lý...' : <>Xác nhận Đặt phòng <ArrowRight size={20} /></>}
+                                        {isPending ? 'Đang xử lý...' : (
+                                            <span className="flex items-center justify-center gap-2">
+                                                Xác nhận Đặt phòng <ArrowRight size={16} />
+                                            </span>
+                                        )}
                                     </Button>
                                 </div>
                             </Form>

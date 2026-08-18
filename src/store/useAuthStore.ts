@@ -4,7 +4,8 @@ import type { User, LoginResponse } from '../types/auth';
 
 interface AuthState {
     user: User | null;
-    token: string | null;
+    accessToken: string | null;
+    refreshToken: string | null;
     isAuthenticated: boolean;
     login: (data: LoginResponse) => void;
     logout: () => void;
@@ -15,15 +16,18 @@ export const useAuthStore = create<AuthState>()(
     persist(
         (set) => ({
             user: null,
-            token: null,
+            accessToken: null,
+            refreshToken: null,
             isAuthenticated: false,
             login: (data) => {
-                localStorage.setItem('token', data.token);
-                set({ user: data.user, token: data.token, isAuthenticated: true });
+                localStorage.setItem('token', data.accessToken);
+                localStorage.setItem('refreshToken', data.refreshToken);
+                set({ user: data.user, accessToken: data.accessToken, refreshToken: data.refreshToken, isAuthenticated: true });
             },
             logout: () => {
                 localStorage.removeItem('token');
-                set({ user: null, token: null, isAuthenticated: false });
+                localStorage.removeItem('refreshToken');
+                set({ user: null, accessToken: null, refreshToken: null, isAuthenticated: false });
             },
             updateUser: (updatedData) => 
                 set((state) => ({ 

@@ -27,6 +27,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
         if (!open) return;
 
         // Reset state
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setTimeLeft(300);
         setPaymentStatus('pending');
 

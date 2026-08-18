@@ -3,7 +3,6 @@ import { Tag, Button, Modal, Rate, Input } from 'antd';
 import { toast } from 'sonner';
 import { Calendar, Search } from 'lucide-react';
 
-
 import { useMyBookings } from './queries/useMyBookings';
 import { useCreateReview } from './queries/useCreateReview';
 
@@ -80,7 +79,7 @@ export const BookingsPage: React.FC = () => {
                         myBookings.map((booking) => (
                             <div key={booking.id} className="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 overflow-hidden flex flex-col md:flex-row transition-all hover:shadow-md">
                                 <div className="w-full md:w-72 h-48 md:h-auto shrink-0 relative">
-                                    <img src="https://images.unsplash.com/photo-1566073171589-236237eff6dd?q=80&w=500" alt={booking.packageName || 'Khách sạn'} className="w-full h-full object-cover" />
+                                    {/* <img src={getBookingImage(booking)} alt={booking.packageName || 'Khách sạn'} className="w-full h-full object-cover" /> */}
                                     <div className="absolute top-3 left-3">
                                         {getStatusTag(booking.status)}
                                     </div>
@@ -112,7 +111,7 @@ export const BookingsPage: React.FC = () => {
                                         <div className="text-lg font-bold text-slate-800">
                                             Tổng tiền: <span className="text-primary-600 ml-1">{booking.total.toLocaleString()}đ</span>
                                         </div>
-                                        
+
                                         <div className="flex items-center gap-3">
                                             {booking.status === 'COMPLETED' && (
                                                 <Button type="primary" onClick={() => handleOpenReview(booking)} className="bg-amber-500 hover:!bg-amber-600 border-none rounded-lg font-semibold shadow-md shadow-amber-500/20 h-10 px-5">
@@ -146,7 +145,7 @@ export const BookingsPage: React.FC = () => {
                 {selectedBooking && (
                     <div className="py-4">
                         <div className="flex items-center gap-4 mb-6 p-4 bg-slate-50 rounded-xl border border-slate-100">
-                            <img src="https://images.unsplash.com/photo-1566073171589-236237eff6dd?q=80&w=500" className="w-16 h-16 rounded-lg object-cover shadow-sm" alt="hotel" />
+                            {/* <img src={getBookingImage(selectedBooking)} className="w-16 h-16 rounded-lg object-cover shadow-sm" alt="hotel" /> */}
                             <div>
                                 <h4 className="font-bold text-slate-800 line-clamp-1 mb-1">{selectedBooking.packageName || 'Phòng Khách sạn'}</h4>
                                 <div className="text-sm text-primary-600 font-medium">{selectedBooking.rooms && selectedBooking.rooms.length > 0 ? selectedBooking.rooms[0].roomName : 'Phòng tiêu chuẩn'}</div>
@@ -160,10 +159,10 @@ export const BookingsPage: React.FC = () => {
 
                         <div className="mb-2">
                             <div className="text-slate-700 mb-2 font-medium">Chia sẻ thêm (Tùy chọn)</div>
-                            <Input.TextArea 
-                                rows={4} 
-                                value={comment} 
-                                onChange={e => setComment(e.target.value)} 
+                            <Input.TextArea
+                                rows={4}
+                                value={comment}
+                                onChange={e => setComment(e.target.value)}
                                 placeholder="Hãy mô tả trải nghiệm của bạn (phòng ốc, dịch vụ, vị trí...)"
                                 className="rounded-xl border-slate-200 hover:border-primary-400 focus:border-primary-500 text-base py-3"
                             />
