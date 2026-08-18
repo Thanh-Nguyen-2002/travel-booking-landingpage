@@ -31,7 +31,7 @@ export const HotelsPage: React.FC = () => {
 
             <div className="max-w-6xl mx-auto px-4 -mt-8 relative z-20">
                 {/* Search Bar */}
-                <div className="bg-white/95 backdrop-blur-md rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 p-4 mb-12 max-w-2xl mx-auto flex items-center gap-3">
+                <div className="bg-white/95 backdrop-blur-md rounded-lg shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 p-4 mb-12 max-w-2xl mx-auto flex items-center gap-3">
                     <Search className="text-slate-400 shrink-0 ml-2" size={20} />
                     <input
                         type="text"
@@ -65,7 +65,7 @@ export const HotelsPage: React.FC = () => {
                                     <Link
                                         key={hotel.id}
                                         to={`/hotels/${hotel.id}`}
-                                        className="group block bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 overflow-hidden hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] transition-all duration-300 flex flex-col h-full"
+                                        className="group block bg-white rounded-lg shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 overflow-hidden hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] transition-all duration-300 flex flex-col h-full"
                                     >
                                         <div className="relative h-56 overflow-hidden shrink-0">
                                             <FallbackImage
@@ -75,7 +75,7 @@ export const HotelsPage: React.FC = () => {
                                             />
                                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-60 group-hover:opacity-70 transition-opacity duration-300"></div>
 
-                                            <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-lg flex items-center gap-1 shadow-sm">
+                                            <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-[6px] flex items-center gap-1 shadow-sm">
                                                 <Star size={14} className="text-amber-500 fill-amber-500" />
                                                 <span className="font-bold text-slate-800 text-sm">{hotel.rating || 5.0}</span>
                                             </div>

@@ -35,7 +35,7 @@ export const RoomList: React.FC<RoomListProps> = ({ hotel, roomsData, isLoadingR
                         const roomCover = getCoverImage(room.images, 'https://images.unsplash.com/photo-1598928506311-c55dd71360fa?q=80&w=1000');
 
                         return (
-                            <div key={room.id} className="flex flex-col md:flex-row border border-slate-200 rounded-xl overflow-hidden hover:border-primary-300 transition-colors shadow-sm hover:shadow-md">
+                            <div key={room.id} className="flex flex-col md:flex-row border border-slate-200 rounded-lg overflow-hidden hover:border-primary-300 transition-colors shadow-sm hover:shadow-md">
                                 <div className="w-full md:w-1/3 h-48 md:h-auto shrink-0">
                                     <FallbackImage src={roomCover} alt={room.name} className="w-full h-full object-cover" />
                                 </div>

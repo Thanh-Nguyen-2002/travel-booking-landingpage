@@ -6,7 +6,7 @@ export const PromotionsPage: React.FC = () => {
     const { data: promotions, isLoading, isError } = usePromotions();
 
     const renderPromoCard = (promo: Promotion) => (
-        <div key={promo.id} className="group bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 overflow-hidden hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] transition-all duration-300 flex flex-col h-full">
+        <div key={promo.id} className="group bg-white rounded-lg shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 overflow-hidden hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] transition-all duration-300 flex flex-col h-full">
             <div className="h-48 bg-gradient-to-br from-primary-100 to-primary-50 relative overflow-hidden shrink-0">
                 <div className="absolute -right-8 -top-8 w-32 h-32 bg-primary-200 rounded-full mix-blend-multiply filter blur-2xl opacity-50 group-hover:opacity-80 transition-opacity duration-700"></div>
                 <div className="absolute -left-8 -bottom-8 w-32 h-32 bg-amber-200 rounded-full mix-blend-multiply filter blur-2xl opacity-50 group-hover:opacity-80 transition-opacity duration-700"></div>
@@ -29,7 +29,7 @@ export const PromotionsPage: React.FC = () => {
                     <Calendar size={18} className="text-primary-500" />
                     Áp dụng đến: <span className="text-slate-700">{promo.endDate ? new Date(promo.endDate).toLocaleDateString('vi-VN') : 'Không thời hạn'}</span>
                 </div>
-                <button className="w-full mt-auto bg-gradient-to-r from-primary-50 to-slate-50 text-primary-600 hover:from-primary-500 hover:to-primary-600 hover:text-white font-semibold py-3.5 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md">
+                <button className="w-full mt-auto hover:cursor-pointer bg-gradient-to-r from-primary-50 to-slate-50 text-primary-600 hover:from-primary-500 hover:to-primary-600 hover:text-white font-semibold py-3.5 rounded-lg transition-all duration-300 shadow-sm hover:shadow-md">
                     Sử dụng mã {promo.code}
                 </button>
             </div>
@@ -60,7 +60,7 @@ export const PromotionsPage: React.FC = () => {
                             <p className="text-slate-500 text-lg">Đang tải danh sách khuyến mãi...</p>
                         </div>
                     ) : isError ? (
-                        <div className="backdrop-blur-md bg-white/95 p-16 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 flex flex-col items-center justify-center text-red-500 min-h-[400px]">
+                        <div className="backdrop-blur-md bg-white/95 p-16 rounded-lg shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 flex flex-col items-center justify-center text-red-500 min-h-[400px]">
                             <div className="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center mb-6">
                                 <AlertCircle size={40} className="text-red-500" />
                             </div>

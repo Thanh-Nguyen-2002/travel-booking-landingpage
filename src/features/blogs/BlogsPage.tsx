@@ -70,7 +70,7 @@ export const BlogsPage: React.FC = () => {
                                 <Link
                                     key={blog.id}
                                     to={`/blogs/${blog.slug || blog.id}`}
-                                    className="group flex flex-col bg-white rounded-xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 h-full"
+                                    className="group flex flex-col bg-white rounded-lg overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 h-full"
                                 >
                                     <div className="relative h-52 overflow-hidden shrink-0">
                                         <FallbackImage
@@ -81,7 +81,7 @@ export const BlogsPage: React.FC = () => {
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60"></div>
                                         {blog.categoryName && (
                                             <div className="absolute top-4 left-4">
-                                                <span className="px-3 py-1 bg-white/95 backdrop-blur-md text-primary-600 text-xs font-bold rounded-lg shadow-sm">
+                                                <span className="px-3 py-2 bg-white/95 backdrop-blur-md text-primary-600 text-xs font-bold rounded-[6px] shadow-sm">
                                                     {blog.categoryName}
                                                 </span>
                                             </div>

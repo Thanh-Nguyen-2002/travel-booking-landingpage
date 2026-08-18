@@ -27,7 +27,7 @@ export const PackagesSection: React.FC = () => {
         <section className="py-24 relative overflow-hidden bg-white">
             {/* Background decorative elements */}
             <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-primary-100/40 rounded-full mix-blend-multiply filter blur-3xl opacity-50 -translate-x-1/2"></div>
-            
+
             <div className="container mx-auto px-4 relative z-10 max-w-6xl">
                 <div className="flex justify-between items-end mb-12">
                     <div>
@@ -45,43 +45,43 @@ export const PackagesSection: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {packages.map((pkg) => {
                         const coverImage = getCoverImage(pkg.images, 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2000');
-                        
+
                         const hasPromo = pkg.promotionalPrice && pkg.promotionalPrice < pkg.price;
-                        const discountPercent = hasPromo 
-                            ? Math.round(((pkg.price - pkg.promotionalPrice!) / pkg.price) * 100) 
+                        const discountPercent = hasPromo
+                            ? Math.round(((pkg.price - pkg.promotionalPrice!) / pkg.price) * 100)
                             : 0;
 
                         return (
-                            <Link 
-                                key={pkg.id} 
+                            <Link
+                                key={pkg.id}
                                 to={`/packages/${pkg.id}`}
-                                className="group bg-white rounded-xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.03)] border border-slate-100 hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col h-full"
+                                className="group bg-white rounded-lg overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.03)] border border-slate-100 hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-300 flex flex-col h-full"
                             >
                                 {/* Image Area */}
                                 <div className="relative h-56 overflow-hidden shrink-0">
-                                    <FallbackImage 
-                                        src={coverImage} 
-                                        alt={pkg.name} 
+                                    <FallbackImage
+                                        src={coverImage}
+                                        alt={pkg.name}
                                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                                     />
-                                    
+
                                     {/* Destination Badge */}
                                     {pkg.destination?.name && (
-                                        <div className="absolute top-4 left-4 bg-slate-900/80 backdrop-blur-md text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">
+                                        <div className="absolute top-4 left-4 bg-slate-900/80 backdrop-blur-md text-white text-xs font-bold px-3 py-2 rounded-[6px] uppercase tracking-wider">
                                             {pkg.destination.name}
                                         </div>
                                     )}
 
                                     {/* Discount Badge */}
                                     {hasPromo && (
-                                        <div className="absolute top-4 right-4 bg-red-500 text-white text-xs font-extrabold px-2.5 py-1.5 rounded-lg flex items-center gap-1 shadow-md">
+                                        <div className="absolute top-4 right-4 bg-red-500 text-white text-xs font-extrabold px-3.5 py-2 rounded-[6px] flex items-center gap-1 shadow-md">
                                             <Tag size={12} className="fill-white" />
                                             Giảm {discountPercent}%
                                         </div>
                                     )}
 
                                     {/* Duration Badge */}
-                                    <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm text-slate-800 text-xs font-semibold px-2.5 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm">
+                                    <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm text-slate-800 text-xs font-semibold px-2.5 py-2 rounded-[6px] flex items-center gap-1.5 shadow-sm">
                                         <Clock size={13} className="text-primary-500" />
                                         {pkg.duration || 'Liên hệ'}
                                     </div>
@@ -92,7 +92,7 @@ export const PackagesSection: React.FC = () => {
                                     <h3 className="text-xl font-bold text-slate-800 group-hover:text-primary-600 transition-colors duration-300 line-clamp-2 mb-3">
                                         {pkg.name}
                                     </h3>
-                                    
+
                                     <p className="text-slate-500 text-sm line-clamp-2 leading-relaxed mb-6">
                                         {pkg.description || 'Hành trình khám phá tuyệt vời đang chờ đón bạn.'}
                                     </p>
@@ -115,8 +115,8 @@ export const PackagesSection: React.FC = () => {
                                                 </span>
                                             )}
                                         </div>
-                                        
-                                        <span className="px-4 py-2 bg-slate-50 group-hover:bg-primary-600 group-hover:text-white text-slate-700 text-xs font-bold rounded-lg border border-slate-150 transition-all duration-300">
+
+                                        <span className="px-4 py-2 bg-slate-50 group-hover:bg-primary-600 group-hover:text-white text-slate-700 text-xs font-bold rounded-[6px] border border-slate-150 transition-all duration-300">
                                             Chi tiết
                                         </span>
                                     </div>
