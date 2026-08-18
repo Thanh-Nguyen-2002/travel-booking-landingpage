@@ -1,8 +1,9 @@
 import React from 'react';
-import { MapPin, Loader2, ArrowRight } from 'lucide-react';
+import { MapPin, ArrowRight } from 'lucide-react';
 import { useDestinations } from '../../destinations/queries/useDestinations';
 import { Link } from 'react-router-dom';
 import { FallbackImage } from '../../../components/common/FallbackImage';
+import { DestinationCardSkeleton } from '../../../components/common/skeletons';
 
 export const DestinationsSection: React.FC = () => {
     // Fetch 6 destinations for the home page
@@ -10,9 +11,28 @@ export const DestinationsSection: React.FC = () => {
 
     if (isLoading) {
         return (
-            <div className="py-24 flex justify-center items-center">
-                <Loader2 className="w-8 h-8 animate-spin text-primary-500" />
-            </div>
+            <section className="py-24 bg-white relative overflow-hidden">
+                {/* Background Blob */}
+                <div className="absolute top-0 right-0 w-96 h-96 bg-primary-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 -translate-y-1/2 translate-x-1/2"></div>
+
+                <div className="max-w-6xl mx-auto px-4 relative z-10">
+                    <div className="flex justify-between items-end mb-12">
+                        <div>
+                            <h2 className="text-4xl font-bold text-slate-800 mb-4">Điểm đến nổi bật</h2>
+                            <p className="text-lg text-slate-600 max-w-2xl">Khám phá những địa điểm du lịch tuyệt vời nhất được chúng tôi tuyển chọn dành riêng cho bạn.</p>
+                        </div>
+                        <div className="hidden md:flex items-center gap-2 text-primary-600 font-semibold opacity-50">
+                            Xem tất cả <ArrowRight size={20} />
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {Array.from({ length: 6 }).map((_, index) => (
+                            <DestinationCardSkeleton key={index} />
+                        ))}
+                    </div>
+                </div>
+            </section>
         );
     }
 

@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
-import { usePackages } from './queries/usePackages';
-import { Link } from 'react-router-dom';
-import { Loader2, Calendar, MapPin, Compass, Search } from 'lucide-react';
-import { FallbackImage } from '../../components/common/FallbackImage';
 import { Input, Pagination } from 'antd';
+import { Calendar, Compass, MapPin, Search } from 'lucide-react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { FallbackImage } from '../../components/common/FallbackImage';
+import { PackageCardSkeleton } from '../../components/common/skeletons';
 import { getCoverImage } from '../../utils/image';
+import { usePackages } from './queries/usePackages';
+
 
 export const PackagesPage: React.FC = () => {
     const [search, setSearch] = useState('');
@@ -47,8 +49,10 @@ export const PackagesPage: React.FC = () => {
 
                 {/* Content */}
                 {isLoading ? (
-                    <div className="flex justify-center items-center py-24">
-                        <Loader2 className="w-12 h-12 animate-spin text-primary-600" />
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                        {Array.from({ length: 12 }).map((_, index) => (
+                            <PackageCardSkeleton key={index} />
+                        ))}
                     </div>
                 ) : isError ? (
                     <div className="text-center py-24 bg-white rounded-xl border border-slate-100">
@@ -144,7 +148,10 @@ export const PackagesPage: React.FC = () => {
                                     current={page + 1}
                                     total={pageData.totalElements}
                                     pageSize={12}
-                                    onChange={(newPage) => setPage(newPage - 1)}
+                                    onChange={(newPage) => {
+                                        setPage(newPage - 1);
+                                        window.scrollTo(0, 0);
+                                    }}
                                     showSizeChanger={false}
                                 />
                             </div>

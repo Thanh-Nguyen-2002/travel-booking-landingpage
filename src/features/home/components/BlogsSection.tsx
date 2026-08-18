@@ -1,8 +1,9 @@
 import React from 'react';
-import { Loader2, ArrowRight, Calendar, User } from 'lucide-react';
+import { ArrowRight, Calendar, User } from 'lucide-react';
 import { useBlogs } from '../../blogs/queries/useBlogs';
 import { Link } from 'react-router-dom';
 import { FallbackImage } from '../../../components/common/FallbackImage';
+import { BlogCardSkeleton } from '../../../components/common/skeletons';
 
 export const BlogsSection: React.FC = () => {
     // Fetch 3 latest blogs for the home page
@@ -10,9 +11,28 @@ export const BlogsSection: React.FC = () => {
 
     if (isLoading) {
         return (
-            <div className="py-24 flex justify-center items-center">
-                <Loader2 className="w-8 h-8 animate-spin text-primary-500" />
-            </div>
+            <section className="py-24 bg-white relative overflow-hidden">
+                {/* Background Blob */}
+                <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 translate-y-1/2 -translate-x-1/2"></div>
+
+                <div className="max-w-6xl mx-auto px-4 relative z-10">
+                    <div className="flex justify-between items-end mb-12">
+                        <div>
+                            <h2 className="text-4xl font-bold text-slate-800 mb-4">Cẩm nang du lịch</h2>
+                            <p className="text-lg text-slate-600 max-w-2xl">Cập nhật những tin tức, bí kíp và kinh nghiệm hữu ích nhất cho chuyến đi của bạn.</p>
+                        </div>
+                        <div className="hidden md:flex items-center gap-2 text-primary-600 font-semibold opacity-50">
+                            Xem tất cả bài viết <ArrowRight size={20} />
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {Array.from({ length: 3 }).map((_, index) => (
+                            <BlogCardSkeleton key={index} />
+                        ))}
+                    </div>
+                </div>
+            </section>
         );
     }
 

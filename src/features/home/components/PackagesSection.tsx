@@ -1,9 +1,10 @@
 import React from 'react';
-import { Clock, Tag, ArrowRight, Loader2 } from 'lucide-react';
+import { Clock, Tag, ArrowRight } from 'lucide-react';
 import { usePackages } from '../../packages/queries/usePackages';
 import { Link } from 'react-router-dom';
 import { FallbackImage } from '../../../components/common/FallbackImage';
 import { getCoverImage } from '../../../utils/image';
+import { PackageCardSkeleton } from '../../../components/common/skeletons';
 
 export const PackagesSection: React.FC = () => {
     // Fetch 3 hot packages for the home page
@@ -11,9 +12,31 @@ export const PackagesSection: React.FC = () => {
 
     if (isLoading) {
         return (
-            <div className="py-24 flex justify-center items-center">
-                <Loader2 className="w-8 h-8 animate-spin text-primary-500" />
-            </div>
+            <section className="py-24 relative overflow-hidden bg-white">
+                {/* Background decorative elements */}
+                <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-primary-100/40 rounded-full mix-blend-multiply filter blur-3xl opacity-50 -translate-x-1/2"></div>
+
+                <div className="container mx-auto px-4 relative z-10 max-w-6xl">
+                    <div className="flex justify-between items-end mb-12">
+                        <div>
+                            <span className="text-primary-600 font-bold text-sm uppercase tracking-widest block mb-2">Trải nghiệm tuyệt vời</span>
+                            <h2 className="text-4xl font-extrabold text-slate-800 tracking-tight">Tour Du Lịch Bán Chạy</h2>
+                            <p className="text-lg text-slate-600 mt-2 max-w-2xl">
+                                Khám phá các gói tour trọn gói được thiết kế tỉ mỉ, giúp bạn tận hưởng kỳ nghỉ trọn vẹn mà không cần lo lắng.
+                            </p>
+                        </div>
+                        <div className="hidden md:flex items-center gap-2 text-primary-600 font-semibold opacity-50">
+                            Xem tất cả tour <ArrowRight size={20} />
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {Array.from({ length: 3 }).map((_, index) => (
+                            <PackageCardSkeleton key={index} />
+                        ))}
+                    </div>
+                </div>
+            </section>
         );
     }
 

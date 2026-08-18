@@ -1,11 +1,13 @@
+import { Bed, Users } from 'lucide-react';
 import React from 'react';
-import { Loader2, Bed, Users } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useBookingStore } from '../../../store/useBookingStore';
-import type { RoomResponse } from '../../../types/room';
-import type { HotelResponse } from '../../../types/hotel';
 import { FallbackImage } from '../../../components/common/FallbackImage';
+import { RoomCardSkeleton } from '../../../components/common/skeletons';
+import { useBookingStore } from '../../../store/useBookingStore';
+import type { HotelResponse } from '../../../types/hotel';
+import type { RoomResponse } from '../../../types/room';
 import { getCoverImage } from '../../../utils/image';
+
 
 interface RoomListProps {
     hotel: HotelResponse;
@@ -22,8 +24,10 @@ export const RoomList: React.FC<RoomListProps> = ({ hotel, roomsData, isLoadingR
             <h2 className="text-2xl font-bold text-slate-800 mb-6">Phòng có sẵn</h2>
 
             {isLoadingRooms ? (
-                <div className="py-12 flex justify-center">
-                    <Loader2 className="w-8 h-8 animate-spin text-primary-500" />
+                <div className="space-y-6">
+                    {Array.from({ length: 3 }).map((_, index) => (
+                        <RoomCardSkeleton key={index} />
+                    ))}
                 </div>
             ) : !roomsData || roomsData.length === 0 ? (
                 <div className="text-center py-12 text-slate-500 bg-slate-50 rounded-xl border border-slate-100">

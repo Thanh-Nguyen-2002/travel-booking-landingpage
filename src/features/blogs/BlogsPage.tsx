@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
-import { useBlogs } from './queries/useBlogs';
-import { Link } from 'react-router-dom';
-import { Loader2, Calendar, User, Search, BookOpen, ArrowRight } from 'lucide-react';
 import { Input, Pagination } from 'antd';
+import { ArrowRight, BookOpen, Calendar, Search, User } from 'lucide-react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FallbackImage } from '../../components/common/FallbackImage';
+import { BlogCardSkeleton } from '../../components/common/skeletons';
+import { useBlogs } from './queries/useBlogs';
+
 
 export const BlogsPage: React.FC = () => {
     const [search, setSearch] = useState('');
@@ -48,8 +50,10 @@ export const BlogsPage: React.FC = () => {
 
                 {/* Content */}
                 {isLoading ? (
-                    <div className="flex justify-center items-center py-24">
-                        <Loader2 className="w-12 h-12 animate-spin text-primary-600" />
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                        {Array.from({ length: 9 }).map((_, index) => (
+                            <BlogCardSkeleton key={index} />
+                        ))}
                     </div>
                 ) : isError ? (
                     <div className="text-center py-24 bg-white rounded-xl border border-slate-100">
@@ -116,7 +120,10 @@ export const BlogsPage: React.FC = () => {
                                     current={page + 1}
                                     total={totalElements}
                                     pageSize={pageSize}
-                                    onChange={(p) => setPage(p - 1)}
+                                    onChange={(p) => {
+                                        setPage(p - 1);
+                                        window.scrollTo(0, 0);
+                                    }}
                                     showSizeChanger={false}
                                 />
                             </div>

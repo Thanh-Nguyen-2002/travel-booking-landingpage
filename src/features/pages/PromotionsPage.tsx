@@ -1,6 +1,8 @@
 import React from 'react';
-import { Tag, Calendar, Loader2, AlertCircle, Sparkles } from 'lucide-react';
+import { Tag, Calendar, AlertCircle, Sparkles } from 'lucide-react';
 import { usePromotions, type Promotion } from '../../hooks/usePromotions';
+import { PromoCardSkeleton } from '../../components/common/skeletons';
+
 
 export const PromotionsPage: React.FC = () => {
     const { data: promotions, isLoading, isError } = usePromotions();
@@ -55,9 +57,10 @@ export const PromotionsPage: React.FC = () => {
             <div className="container mx-auto px-4 mt-[-60px] relative z-20">
                 <div className="max-w-6xl mx-auto">
                     {isLoading ? (
-                        <div className="backdrop-blur-md bg-white/95 p-16 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 flex flex-col items-center justify-center min-h-[400px]">
-                            <Loader2 size={48} className="text-primary-500 animate-spin mb-6" />
-                            <p className="text-slate-500 text-lg">Đang tải danh sách khuyến mãi...</p>
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {Array.from({ length: 6 }).map((_, index) => (
+                                <PromoCardSkeleton key={index} />
+                            ))}
                         </div>
                     ) : isError ? (
                         <div className="backdrop-blur-md bg-white/95 p-16 rounded-lg shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 flex flex-col items-center justify-center text-red-500 min-h-[400px]">
