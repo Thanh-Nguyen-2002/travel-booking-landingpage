@@ -1,10 +1,13 @@
 import { create } from 'zustand';
 
 interface BookingInfo {
-    hotelId: string;
-    hotelName: string;
-    roomId: string;
-    roomName: string;
+    hotelId?: string;
+    hotelName?: string;
+    roomId?: string;
+    roomName?: string;
+    packageId?: string;
+    packageName?: string;
+    type?: 'room' | 'package';
     price: number;
     checkIn?: string;
     checkOut?: string;

@@ -10,5 +10,13 @@ export const authService = {
     register: async (data: RegisterRequest) => {
         const response = await apiClient.post<any, ApiResponse<any>>('/auth/register', data);
         return response.data;
+    },
+    forgotPassword: async (email: string) => {
+        const response = await apiClient.post<any, ApiResponse<any>>('/auth/forgot-password', { email });
+        return response.data;
+    },
+    resetPassword: async (data: any) => {
+        const response = await apiClient.post<any, ApiResponse<any>>('/auth/reset-password', data);
+        return response.data;
     }
 };

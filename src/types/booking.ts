@@ -1,6 +1,7 @@
 export interface BookingRoomResponse {
     id: string;
     roomId: string;
+    hotelId?: string;
     roomName: string;
     quantity: number;
     price: number;
@@ -43,6 +44,6 @@ export interface BookingCreationRequest {
     promotionCode?: string;
     packageId?: string;
     guests: number;
-    items: BookingItemRequest[];
+    items?: BookingItemRequest[];
     note?: string;
 }

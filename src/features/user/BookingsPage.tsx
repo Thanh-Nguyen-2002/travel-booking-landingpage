@@ -5,9 +5,11 @@ import { Calendar, Search } from 'lucide-react';
 
 
 import { useMyBookings } from './queries/useMyBookings';
+import { useCreateReview } from './queries/useCreateReview';
 
 export const BookingsPage: React.FC = () => {
     const { data: myBookings, isLoading } = useMyBookings();
+    const { mutate: createReview, isPending: isSubmittingReview } = useCreateReview();
     const [reviewModalVisible, setReviewModalVisible] = useState(false);
     const [selectedBooking, setSelectedBooking] = useState<any>(null);
     const [rating, setRating] = useState(5);
@@ -25,9 +27,28 @@ export const BookingsPage: React.FC = () => {
             toast.warning('Vui lòng nhập nội dung đánh giá!');
             return;
         }
-        
-        toast.success('Cảm ơn bạn đã gửi đánh giá!');
-        setReviewModalVisible(false);
+
+        const hotelId = selectedBooking?.rooms?.[0]?.hotelId;
+        if (!hotelId) {
+            toast.error('Không tìm thấy thông tin khách sạn để đánh giá!');
+            return;
+        }
+
+        createReview({
+            hotelId,
+            roomId: selectedBooking.rooms[0].roomId,
+            rating,
+            comment
+        }, {
+            onSuccess: () => {
+                toast.success('Gửi đánh giá thành công, đang chờ duyệt!');
+                setReviewModalVisible(false);
+            },
+            onError: (err: any) => {
+                const msg = err.response?.data?.message || 'Có lỗi xảy ra khi gửi đánh giá!';
+                toast.error(msg);
+            }
+        });
     };
 
     const getStatusTag = (status: string) => {
@@ -116,7 +137,7 @@ export const BookingsPage: React.FC = () => {
                 onCancel={() => setReviewModalVisible(false)}
                 footer={[
                     <Button key="cancel" onClick={() => setReviewModalVisible(false)} className="rounded-xl font-medium px-6">Hủy bỏ</Button>,
-                    <Button key="submit" type="primary" onClick={handleSubmitReview} className="bg-primary-600 rounded-xl font-bold px-8 border-none shadow-lg shadow-primary-500/30">Gửi Đánh Giá</Button>
+                    <Button key="submit" type="primary" loading={isSubmittingReview} onClick={handleSubmitReview} className="bg-primary-600 rounded-xl font-bold px-8 border-none shadow-lg shadow-primary-500/30">Gửi Đánh Giá</Button>
                 ]}
                 centered
                 width={500}

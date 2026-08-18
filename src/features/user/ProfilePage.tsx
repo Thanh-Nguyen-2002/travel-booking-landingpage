@@ -3,24 +3,49 @@ import { Form, Input, Button, Tabs, Avatar, Upload } from 'antd';
 import { toast } from 'sonner';
 import { User, Lock, Upload as UploadIcon, Mail, Phone, Shield } from 'lucide-react';
 import { useAuthStore } from '../../store/useAuthStore';
+import { useUpdateProfile } from './queries/useUpdateProfile';
+import { useChangePassword } from './queries/useChangePassword';
 
 export const ProfilePage: React.FC = () => {
     const { user, updateUser } = useAuthStore();
     const [form] = Form.useForm();
     const [passwordForm] = Form.useForm();
+    
+    const { mutate: updateProfile, isPending: isUpdatingProfile } = useUpdateProfile();
+    const { mutate: changePassword, isPending: isChangingPassword } = useChangePassword();
 
     if (!user) {
         return <div className="min-h-[50vh] flex items-center justify-center text-lg text-slate-500 font-medium">Vui lòng đăng nhập để xem thông tin</div>;
     }
 
     const onUpdateProfile = (values: any) => {
-        updateUser({ fullName: values.fullName, phone: values.phone });
-        toast.success('Cập nhật thông tin thành công!');
+        updateProfile({ fullName: values.fullName, phone: values.phone }, {
+            onSuccess: (data: any) => {
+                updateUser({ fullName: data.fullName, phone: data.phone });
+                toast.success('Cập nhật thông tin thành công!');
+            },
+            onError: (err: any) => {
+                const msg = err.response?.data?.message || 'Có lỗi xảy ra khi cập nhật thông tin!';
+                toast.error(msg);
+            }
+        });
     };
 
-    const onChangePassword = (_values: any) => {
-        toast.success('Đổi mật khẩu thành công!');
-        passwordForm.resetFields();
+    const onChangePassword = (values: any) => {
+        changePassword({
+            oldPassword: values.currentPassword,
+            newPassword: values.newPassword,
+            confirmPassword: values.confirmPassword
+        }, {
+            onSuccess: () => {
+                toast.success('Đổi mật khẩu thành công!');
+                passwordForm.resetFields();
+            },
+            onError: (err: any) => {
+                const msg = err.response?.data?.message || 'Có lỗi xảy ra khi đổi mật khẩu!';
+                toast.error(msg);
+            }
+        });
     };
 
     const profileTab = (
@@ -57,7 +82,7 @@ export const ProfilePage: React.FC = () => {
                         </Form.Item>
 
                         <Form.Item className="mt-6 mb-0">
-                            <Button type="primary" htmlType="submit" size="large" className="bg-primary-600 hover:!bg-primary-700 border-none rounded-xl font-bold px-8 h-12 shadow-lg shadow-primary-500/30">
+                            <Button type="primary" htmlType="submit" size="large" loading={isUpdatingProfile} className="bg-primary-600 hover:!bg-primary-700 border-none rounded-xl font-bold px-8 h-12 shadow-lg shadow-primary-500/30">
                                 Lưu Thay Đổi
                             </Button>
                         </Form.Item>
@@ -103,7 +128,7 @@ export const ProfilePage: React.FC = () => {
                 </div>
 
                 <Form.Item className="mt-6 mb-0">
-                    <Button type="primary" htmlType="submit" size="large" className="bg-slate-900 hover:!bg-primary-600 border-none rounded-xl font-bold px-8 h-12 shadow-lg hover:shadow-primary-500/30 transition-all duration-300">
+                    <Button type="primary" htmlType="submit" size="large" loading={isChangingPassword} className="bg-slate-900 hover:!bg-primary-600 border-none rounded-xl font-bold px-8 h-12 shadow-lg hover:shadow-primary-500/30 transition-all duration-300">
                         Cập Nhật Mật Khẩu
                     </Button>
                 </Form.Item>

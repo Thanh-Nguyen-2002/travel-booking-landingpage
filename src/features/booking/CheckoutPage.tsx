@@ -10,6 +10,7 @@ import type { BookingCreationRequest } from '../../types/booking';
 import { EmptyBooking } from './components/EmptyBooking';
 import { SuccessStep } from './components/SuccessStep';
 import { OrderSummary } from './components/OrderSummary';
+import { PaymentModal } from './components/PaymentModal';
 
 export const CheckoutPage: React.FC = () => {
     const navigate = useNavigate();
@@ -17,6 +18,9 @@ export const CheckoutPage: React.FC = () => {
     const { bookingInfo, clearBookingInfo } = useBookingStore();
     const [step, setStep] = useState(0);
     const { mutate: createBooking, isPending } = useCreateBooking();
+    const [paymentModalOpen, setPaymentModalOpen] = useState(false);
+    const [createdBooking, setCreatedBooking] = useState<any>(null);
+    const [selectedMethod, setSelectedMethod] = useState<'credit_card' | 'momo' | 'vnpay'>('credit_card');
 
     if (!bookingInfo) {
         return <EmptyBooking />;
@@ -36,22 +40,43 @@ export const CheckoutPage: React.FC = () => {
             customerPhone: values.phone,
             customerEmail: values.email,
             guests: bookingInfo.guests || 2,
-            items: [{
+        };
+
+        if (bookingInfo.type === 'package' && bookingInfo.packageId) {
+            request.packageId = bookingInfo.packageId;
+        } else if (bookingInfo.roomId) {
+            request.items = [{
                 roomId: bookingInfo.roomId,
                 quantity: 1
-            }]
-        };
+            }];
+        }
         
+        const method = values.paymentMethod || 'credit_card';
+        setSelectedMethod(method);
+
         createBooking(request, {
-            onSuccess: () => {
-                toast.success('Đặt phòng thành công! Cảm ơn bạn đã sử dụng dịch vụ.');
-                clearBookingInfo();
-                setStep(1);
+            onSuccess: (data) => {
+                setCreatedBooking(data);
+                setPaymentModalOpen(true);
             },
             onError: () => {
                 toast.error('Có lỗi xảy ra khi đặt phòng. Vui lòng kiểm tra lại!');
             }
         });
+    };
+
+    const handlePaymentSuccess = () => {
+        setPaymentModalOpen(false);
+        toast.success('Đặt phòng thành công! Cảm ơn bạn đã sử dụng dịch vụ.');
+        clearBookingInfo();
+        setStep(1);
+    };
+
+    const handlePaymentClose = () => {
+        setPaymentModalOpen(false);
+        toast.warning('Thanh toán chưa hoàn tất. Bạn có thể tiếp tục thanh toán trong Lịch sử đặt phòng.');
+        clearBookingInfo();
+        navigate('/bookings');
     };
 
     if (step === 1) {
@@ -62,9 +87,15 @@ export const CheckoutPage: React.FC = () => {
         <div className="bg-slate-50 min-h-screen pb-24 pt-12">
             <div className="container mx-auto px-4 max-w-5xl">
                 <div className="flex items-center gap-2 text-slate-500 mb-8">
-                    <Link to={`/hotels/${bookingInfo.hotelId}`} className="hover:text-primary-600 flex items-center gap-1">
-                        <ArrowLeft size={16} /> Quay lại khách sạn
-                    </Link>
+                    {bookingInfo.type === 'package' ? (
+                        <Link to={`/packages/${bookingInfo.packageId}`} className="hover:text-primary-600 flex items-center gap-1">
+                            <ArrowLeft size={16} /> Quay lại tour du lịch
+                        </Link>
+                    ) : (
+                        <Link to={`/hotels/${bookingInfo.hotelId}`} className="hover:text-primary-600 flex items-center gap-1">
+                            <ArrowLeft size={16} /> Quay lại khách sạn
+                        </Link>
+                    )}
                 </div>
 
                 <div className="mb-12">
@@ -172,6 +203,16 @@ export const CheckoutPage: React.FC = () => {
                     </div>
                 </div>
             </div>
+            {createdBooking && (
+                <PaymentModal
+                    open={paymentModalOpen}
+                    onClose={handlePaymentClose}
+                    onSuccess={handlePaymentSuccess}
+                    paymentMethod={selectedMethod}
+                    amount={createdBooking.total}
+                    bookingId={createdBooking.id}
+                />
+            )}
         </div>
     );
 };

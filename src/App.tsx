@@ -18,6 +18,9 @@ import { DestinationDetailPage } from './features/destinations/DestinationDetail
 import { HotelsPage } from './features/hotels/HotelsPage';
 import { HotelDetailPage } from './features/hotels/HotelDetailPage';
 import { PackagesPage } from './features/packages/PackagesPage';
+import { PackageDetailPage } from './features/packages/PackageDetailPage';
+import { BlogsPage } from './features/blogs/BlogsPage';
+import { BlogDetailPage } from './features/blogs/BlogDetailPage';
 import { AboutPage } from './features/pages/AboutPage';
 import { ContactPage } from './features/pages/ContactPage';
 import { TermsPage } from './features/pages/TermsPage';
@@ -25,6 +28,7 @@ import { PrivacyPage } from './features/pages/PrivacyPage';
 import { PromotionsPage } from './features/pages/PromotionsPage';
 import { LoginPage } from './features/auth/LoginPage';
 import { RegisterPage } from './features/auth/RegisterPage';
+import { ForgotPasswordPage } from './features/auth/ForgotPasswordPage';
 import { CheckoutPage } from './features/booking/CheckoutPage';
 import { ProfilePage } from './features/user/ProfilePage';
 import { BookingsPage } from './features/user/BookingsPage';
@@ -40,6 +44,7 @@ function App() {
                 <Routes>
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/register" element={<RegisterPage />} />
+                    <Route path="/forgot-password" element={<ForgotPasswordPage />} />
                     
                     <Route path="/" element={<MainLayout />}>
                         <Route index element={<Home />} />
@@ -48,6 +53,9 @@ function App() {
                         <Route path="hotels" element={<HotelsPage />} />
                         <Route path="hotels/:id" element={<HotelDetailPage />} />
                         <Route path="packages" element={<PackagesPage />} />
+                        <Route path="packages/:id" element={<PackageDetailPage />} />
+                        <Route path="blogs" element={<BlogsPage />} />
+                        <Route path="blogs/:idOrSlug" element={<BlogDetailPage />} />
                         <Route path="promotions" element={<PromotionsPage />} />
                         <Route path="about" element={<AboutPage />} />
                         <Route path="contact" element={<ContactPage />} />
