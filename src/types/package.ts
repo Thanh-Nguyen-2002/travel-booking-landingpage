@@ -13,6 +13,10 @@ export interface PackageResponse {
     excludes?: string;
     itinerary?: string;
     images?: string;
+    overviewHtml?: string;
+    termsHtml?: string;
+    videoUrl?: string;
+    departureLocation?: string;
     status: string;
     createdAt: string;
     updatedAt: string;

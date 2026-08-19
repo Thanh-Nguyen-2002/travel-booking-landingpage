@@ -8,6 +8,7 @@ import { DatePicker, InputNumber, Button, Tabs, Divider } from 'antd';
 import { toast } from 'sonner';
 import dayjs from 'dayjs';
 import { getImageUrls } from '../../utils/image';
+import { decodeHtmlEntities } from '../../utils/html';
 
 export const PackageDetailPage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -71,6 +72,19 @@ export const PackageDetailPage: React.FC = () => {
     };
 
     const tabItems = [
+        {
+            key: 'overview',
+            label: 'Tổng quan',
+            children: (
+                <div className="py-4">
+                    {pkg.overviewHtml ? (
+                        <div className="prose prose-slate max-w-none prose-img:rounded-xl prose-headings:text-slate-800 prose-a:text-primary-600" dangerouslySetInnerHTML={{ __html: decodeHtmlEntities(pkg.overviewHtml) }} />
+                    ) : (
+                        <p className="text-slate-600 leading-relaxed whitespace-pre-line">{pkg.description || 'Chưa có thông tin tổng quan chi tiết.'}</p>
+                    )}
+                </div>
+            )
+        },
         {
             key: 'itinerary',
             label: 'Lịch trình chi tiết',
@@ -159,6 +173,19 @@ export const PackageDetailPage: React.FC = () => {
                     </div>
                 </div>
             )
+        },
+        {
+            key: 'terms',
+            label: 'Điều khoản & Lưu ý',
+            children: (
+                <div className="py-4">
+                    {pkg.termsHtml ? (
+                        <div className="prose prose-slate max-w-none prose-img:rounded-xl prose-headings:text-slate-800 prose-a:text-primary-600" dangerouslySetInnerHTML={{ __html: decodeHtmlEntities(pkg.termsHtml) }} />
+                    ) : (
+                        <p className="text-slate-500 italic">Chưa có thông tin điều khoản và lưu ý.</p>
+                    )}
+                </div>
+            )
         }
     ];
 
@@ -185,15 +212,29 @@ export const PackageDetailPage: React.FC = () => {
                             <span className="inline-flex items-center gap-1 px-3 py-1 bg-slate-100 text-slate-600 text-xs font-bold rounded-lg">
                                 <Clock size={12} /> {pkg.duration || 'Liên hệ'}
                             </span>
+                            {pkg.departureLocation && (
+                                <span className="inline-flex items-center gap-1 px-3 py-1 bg-emerald-50 text-emerald-600 text-xs font-bold rounded-lg">
+                                    <MapPin size={12} /> Khởi hành: {pkg.departureLocation}
+                                </span>
+                            )}
                         </div>
 
                         <h1 className="text-3xl md:text-4xl font-extrabold text-slate-800 mb-4 leading-tight">
                             {pkg.name}
                         </h1>
 
-                        <div className="text-slate-600 whitespace-pre-line mb-6 leading-relaxed">
+                        <div className="text-slate-600 whitespace-pre-line mb-4 leading-relaxed">
                             {pkg.description || 'Hành trình được chuẩn bị chu đáo mang lại trải nghiệm tuyệt vời cho quý khách.'}
                         </div>
+
+                        {pkg.videoUrl && (
+                            <div className="mb-6">
+                                <a href={pkg.videoUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 bg-rose-50 text-rose-600 rounded-xl hover:bg-rose-100 transition-colors font-bold text-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
+                                    Xem Video Giới Thiệu
+                                </a>
+                            </div>
+                        )}
 
                         {/* Image Gallery */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

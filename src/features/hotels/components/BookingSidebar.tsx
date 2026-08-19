@@ -1,5 +1,5 @@
 import React from 'react';
-import { Check } from 'lucide-react';
+import { Check, Phone, Mail } from 'lucide-react';
 import type { HotelResponse } from '../../../types/hotel';
 
 interface BookingSidebarProps {
@@ -32,6 +32,24 @@ export const BookingSidebar: React.FC<BookingSidebarProps> = ({ hotel }) => {
             <button className="w-full py-3.5 bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white font-bold rounded-lg shadow-lg shadow-primary-500/30 transition-all duration-300">
                 Chọn phòng
             </button>
+
+            {(hotel.contactPhone || hotel.contactEmail) && (
+                <div className="mt-6 pt-6 border-t border-slate-100">
+                    <h4 className="text-sm font-semibold text-slate-800 mb-3">Thông tin liên hệ</h4>
+                    {hotel.contactPhone && (
+                        <div className="flex items-center gap-2 text-sm text-slate-600 mb-2">
+                            <Phone size={14} className="text-primary-600" />
+                            <a href={`tel:${hotel.contactPhone}`} className="hover:text-primary-600">{hotel.contactPhone}</a>
+                        </div>
+                    )}
+                    {hotel.contactEmail && (
+                        <div className="flex items-center gap-2 text-sm text-slate-600">
+                            <Mail size={14} className="text-primary-600" />
+                            <a href={`mailto:${hotel.contactEmail}`} className="hover:text-primary-600">{hotel.contactEmail}</a>
+                        </div>
+                    )}
+                </div>
+            )}
         </div>
     );
 };

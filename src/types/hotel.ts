@@ -11,6 +11,11 @@ export interface HotelResponse {
     rating: number;
     priceFrom: number;
     images: string;
+    overviewHtml?: string;
+    policiesHtml?: string;
+    contactPhone?: string;
+    contactEmail?: string;
+    mapIframe?: string;
     status: string;
     amenities: AmenityResponse[];
 }
