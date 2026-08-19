@@ -11,6 +11,11 @@ export interface DestinationResponse {
     bestTime: string;
     activities: string;
     travelGuide: string;
+    overviewHtml: string;
+    culinaryHtml: string;
+    transportHtml: string;
+    highlightSpots: string;
+    videoUrl: string;
     status: string;
     createdAt: string;
     updatedAt: string;
