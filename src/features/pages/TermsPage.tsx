@@ -1,51 +1,154 @@
 import React from 'react';
 import { useSettings } from '../../hooks/useSettings';
+import { Scale, ShieldCheck, CreditCard, XCircle, FileText, AlertTriangle, UserCheck } from 'lucide-react';
 
 export const TermsPage: React.FC = () => {
     const { data: settings } = useSettings();
     const termsContent = settings?.termsOfService;
 
     return (
-        <div className="bg-slate-50 min-h-screen">
+        <div className="bg-slate-50 min-h-screen pb-24">
             {/* Hero Section */}
-            <div className="relative bg-gradient-to-br from-primary-900 via-primary-700 to-primary-800 py-24 text-center text-white overflow-hidden">
-                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
-                <div className="absolute -top-24 -left-24 w-96 h-96 bg-primary-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
-                <div className="absolute top-12 -right-24 w-96 h-96 bg-teal-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-                <div className="container mx-auto px-4 relative z-10">
-                    <h1 className="text-4xl md:text-5xl font-bold mb-4">Điều khoản dịch vụ</h1>
-                    <p className="text-primary-100 text-lg">Cập nhật lần cuối: {new Date().toLocaleDateString('vi-VN')}</p>
+            <div className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-primary-900 py-32 text-center text-white overflow-hidden">
+                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03] mix-blend-overlay"></div>
+                <div className="absolute -top-32 -left-32 w-96 h-96 bg-primary-600 rounded-full mix-blend-screen filter blur-[100px] opacity-40 animate-blob"></div>
+                <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-teal-500 rounded-full mix-blend-screen filter blur-[120px] opacity-20 animate-blob animation-delay-2000"></div>
+
+                <div className="container mx-auto px-4 relative z-10 flex flex-col items-center">
+                    <div className="inline-flex items-center justify-center p-3 bg-white/10 rounded-lg backdrop-blur-md border border-white/20 mb-6 shadow-xl">
+                        <Scale className="w-8 h-8 text-teal-300" />
+                    </div>
+                    <h1 className="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight">
+                        Điều khoản <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-teal-300">Dịch vụ</span>
+                    </h1>
+                    <p className="text-slate-300 text-lg md:text-xl max-w-2xl font-light leading-relaxed">
+                        Quy định chi tiết về quyền lợi, trách nhiệm và nguyên tắc hoạt động nhằm mang lại trải nghiệm du lịch an toàn, minh bạch cho mọi khách hàng.
+                    </p>
+                    <div className="mt-8 flex items-center gap-4 text-sm font-medium text-slate-400 bg-slate-900/50 py-2.5 px-6 rounded-full border border-slate-700 backdrop-blur-sm">
+                        <span>Cập nhật lần cuối: 15/08/2026</span>
+                        <span className="w-1.5 h-1.5 rounded-full bg-slate-500"></span>
+                        <span>Phiên bản: 2.1.0</span>
+                    </div>
                 </div>
             </div>
 
             {/* Content Section */}
-            <div className="container mx-auto px-4 py-16 -mt-8 relative z-20">
-                <div className="max-w-6xl mx-auto backdrop-blur-md bg-white/95 p-8 md:p-14 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50">
+            <div className="container mx-auto px-4 relative z-20 -mt-16">
+                <div className="max-w-5xl mx-auto bg-white p-8 md:p-16 rounded-lg shadow-[0_20px_60px_rgb(0,0,0,0.05)] border border-slate-100">
                     {termsContent ? (
                         <div
-                            className="prose prose-lg prose-slate max-w-none prose-headings:text-slate-800 prose-a:text-primary-500"
+                            className="prose prose-lg prose-slate max-w-none prose-headings:text-slate-800 prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline"
                             dangerouslySetInnerHTML={{ __html: termsContent }}
                         />
                     ) : (
-                        <div className="prose prose-lg prose-slate max-w-none prose-headings:text-slate-800 prose-a:text-primary-500">
-                            <h2 className="text-2xl font-bold text-slate-800 mb-4">1. Chấp nhận các điều khoản</h2>
-                            <p>Bằng việc truy cập và sử dụng trang web này, bạn đồng ý tuân thủ các Điều khoản Dịch vụ của chúng tôi. Nếu bạn không đồng ý với bất kỳ phần nào của các điều khoản này, vui lòng không sử dụng dịch vụ của chúng tôi.</p>
-
-                            <h2 className="text-2xl font-bold text-slate-800 mt-8 mb-4">2. Đặt phòng và Thanh toán</h2>
-                            <p>Tất cả các đặt phòng và tour du lịch đều phụ thuộc vào tình trạng sẵn có. Giá cả có thể thay đổi mà không cần báo trước, nhưng mức giá bạn đã xác nhận tại thời điểm đặt sẽ luôn được giữ nguyên. Chúng tôi yêu cầu thanh toán đầy đủ hoặc đặt cọc theo tỷ lệ phần trăm được quy định tùy từng gói dịch vụ.</p>
-
-                            <h2 className="text-2xl font-bold text-slate-800 mt-8 mb-4">3. Chính sách Hủy và Hoàn tiền</h2>
-                            <ul className="list-disc pl-6 space-y-2">
-                                <li>Hủy trước 14 ngày so với ngày khởi hành: Hoàn 100% số tiền đã thanh toán.</li>
-                                <li>Hủy từ 7-13 ngày trước ngày khởi hành: Hoàn 50% số tiền đã thanh toán.</li>
-                                <li>Hủy dưới 7 ngày trước ngày khởi hành: Không hoàn tiền.</li>
-                            </ul>
-                            <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mt-4 rounded-r text-sm text-blue-800">
-                                <strong>Lưu ý:</strong> Một số chương trình khuyến mãi đặc biệt có thể áp dụng chính sách hủy/hoàn tiền riêng (Không hoàn, Không hủy).
+                        <div className="space-y-16">
+                            {/* Section 1 */}
+                            <div className="flex flex-col md:flex-row gap-8 md:gap-12 group">
+                                <div className="md:w-1/3 shrink-0">
+                                    <div className="">
+                                        <div className="w-14 h-14 bg-slate-50 border border-slate-100 text-primary-600 rounded-lg flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-primary-50 transition-all duration-300">
+                                            <ShieldCheck className="w-7 h-7" />
+                                        </div>
+                                        <h3 className="text-2xl font-bold text-slate-800 mb-3 leading-tight">1. Quy định chung</h3>
+                                        <p className="text-slate-500 text-sm leading-relaxed">Hiệu lực và sự chấp thuận các điều khoản khi sử dụng nền tảng.</p>
+                                    </div>
+                                </div>
+                                <div className="md:w-2/3 prose prose-slate prose-lg text-slate-600">
+                                    <p>Chào mừng Quý khách đến với hệ thống đặt tour và phòng khách sạn của chúng tôi. Bằng việc truy cập, đăng ký tài khoản hoặc sử dụng bất kỳ dịch vụ nào trên website, Quý khách được xem là đã đọc, hiểu và đồng ý ràng buộc bởi toàn bộ các Điều khoản Dịch vụ này một cách vô điều kiện.</p>
+                                    <p>Chúng tôi bảo lưu quyền được sửa đổi, cập nhật hoặc loại bỏ bất kỳ phần nào trong Điều khoản này vào bất kỳ lúc nào mà không cần báo trước. Các thay đổi sẽ có hiệu lực ngay lập tức khi được đăng tải. Việc Quý khách tiếp tục sử dụng dịch vụ sau đó đồng nghĩa với việc Quý khách chấp nhận hoàn toàn những sửa đổi này.</p>
+                                </div>
                             </div>
 
-                            <h2 className="text-2xl font-bold text-slate-800 mt-8 mb-4">4. Quyền và Trách nhiệm</h2>
-                            <p>Bạn chịu trách nhiệm cung cấp thông tin chính xác khi đặt dịch vụ. Chúng tôi không chịu trách nhiệm đối với các tổn thất phát sinh do bạn cung cấp sai thông tin (như sai tên, sai ngày tháng, số hộ chiếu hết hạn...).</p>
+                            <hr className="border-slate-100" />
+
+                            {/* Section 2 */}
+                            <div className="flex flex-col md:flex-row gap-8 md:gap-12 group">
+                                <div className="md:w-1/3 shrink-0">
+                                    <div className="">
+                                        <div className="w-14 h-14 bg-slate-50 border border-slate-100 text-indigo-500 rounded-lg flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-indigo-50 transition-all duration-300">
+                                            <UserCheck className="w-7 h-7" />
+                                        </div>
+                                        <h3 className="text-2xl font-bold text-slate-800 mb-3 leading-tight">2. Quyền và Nghĩa vụ</h3>
+                                        <p className="text-slate-500 text-sm leading-relaxed">Trách nhiệm của khách hàng khi đăng ký thông tin đặt phòng và dịch vụ.</p>
+                                    </div>
+                                </div>
+                                <div className="md:w-2/3 prose prose-slate prose-lg text-slate-600">
+                                    <p><strong>Cung cấp thông tin:</strong> Quý khách có trách nhiệm cung cấp thông tin cá nhân (họ tên, CCCD/Passport, số điện thoại, email) một cách chính xác và đầy đủ. Chúng tôi không chịu trách nhiệm cho bất kỳ tổn thất, chi phí phát sinh hoặc việc từ chối dịch vụ nào từ phía đối tác (hãng hàng không, khách sạn) do thông tin Quý khách cung cấp bị sai lệch.</p>
+                                    <p><strong>Bảo mật tài khoản:</strong> Nếu Quý khách tạo tài khoản trên hệ thống, Quý khách phải tự bảo mật thông tin đăng nhập. Mọi giao dịch được thực hiện dưới tài khoản của Quý khách sẽ được coi là do chính Quý khách thực hiện hoặc ủy quyền.</p>
+                                </div>
+                            </div>
+
+                            <hr className="border-slate-100" />
+
+                            {/* Section 3 */}
+                            <div className="flex flex-col md:flex-row gap-8 md:gap-12 group">
+                                <div className="md:w-1/3 shrink-0">
+                                    <div className="">
+                                        <div className="w-14 h-14 bg-slate-50 border border-slate-100 text-emerald-500 rounded-lg flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-emerald-50 transition-all duration-300">
+                                            <CreditCard className="w-7 h-7" />
+                                        </div>
+                                        <h3 className="text-2xl font-bold text-slate-800 mb-3 leading-tight">3. Giá cả & Thanh toán</h3>
+                                        <p className="text-slate-500 text-sm leading-relaxed">Quy định về thanh toán, đặt cọc và chính sách giá hiển thị trên website.</p>
+                                    </div>
+                                </div>
+                                <div className="md:w-2/3 prose prose-slate prose-lg text-slate-600">
+                                    <p>Tất cả các báo giá trên website đã bao gồm thuế và phí dịch vụ (trừ khi có ghi chú khác). Giá có thể biến động theo thời điểm, tuy nhiên, mức giá tại thời điểm Quý khách <strong>hoàn tất thanh toán</strong> sẽ luôn được đảm bảo giữ nguyên.</p>
+                                    <ul>
+                                        <li><strong>Thanh toán toàn bộ:</strong> Bắt buộc đối với các booking cận ngày (dưới 7 ngày trước khởi hành) hoặc các chương trình khuyến mãi đặc biệt (Flash Sale, Early Bird).</li>
+                                        <li><strong>Đặt cọc giữ chỗ:</strong> Cho phép với các tour dài ngày, số tiền cọc tối thiểu là 30% đến 50% tổng giá trị hợp đồng tùy theo quy định của từng gói.</li>
+                                    </ul>
+                                    <p>Chúng tôi hỗ trợ đa dạng phương thức thanh toán qua VNPAY, Thẻ Tín Dụng, và Chuyển khoản ngân hàng. Giao dịch được mã hóa và bảo mật chuẩn quốc tế.</p>
+                                </div>
+                            </div>
+
+                            <hr className="border-slate-100" />
+
+                            {/* Section 4 */}
+                            <div className="flex flex-col md:flex-row gap-8 md:gap-12 group">
+                                <div className="md:w-1/3 shrink-0">
+                                    <div className="">
+                                        <div className="w-14 h-14 bg-slate-50 border border-slate-100 text-rose-500 rounded-lg flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-rose-50 transition-all duration-300">
+                                            <XCircle className="w-7 h-7" />
+                                        </div>
+                                        <h3 className="text-2xl font-bold text-slate-800 mb-3 leading-tight">4. Chính sách Hủy & Hoàn</h3>
+                                        <p className="text-slate-500 text-sm leading-relaxed">Quy định về thời gian hủy, chi phí bồi thường và thủ tục hoàn tiền.</p>
+                                    </div>
+                                </div>
+                                <div className="md:w-2/3 prose prose-slate prose-lg text-slate-600">
+                                    <p>Trừ khi gói dịch vụ của Quý khách thuộc diện "Không hoàn hủy", chính sách hủy dịch vụ tiêu chuẩn được áp dụng như sau:</p>
+                                    <ul className="marker:text-rose-400">
+                                        <li>Hủy <strong>trước 14 ngày</strong> so với ngày khởi hành: Miễn phí hủy, hoàn trả 100% số tiền.</li>
+                                        <li>Hủy <strong>từ 7 đến 13 ngày</strong> trước ngày khởi hành: Phí hủy là 50% tổng giá trị dịch vụ.</li>
+                                        <li>Hủy <strong>trong vòng 7 ngày</strong> hoặc không đến (No-show): Phí hủy là 100% tổng giá trị dịch vụ.</li>
+                                    </ul>
+                                    <div className="bg-amber-50/80 border border-amber-200 p-5 mt-6 rounded-xl flex items-start gap-4">
+                                        <AlertTriangle className="w-6 h-6 text-amber-500 shrink-0 mt-0.5" />
+                                        <div className="text-sm text-amber-800">
+                                            <strong className="block text-base mb-1">Trường hợp bất khả kháng:</strong>
+                                            Thiên tai, dịch bệnh, chiến tranh hoặc lệnh cấm từ cơ quan chức năng. Chúng tôi sẽ hỗ trợ bảo lưu khoản thanh toán hoặc hoàn tiền theo quy định pháp luật và chính sách của nhà cung cấp.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr className="border-slate-100" />
+
+                            {/* Section 5 */}
+                            <div className="flex flex-col md:flex-row gap-8 md:gap-12 group">
+                                <div className="md:w-1/3 shrink-0">
+                                    <div className="">
+                                        <div className="w-14 h-14 bg-slate-50 border border-slate-100 text-slate-600 rounded-lg flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-slate-200 transition-all duration-300">
+                                            <FileText className="w-7 h-7" />
+                                        </div>
+                                        <h3 className="text-2xl font-bold text-slate-800 mb-3 leading-tight">5. Sở hữu trí tuệ</h3>
+                                        <p className="text-slate-500 text-sm leading-relaxed">Bản quyền nội dung, hình ảnh và tài sản trí tuệ trên nền tảng.</p>
+                                    </div>
+                                </div>
+                                <div className="md:w-2/3 prose prose-slate prose-lg text-slate-600">
+                                    <p>Tất cả nội dung trên website bao gồm nhưng không giới hạn ở: văn bản, hình ảnh, đồ họa, logo, biểu tượng, video, phần mềm đều thuộc sở hữu độc quyền của chúng tôi hoặc các đối tác cung cấp nội dung, được bảo vệ bởi luật sở hữu trí tuệ của Việt Nam và quốc tế.</p>
+                                    <p>Nghiêm cấm mọi hành vi sao chép, phân phối, sửa đổi hoặc sử dụng nội dung cho mục đích thương mại mà không có sự đồng ý bằng văn bản của chúng tôi.</p>
+                                </div>
+                            </div>
                         </div>
                     )}
                 </div>
@@ -53,3 +156,5 @@ export const TermsPage: React.FC = () => {
         </div>
     );
 };
+
+export default TermsPage;
