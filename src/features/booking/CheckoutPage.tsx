@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react';
 import { Form, Input, Button, Steps, Divider, Radio } from 'antd';
 import { toast } from 'sonner';

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react';
 import { Tag, Button, Modal, Rate, Input } from 'antd';
 import { toast } from 'sonner';
@@ -55,7 +56,8 @@ export const BookingsPage: React.FC = () => {
             case 'CONFIRMED': return <Tag color="blue" className="rounded-full px-3 py-1 font-bold border-0">Sắp diễn ra</Tag>;
             case 'COMPLETED': return <Tag color="green" className="rounded-full px-3 py-1 font-bold border-0">Đã hoàn thành</Tag>;
             case 'CANCELLED': return <Tag color="error" className="rounded-full px-3 py-1 font-bold border-0">Đã hủy</Tag>;
-            default: return <Tag>{status}</Tag>;
+            case 'PENDING': return <Tag color="orange" className="rounded-full px-3 py-1 font-bold border-0">Chờ thanh toán</Tag>;
+            default: return <Tag className="rounded-full px-3 py-1 font-bold border-0">{status}</Tag>;
         }
     };
 
@@ -78,11 +80,11 @@ export const BookingsPage: React.FC = () => {
                     ) : (
                         myBookings.map((booking) => (
                             <div key={booking.id} className="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 overflow-hidden flex flex-col md:flex-row transition-all hover:shadow-md">
-                                <div className="w-full md:w-72 h-48 md:h-auto shrink-0 relative">
-                                    {/* <img src={getBookingImage(booking)} alt={booking.packageName || 'Khách sạn'} className="w-full h-full object-cover" /> */}
-                                    <div className="absolute top-3 left-3">
-                                        {getStatusTag(booking.status)}
+                                <div className="w-full md:w-72 h-48 md:h-auto shrink-0 relative bg-slate-200">
+                                    <div className="absolute inset-0 flex items-center justify-center text-slate-400">
+                                        <Calendar size={48} className="opacity-20" />
                                     </div>
+                                    {/* <img src={getBookingImage(booking)} alt={booking.packageName || 'Khách sạn'} className="w-full h-full object-cover" /> */}
                                 </div>
                                 <div className="p-6 flex flex-col grow">
                                     <div className="flex justify-between items-start mb-2">
@@ -90,9 +92,12 @@ export const BookingsPage: React.FC = () => {
                                             <h3 className="text-xl font-bold text-slate-800 mb-1 line-clamp-1 hover:text-primary-600 transition-colors cursor-pointer">{booking.packageName || 'Phòng Khách sạn'}</h3>
                                             <div className="text-primary-600 font-medium mb-3">{booking.rooms && booking.rooms.length > 0 ? booking.rooms[0].roomName : 'Phòng tiêu chuẩn'}</div>
                                         </div>
-                                        <div className="text-right shrink-0 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100">
-                                            <div className="text-xs text-slate-500 uppercase font-bold tracking-wider mb-0.5">Mã Đặt Chỗ</div>
-                                            <div className="font-bold text-slate-700">{booking.id.substring(0, 8).toUpperCase()}</div>
+                                        <div className="text-right shrink-0 flex flex-col items-end gap-2">
+                                            {getStatusTag(booking.status)}
+                                            <div className="bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100 text-center">
+                                                <div className="text-xs text-slate-500 uppercase font-bold tracking-wider mb-0.5">Mã Đặt Chỗ</div>
+                                                <div className="font-bold text-slate-700">{booking.id.substring(0, 8).toUpperCase()}</div>
+                                            </div>
                                         </div>
                                     </div>
 

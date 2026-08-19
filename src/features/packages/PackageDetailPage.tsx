@@ -75,9 +75,49 @@ export const PackageDetailPage: React.FC = () => {
             key: 'itinerary',
             label: 'Lịch trình chi tiết',
             children: (
-                <div className="prose prose-slate max-w-none py-4">
+                <div className="py-4">
                     {pkg.itinerary ? (
-                        <div className="whitespace-pre-line text-slate-600 leading-relaxed">{pkg.itinerary}</div>
+                        (() => {
+                            try {
+                                const parsed = JSON.parse(pkg.itinerary);
+                                if (Array.isArray(parsed)) {
+                                    return (
+                                        <div className="relative border-l-2 border-primary-200 ml-4 py-2 space-y-8 mt-4">
+                                            {parsed.map((item, index) => (
+                                                <div key={index} className="relative pl-8">
+                                                    {/* Timeline dot */}
+                                                    <div className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-white border-4 border-primary-500 shadow-sm" />
+
+                                                    {/* Content */}
+                                                    <div className="bg-white rounded-xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+                                                        <div className="flex flex-wrap items-center gap-3 mb-4 border-b border-slate-50 pb-3">
+                                                            <span className="px-3 py-1.5 bg-gradient-to-r from-primary-500 to-primary-600 text-white text-sm font-bold rounded-lg shadow-sm whitespace-nowrap">
+                                                                Ngày {item.day}
+                                                            </span>
+                                                            <h4 className="text-lg font-bold text-slate-800">{item.title}</h4>
+                                                        </div>
+
+                                                        {item.activities && Array.isArray(item.activities) && (
+                                                            <ul className="space-y-3">
+                                                                {item.activities.map((act: string, actIdx: number) => (
+                                                                    <li key={actIdx} className="flex items-start gap-3 text-slate-600">
+                                                                        <div className="mt-2 w-1.5 h-1.5 rounded-full bg-primary-400 shrink-0" />
+                                                                        <span className="leading-relaxed">{act}</span>
+                                                                    </li>
+                                                                ))}
+                                                            </ul>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    );
+                                }
+                                return <div className="whitespace-pre-line text-slate-600 leading-relaxed prose prose-slate max-w-none">{pkg.itinerary}</div>;
+                            } catch {
+                                return <div className="whitespace-pre-line text-slate-600 leading-relaxed prose prose-slate max-w-none">{pkg.itinerary}</div>;
+                            }
+                        })()
                     ) : (
                         <p className="text-slate-500 italic">Chưa có lịch trình chi tiết được cập nhật.</p>
                     )}
@@ -197,7 +237,7 @@ export const PackageDetailPage: React.FC = () => {
                         <div className="space-y-4 mb-6">
                             <div>
                                 <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Ngày khởi hành</label>
-                                <DatePicker 
+                                <DatePicker
                                     className="w-full rounded-xl py-2.5"
                                     size="large"
                                     disabledDate={(current) => current && current < dayjs().startOf('day')}
@@ -235,9 +275,9 @@ export const PackageDetailPage: React.FC = () => {
                             </div>
                         </div>
 
-                        <Button 
-                            type="primary" 
-                            size="large" 
+                        <Button
+                            type="primary"
+                            size="large"
                             onClick={handleBookNow}
                             className="w-full bg-primary-600 hover:!bg-primary-700 h-14 text-base font-bold rounded-xl shadow-lg shadow-primary-500/20"
                         >
