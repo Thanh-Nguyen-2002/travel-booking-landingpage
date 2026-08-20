@@ -12,6 +12,7 @@ import { EmptyBooking } from './components/EmptyBooking';
 import { SuccessStep } from './components/SuccessStep';
 import { OrderSummary } from './components/OrderSummary';
 import { PaymentModal } from './components/PaymentModal';
+import apiClient from '../../services/api-client';
 
 export const CheckoutPage: React.FC = () => {
     const navigate = useNavigate();
@@ -56,12 +57,27 @@ export const CheckoutPage: React.FC = () => {
         setSelectedMethod(method);
 
         createBooking(request, {
-            onSuccess: (data) => {
+            onSuccess: async (data) => {
                 setCreatedBooking(data);
-                setPaymentModalOpen(true);
+                if (method === 'vnpay') {
+                    try {
+                        const returnUrl = window.location.origin + '/booking/vnpay-return';
+                        const res: any = await apiClient.get(`/payment/create?amount=${data.total}&bookingId=${data.id}&returnUrl=${encodeURIComponent(returnUrl)}`);
+                        if (res.data?.paymentUrl) {
+                            window.location.replace(res.data.paymentUrl);
+                        } else {
+                            toast.error('Không lấy được URL thanh toán VNPAY');
+                        }
+                    } catch (error) {
+                        toast.error('Lỗi kết nối đến cổng thanh toán VNPAY');
+                    }
+                } else {
+                    setPaymentModalOpen(true);
+                }
             },
-            onError: () => {
-                toast.error('Có lỗi xảy ra khi đặt phòng. Vui lòng kiểm tra lại!');
+            onError: (error: any) => {
+                const message = error?.response?.data?.message || 'Có lỗi xảy ra khi đặt phòng. Vui lòng kiểm tra lại!';
+                toast.error(message);
             }
         });
     };

@@ -30,6 +30,7 @@ import { LoginPage } from './features/auth/LoginPage';
 import { RegisterPage } from './features/auth/RegisterPage';
 import { ForgotPasswordPage } from './features/auth/ForgotPasswordPage';
 import { CheckoutPage } from './features/booking/CheckoutPage';
+import { VnPayReturnPage } from './features/booking/VnPayReturnPage';
 import { ProfilePage } from './features/user/ProfilePage';
 import { BookingsPage } from './features/user/BookingsPage';
 import { ScrollToTop } from './components/common/ScrollToTop';
@@ -62,6 +63,7 @@ function App() {
                         <Route path="terms" element={<TermsPage />} />
                         <Route path="privacy" element={<PrivacyPage />} />
                         <Route path="checkout" element={<CheckoutPage />} />
+                        <Route path="booking/vnpay-return" element={<VnPayReturnPage />} />
                         <Route path="profile" element={<ProfilePage />} />
                         <Route path="bookings" element={<BookingsPage />} />
                         {/* More routes will go here */}

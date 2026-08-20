@@ -62,23 +62,32 @@ export const RoomList: React.FC<RoomListProps> = ({ hotel, roomsData, isLoadingR
                                             <div className="text-2xl font-bold text-primary-600">{room.price.toLocaleString()}đ</div>
                                             <div className="text-slate-500 text-sm">/ đêm</div>
                                         </div>
-                                        <button
-                                            onClick={() => {
-                                                if (!hotel) return;
-                                                setBookingInfo({
-                                                    hotelId: hotel.id,
-                                                    hotelName: hotel.name,
-                                                    roomId: room.id,
-                                                    roomName: room.name,
-                                                    price: room.price,
-                                                    coverImage: roomCover
-                                                });
-                                                navigate('/checkout');
-                                            }}
-                                            className="px-6 py-2.5 bg-slate-900 hover:bg-primary-600 hover:cursor-pointer text-white font-semibold rounded-lg shadow-lg hover:shadow-primary-500/30 transition-all duration-300"
-                                        >
-                                            Đặt ngay
-                                        </button>
+                                        {room.quantity > 0 && room.status === 'ACTIVE' ? (
+                                            <button
+                                                onClick={() => {
+                                                    if (!hotel) return;
+                                                    setBookingInfo({
+                                                        hotelId: hotel.id,
+                                                        hotelName: hotel.name,
+                                                        roomId: room.id,
+                                                        roomName: room.name,
+                                                        price: room.price,
+                                                        coverImage: roomCover
+                                                    });
+                                                    navigate('/checkout');
+                                                }}
+                                                className="px-6 py-2.5 bg-slate-900 hover:bg-primary-600 hover:cursor-pointer text-white font-semibold rounded-lg shadow-lg hover:shadow-primary-500/30 transition-all duration-300"
+                                            >
+                                                Đặt ngay
+                                            </button>
+                                        ) : (
+                                            <button
+                                                disabled
+                                                className="px-6 py-2.5 bg-slate-200 text-slate-500 font-semibold rounded-lg cursor-not-allowed"
+                                            >
+                                                Hết phòng
+                                            </button>
+                                        )}
                                     </div>
                                 </div>
                             </div>
