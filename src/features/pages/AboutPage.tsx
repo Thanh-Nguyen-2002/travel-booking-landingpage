@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSettings } from '../../hooks/useSettings';
-import { Compass, Map, Telescope, Target, HeartHandshake, Users, Quote } from 'lucide-react';
+import { Map, Telescope, Target, HeartHandshake, Users, Quote } from 'lucide-react';
+import { ASSETS } from '../../config/assets';
 
 export const AboutPage: React.FC = () => {
     const { data: settings } = useSettings();
@@ -10,24 +11,23 @@ export const AboutPage: React.FC = () => {
     return (
         <div className="bg-slate-50 min-h-screen pb-24">
             {/* Hero Section */}
-            <div className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-primary-900 py-32 text-center text-white overflow-hidden">
-                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03] mix-blend-overlay"></div>
-                <div className="absolute -top-32 -left-32 w-96 h-96 bg-primary-600 rounded-full mix-blend-screen filter blur-[100px] opacity-40 animate-blob"></div>
-                <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-teal-500 rounded-full mix-blend-screen filter blur-[120px] opacity-20 animate-blob animation-delay-2000"></div>
+            <div className="relative bg-slate-900 py-32 text-center text-white overflow-hidden">
+                <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: `url(${ASSETS.IMAGES.HERO_ABOUT})` }}></div>
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-50 z-10"></div>
 
-                <div className="container mx-auto px-4 relative z-10 flex flex-col items-center">
-                    <div className="inline-flex items-center justify-center p-3 bg-white/10 rounded-lg backdrop-blur-md border border-white/20 mb-6 shadow-xl">
-                        <Compass className="w-8 h-8 text-teal-300" />
-                    </div>
-                    <h1 className="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight">
-                        Về <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-teal-300">{siteName}</span>
+                <div className="container mx-auto px-4 relative z-20 flex flex-col items-center">
+                    <span className="inline-block px-3 py-1 bg-primary-500/20 text-primary-400 text-sm font-bold rounded-full mb-4 border border-primary-500/30 uppercase tracking-widest">
+                        Câu Chuyện Thương Hiệu
+                    </span>
+                    <h1 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-white drop-shadow-sm">
+                        Về {siteName}
                     </h1>
-                    <p className="text-slate-300 text-lg md:text-xl max-w-2xl font-light leading-relaxed">
+                    <p className="text-slate-300 text-lg md:text-xl max-w-2xl font-medium leading-relaxed drop-shadow-sm">
                         Hành trình của chúng tôi là mang thế giới đến gần bạn hơn, biến mỗi chuyến đi thành một kỷ niệm vô giá khắc sâu trong tâm trí.
                     </p>
-                    <div className="mt-8 flex items-center gap-4 text-sm font-medium text-slate-400 bg-slate-900/50 py-2.5 px-6 rounded-lg border border-slate-700 backdrop-blur-sm">
+                    <div className="mt-8 flex items-center gap-4 text-sm font-semibold text-slate-300 bg-black/20 py-2.5 px-6 rounded-lg border border-white/10 backdrop-blur-md">
                         <span>Thành lập: 2026</span>
-                        <span className="w-1.5 h-1.5 rounded-full bg-slate-500"></span>
+                        <span className="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
                         <span>Sứ mệnh: Vươn tầm thế giới</span>
                     </div>
                 </div>

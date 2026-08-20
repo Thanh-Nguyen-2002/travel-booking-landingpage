@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Phone, User } from 'lucide-react';
+import { Phone, User, UserCircle, History, LogOut } from 'lucide-react';
 import { Dropdown, Avatar } from 'antd';
 import { useSettings } from '../../hooks/useSettings';
 import { useScroll } from '../../hooks/useScroll';
@@ -46,11 +46,12 @@ export const Header: React.FC = () => {
                         {isAuthenticated && user ? (
                             <Dropdown menu={{
                                 items: [
-                                    { key: 'profile', label: <Link to="/profile">Thông tin cá nhân</Link> },
-                                    { key: 'bookings', label: <Link to="/bookings">Lịch sử đặt phòng</Link> },
+                                    { key: 'profile', icon: <UserCircle size={18} className="text-slate-500" />, label: <Link to="/profile">Thông tin cá nhân</Link>, className: "py-2 h-12" },
+                                    { key: 'bookings', icon: <History size={18} className="text-slate-500" />, label: <Link to="/bookings">Lịch sử đặt phòng</Link>, className: "py-2 h-12" },
                                     { type: 'divider' },
-                                    { key: 'logout', label: <span onClick={() => { logout(); window.location.href = '/'; }}>Đăng xuất</span>, danger: true }
-                                ]
+                                    { key: 'logout', icon: <LogOut size={18} />, label: <span onClick={() => { logout(); window.location.href = '/'; }}>Đăng xuất</span>, danger: true, className: "py-2 h-12" }
+                                ],
+                                className: "w-52 shadow-[0_8px_30px_rgb(0,0,0,0.12)] rounded-xl p-2 font-medium text-slate-700"
                             }} placement="bottomRight">
                                 <div className="flex items-center gap-2 cursor-pointer hover:text-primary-100 transition-colors">
                                     <Avatar size="small" src={user.avatar} icon={!user.avatar && <User size={14} />} className="bg-primary-400" />

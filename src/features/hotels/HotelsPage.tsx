@@ -7,6 +7,7 @@ import { HotelCardSkeleton } from '../../components/common/skeletons';
 import { useDebounce } from '../../hooks/useDebounce';
 import { getCoverImage } from '../../utils/image';
 import { useHotels } from './queries/useHotels';
+import { ASSETS } from '../../config/assets';
 
 
 export const HotelsPage: React.FC = () => {
@@ -19,13 +20,18 @@ export const HotelsPage: React.FC = () => {
     return (
         <div className="bg-slate-50 min-h-screen pb-24">
             {/* Hero Header */}
-            <div className="relative bg-gradient-to-br from-primary-900 via-primary-700 to-primary-800 py-24 text-center text-white overflow-hidden">
-                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
-                <div className="absolute -top-24 -left-24 w-96 h-96 bg-primary-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
-                <div className="absolute top-12 -right-24 w-96 h-96 bg-teal-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-                <div className="container mx-auto px-4 relative z-10">
-                    <h1 className="text-4xl md:text-6xl font-bold mb-6">Khách sạn & Nơi lưu trú</h1>
-                    <p className="text-lg md:text-xl text-primary-100 max-w-2xl mx-auto leading-relaxed">
+            <div className="relative bg-slate-900 py-32 text-center text-white overflow-hidden">
+                <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: `url(${ASSETS.IMAGES.HERO_HOTELS})` }}></div>
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-50 z-10"></div>
+
+                <div className="container mx-auto px-4 relative z-20 flex flex-col items-center">
+                    <span className="inline-block px-3 py-1 bg-primary-500/20 text-primary-400 text-sm font-bold rounded-full mb-4 border border-primary-500/30 uppercase tracking-widest">
+                        Khách Sạn & Lưu Trú
+                    </span>
+                    <h1 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-white drop-shadow-sm">
+                        Danh Sách Khách Sạn
+                    </h1>
+                    <p className="text-slate-300 text-lg md:text-xl max-w-2xl font-medium leading-relaxed drop-shadow-sm">
                         Khám phá hàng ngàn khách sạn, resort đẳng cấp với mức giá ưu đãi nhất cho chuyến đi của bạn.
                     </p>
                 </div>

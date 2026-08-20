@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSettings } from '../../hooks/useSettings';
 import { Scale, ShieldCheck, CreditCard, XCircle, FileText, AlertTriangle, UserCheck } from 'lucide-react';
+import { ASSETS } from '../../config/assets';
 
 export const TermsPage: React.FC = () => {
     const { data: settings } = useSettings();
@@ -9,24 +10,23 @@ export const TermsPage: React.FC = () => {
     return (
         <div className="bg-slate-50 min-h-screen pb-24">
             {/* Hero Section */}
-            <div className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-primary-900 py-32 text-center text-white overflow-hidden">
-                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03] mix-blend-overlay"></div>
-                <div className="absolute -top-32 -left-32 w-96 h-96 bg-primary-600 rounded-full mix-blend-screen filter blur-[100px] opacity-40 animate-blob"></div>
-                <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-teal-500 rounded-full mix-blend-screen filter blur-[120px] opacity-20 animate-blob animation-delay-2000"></div>
+            <div className="relative bg-slate-900 py-32 text-center text-white overflow-hidden">
+                <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: `url(${ASSETS.IMAGES.HERO_TERMS})` }}></div>
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-50 z-10"></div>
 
-                <div className="container mx-auto px-4 relative z-10 flex flex-col items-center">
-                    <div className="inline-flex items-center justify-center p-3 bg-white/10 rounded-lg backdrop-blur-md border border-white/20 mb-6 shadow-xl">
-                        <Scale className="w-8 h-8 text-teal-300" />
-                    </div>
-                    <h1 className="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight">
-                        Điều khoản <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-teal-300">Dịch vụ</span>
+                <div className="container mx-auto px-4 relative z-20 flex flex-col items-center">
+                    <span className="inline-block px-3 py-1 bg-primary-500/20 text-primary-400 text-sm font-bold rounded-full mb-4 border border-primary-500/30 uppercase tracking-widest">
+                        Thỏa Thuận Sử Dụng
+                    </span>
+                    <h1 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-white drop-shadow-sm">
+                        Điều Khoản Dịch Vụ
                     </h1>
-                    <p className="text-slate-300 text-lg md:text-xl max-w-2xl font-light leading-relaxed">
+                    <p className="text-slate-300 text-lg md:text-xl max-w-2xl font-medium leading-relaxed drop-shadow-sm">
                         Quy định chi tiết về quyền lợi, trách nhiệm và nguyên tắc hoạt động nhằm mang lại trải nghiệm du lịch an toàn, minh bạch cho mọi khách hàng.
                     </p>
-                    <div className="mt-8 flex items-center gap-4 text-sm font-medium text-slate-400 bg-slate-900/50 py-2.5 px-6 rounded-full border border-slate-700 backdrop-blur-sm">
+                    <div className="mt-8 flex items-center gap-4 text-sm font-semibold text-slate-300 bg-black/20 py-2.5 px-6 rounded-lg border border-white/10 backdrop-blur-md">
                         <span>Cập nhật lần cuối: 15/08/2026</span>
-                        <span className="w-1.5 h-1.5 rounded-full bg-slate-500"></span>
+                        <span className="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
                         <span>Phiên bản: 2.1.0</span>
                     </div>
                 </div>

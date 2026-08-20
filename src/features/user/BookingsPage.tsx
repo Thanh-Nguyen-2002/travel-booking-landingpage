@@ -53,7 +53,8 @@ export const BookingsPage: React.FC = () => {
 
     const getStatusTag = (status: string) => {
         switch (status) {
-            case 'CONFIRMED': return <Tag color="blue" className="rounded-full px-3 py-1 font-bold border-0">Sắp diễn ra</Tag>;
+            case 'CONFIRMED': return <Tag color="blue" className="rounded-full px-3 py-1 font-bold border-0">Đã xác nhận</Tag>;
+            case 'PAID': return <Tag color="cyan" className="rounded-full px-3 py-1 font-bold border-0">Đã thanh toán</Tag>;
             case 'COMPLETED': return <Tag color="green" className="rounded-full px-3 py-1 font-bold border-0">Đã hoàn thành</Tag>;
             case 'CANCELLED': return <Tag color="error" className="rounded-full px-3 py-1 font-bold border-0">Đã hủy</Tag>;
             case 'PENDING': return <Tag color="orange" className="rounded-full px-3 py-1 font-bold border-0">Chờ thanh toán</Tag>;

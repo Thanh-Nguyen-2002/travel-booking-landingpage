@@ -6,6 +6,7 @@ import { FallbackImage } from '../../components/common/FallbackImage';
 import { PackageCardSkeleton } from '../../components/common/skeletons';
 import { getCoverImage } from '../../utils/image';
 import { usePackages } from './queries/usePackages';
+import { ASSETS } from '../../config/assets';
 
 
 export const PackagesPage: React.FC = () => {
@@ -20,7 +21,7 @@ export const PackagesPage: React.FC = () => {
         <div className="bg-slate-50 min-h-screen pb-24">
             {/* Banner Section */}
             <div className="relative bg-slate-900 text-white py-24 overflow-hidden mb-12">
-                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=2000')] bg-cover bg-center opacity-40"></div>
+                <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: `url(${ASSETS.IMAGES.HERO_PACKAGES})` }}></div>
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-slate-50 z-10"></div>
                 <div className="relative z-20 max-w-6xl mx-auto px-4 text-center">
                     <span className="inline-block px-3 py-1 bg-primary-500/20 text-primary-400 text-sm font-bold rounded-full mb-4 border border-primary-500/30 uppercase tracking-widest">Hành trình Tour</span>
@@ -70,7 +71,7 @@ export const PackagesPage: React.FC = () => {
                     <>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
                             {packages.map((pkg) => {
-                                const mainImage = getCoverImage(pkg.images, 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=600');
+                                const mainImage = getCoverImage(pkg.images, ASSETS.IMAGES.HERO_PACKAGES);
                                 const hasPromotion = pkg.promotionalPrice && pkg.promotionalPrice < pkg.price;
 
                                 return (

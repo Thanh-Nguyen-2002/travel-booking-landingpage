@@ -2,6 +2,7 @@ import React from 'react';
 import { Tag, Calendar, AlertCircle, Sparkles } from 'lucide-react';
 import { usePromotions, type Promotion } from '../../hooks/usePromotions';
 import { PromoCardSkeleton } from '../../components/common/skeletons';
+import { ASSETS } from '../../config/assets';
 
 
 export const PromotionsPage: React.FC = () => {
@@ -41,13 +42,18 @@ export const PromotionsPage: React.FC = () => {
     return (
         <div className="bg-slate-50 min-h-screen pb-16">
             {/* Hero Section */}
-            <div className="relative bg-gradient-to-br from-primary-900 via-primary-700 to-primary-800 py-24 text-center text-white overflow-hidden">
-                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
-                <div className="absolute -top-24 -left-24 w-96 h-96 bg-primary-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
-                <div className="absolute top-12 -right-24 w-96 h-96 bg-amber-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-                <div className="container mx-auto px-4 relative z-10">
-                    <h1 className="text-4xl md:text-6xl font-bold mb-6">Khuyến mãi & Ưu đãi</h1>
-                    <p className="text-lg md:text-xl text-primary-100 max-w-2xl mx-auto leading-relaxed">
+            <div className="relative bg-slate-900 py-32 text-center text-white overflow-hidden">
+                <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: `url(${ASSETS.IMAGES.HERO_PROMOTIONS})` }}></div>
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-50 z-10"></div>
+
+                <div className="container mx-auto px-4 relative z-20 flex flex-col items-center">
+                    <span className="inline-block px-3 py-1 bg-primary-500/20 text-primary-400 text-sm font-bold rounded-full mb-4 border border-primary-500/30 uppercase tracking-widest">
+                        Ưu Đãi Đặc Quyền
+                    </span>
+                    <h1 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-white drop-shadow-sm">
+                        Khuyến Mãi & Ưu Đãi
+                    </h1>
+                    <p className="text-slate-300 text-lg md:text-xl max-w-2xl font-medium leading-relaxed drop-shadow-sm">
                         Săn ngay các deal du lịch cực hời chỉ có tại nền tảng của chúng tôi. Chuyến đi trong mơ nay rẻ bất ngờ!
                     </p>
                 </div>
