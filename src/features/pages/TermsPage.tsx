@@ -1,7 +1,7 @@
+import { AlertTriangle, CreditCard, FileText, ShieldCheck, UserCheck, XCircle } from 'lucide-react';
 import React from 'react';
-import { useSettings } from '../../hooks/useSettings';
-import { Scale, ShieldCheck, CreditCard, XCircle, FileText, AlertTriangle, UserCheck } from 'lucide-react';
 import { ASSETS } from '../../config/assets';
+import { useSettings } from '../../hooks/useSettings';
 
 export const TermsPage: React.FC = () => {
     const { data: settings } = useSettings();
