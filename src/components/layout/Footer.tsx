@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Mail, Phone, Send } from 'lucide-react';
+import { FaFacebookF, FaTwitter, FaInstagram } from 'react-icons/fa';
 import { useSettings } from '../../hooks/useSettings';
 import { useSubscribe } from '../../hooks/useSubscribe';
 import { toast } from 'sonner';
@@ -57,14 +58,29 @@ export const Footer: React.FC = () => {
                             Khám phá thế giới cùng chúng tôi. Mang đến những trải nghiệm du lịch tuyệt vời nhất cho bạn.
                         </p>
                         <div className="flex space-x-4">
-                            <a href={fbLink} className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-primary-500 hover:text-white transition-colors">
-
+                            <a 
+                                href={fbLink || '#'} 
+                                target={fbLink && fbLink !== '#' ? "_blank" : undefined} 
+                                rel={fbLink && fbLink !== '#' ? "noreferrer" : undefined} 
+                                className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors"
+                            >
+                                <FaFacebookF size={18} />
                             </a>
-                            <a href={twLink} className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-primary-500 hover:text-white transition-colors">
-
+                            <a 
+                                href={twLink || '#'} 
+                                target={twLink && twLink !== '#' ? "_blank" : undefined} 
+                                rel={twLink && twLink !== '#' ? "noreferrer" : undefined} 
+                                className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-sky-500 hover:text-white transition-colors"
+                            >
+                                <FaTwitter size={18} />
                             </a>
-                            <a href={igLink} className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-primary-500 hover:text-white transition-colors">
-
+                            <a 
+                                href={igLink || '#'} 
+                                target={igLink && igLink !== '#' ? "_blank" : undefined} 
+                                rel={igLink && igLink !== '#' ? "noreferrer" : undefined} 
+                                className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-pink-600 hover:text-white transition-colors"
+                            >
+                                <FaInstagram size={18} />
                             </a>
                         </div>
                     </div>
@@ -111,22 +127,22 @@ export const Footer: React.FC = () => {
 
                         <h3 className="text-white font-bold text-lg mb-4">Nhận bản tin</h3>
                         <CmsForm form={form} onFinish={onSubscribe} layout="vertical" className="w-full">
-                            <CmsForm.Item 
-                                name="email" 
+                            <CmsForm.Item
+                                name="email"
                                 rules={[
                                     { required: true, message: 'Vui lòng nhập email!' },
                                     { type: 'email', message: 'Email không hợp lệ!' }
                                 ]}
                                 style={{ marginBottom: '8px' }}
                             >
-                                <CmsInput 
-                                    placeholder="Email của bạn..." 
+                                <CmsInput
+                                    placeholder="Email của bạn..."
                                     className="footer-input"
                                 />
                             </CmsForm.Item>
-                            <CmsButton 
-                                type="primary" 
-                                htmlType="submit" 
+                            <CmsButton
+                                type="primary"
+                                htmlType="submit"
                                 loading={isPending}
                                 className="w-full mt-2 !bg-primary-500 hover:!bg-primary-600 !border-none"
                                 icon={<Send size={18} />}

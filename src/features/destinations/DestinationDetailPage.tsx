@@ -44,15 +44,15 @@ export const DestinationDetailPage: React.FC = () => {
         <div className="bg-slate-50 min-h-screen pb-24">
             {/* Hero Header */}
             <div className="relative h-[60vh] min-h-[400px] w-full overflow-hidden group">
-                <FallbackImage 
-                    src={destination.coverImage || 'https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=2000'} 
+                <FallbackImage
+                    src={destination.coverImage || 'https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=2000'}
                     alt={destination.name}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent"></div>
-                
+
                 <div className="absolute top-8 left-4 md:left-8 z-20">
-                    <Link to="/destinations" className="inline-flex items-center gap-2 text-white/80 hover:text-white bg-black/20 hover:bg-black/40 backdrop-blur-md px-4 py-2 rounded-xl transition-all">
+                    <Link to="/destinations" className="inline-flex items-center gap-2 text-white/80 hover:text-white bg-black/20 hover:bg-black/40 backdrop-blur-md px-4 py-2 rounded-lg transition-all">
                         <ArrowLeft size={20} />
                         <span className="font-medium hidden sm:inline">Trở về</span>
                     </Link>
@@ -66,11 +66,11 @@ export const DestinationDetailPage: React.FC = () => {
                             <span>{destination.address || 'Đang cập nhật địa chỉ'}</span>
                         </div>
                     </div>
-                    
+
                     {destination.videoUrl && (
-                        <a 
-                            href={destination.videoUrl} 
-                            target="_blank" 
+                        <a
+                            href={destination.videoUrl}
+                            target="_blank"
                             rel="noreferrer"
                             className="inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white px-6 py-3 rounded-full font-medium transition-all group/video"
                         >
@@ -85,19 +85,19 @@ export const DestinationDetailPage: React.FC = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     {/* Main Content */}
                     <div className="lg:col-span-2 space-y-8">
-                        
+
                         {/* Highlight Spots Carousel/Grid */}
                         {highlightSpots.length > 0 && (
-                            <div className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 p-6 md:p-8">
+                            <div className="bg-white rounded-lg shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 p-6 md:p-8">
                                 <h2 className="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
                                     <Map className="text-primary-500" /> Điểm đến không thể bỏ lỡ
                                 </h2>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     {highlightSpots.map((spot, idx) => (
-                                        <div key={idx} className="group relative rounded-xl overflow-hidden aspect-video cursor-pointer">
-                                            <FallbackImage 
-                                                src={spot.image || 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=800'} 
-                                                alt={spot.name} 
+                                        <div key={idx} className="group relative rounded-lg overflow-hidden aspect-video cursor-pointer">
+                                            <FallbackImage
+                                                src={spot.image || 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=800'}
+                                                alt={spot.name}
                                                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                                             />
                                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4">
@@ -112,10 +112,10 @@ export const DestinationDetailPage: React.FC = () => {
 
                         {/* Rich Content Tabs */}
                         {hasRichContent && (
-                            <div className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 overflow-hidden">
+                            <div className="bg-white rounded-lg shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 overflow-hidden">
                                 <div className="flex border-b border-slate-100 overflow-x-auto hide-scrollbar">
                                     {(destination.overviewHtml || destination.description) && (
-                                        <button 
+                                        <button
                                             onClick={() => setActiveTab('overview')}
                                             className={`px-6 py-4 font-medium flex items-center gap-2 whitespace-nowrap transition-colors ${activeTab === 'overview' ? 'text-primary-600 border-b-2 border-primary-600 bg-primary-50/50' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'}`}
                                         >
@@ -123,7 +123,7 @@ export const DestinationDetailPage: React.FC = () => {
                                         </button>
                                     )}
                                     {destination.culinaryHtml && (
-                                        <button 
+                                        <button
                                             onClick={() => setActiveTab('culinary')}
                                             className={`px-6 py-4 font-medium flex items-center gap-2 whitespace-nowrap transition-colors ${activeTab === 'culinary' ? 'text-primary-600 border-b-2 border-primary-600 bg-primary-50/50' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'}`}
                                         >
@@ -131,7 +131,7 @@ export const DestinationDetailPage: React.FC = () => {
                                         </button>
                                     )}
                                     {destination.transportHtml && (
-                                        <button 
+                                        <button
                                             onClick={() => setActiveTab('transport')}
                                             className={`px-6 py-4 font-medium flex items-center gap-2 whitespace-nowrap transition-colors ${activeTab === 'transport' ? 'text-primary-600 border-b-2 border-primary-600 bg-primary-50/50' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'}`}
                                         >
@@ -163,11 +163,11 @@ export const DestinationDetailPage: React.FC = () => {
 
                         {/* Activities Tags */}
                         {destination.activities && destination.activities.trim() !== '' && (
-                            <div className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 p-6 md:p-8">
+                            <div className="bg-white rounded-lg shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 p-6 md:p-8">
                                 <h2 className="text-xl font-bold text-slate-800 mb-6">Trải nghiệm & Hoạt động tiêu biểu</h2>
                                 <div className="flex flex-wrap gap-2 md:gap-3">
                                     {destination.activities.split(',').map((act, idx) => (
-                                        <span key={idx} className="px-4 py-2 bg-primary-50 text-primary-700 rounded-xl font-medium border border-primary-100 cursor-pointer hover:bg-primary-100 transition-colors">
+                                        <span key={idx} className="px-4 py-2 bg-primary-50 text-primary-700 rounded-lg font-medium border border-primary-100 cursor-pointer hover:bg-primary-100 transition-colors">
                                             #{act.trim()}
                                         </span>
                                     ))}
@@ -178,12 +178,12 @@ export const DestinationDetailPage: React.FC = () => {
 
                     {/* Sidebar */}
                     <div className="lg:col-span-1 space-y-6">
-                        <div className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 p-6 sticky top-24">
+                        <div className="bg-white rounded-lg shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 p-6 sticky top-24">
                             <h3 className="text-xl font-bold text-slate-800 mb-4">Lên kế hoạch chuyến đi?</h3>
                             <p className="text-slate-600 mb-6">
                                 Đặt phòng khách sạn hoặc tìm kiếm Tour du lịch tại <strong className="text-slate-800">{destination.name}</strong> ngay hôm nay để nhận được mức giá tốt nhất.
                             </p>
-                            
+
                             <div className="space-y-3">
                                 <Link to={`/hotels?destinationId=${destination.id}`} className="w-full flex justify-center items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white py-3 px-4 rounded-xl font-bold transition-all shadow-lg hover:shadow-slate-900/20">
                                     Tìm Khách sạn
