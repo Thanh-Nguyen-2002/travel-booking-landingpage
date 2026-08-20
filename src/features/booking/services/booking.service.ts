@@ -11,5 +11,10 @@ export const bookingService = {
     getMyBookings: async () => {
         const response = await apiClient.get<any, ApiResponse<BookingResponse[]>>('/bookings/my-bookings');
         return response.data;
+    },
+
+    updateBookingStatus: async (id: string, status: string) => {
+        const response = await apiClient.put<any, ApiResponse<BookingResponse>>(`/bookings/${id}/status?status=${status}`);
+        return response.data;
     }
 };

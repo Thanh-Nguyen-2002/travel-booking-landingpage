@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form, Input } from 'antd';
 import { CreditCard, QrCode, Timer, Loader2, ShieldCheck, XCircle } from 'lucide-react';
+import { useMockPaymentSuccess } from '../queries/useMockPaymentSuccess';
 
 interface PaymentModalProps {
     open: boolean;
@@ -22,6 +23,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
     const [timeLeft, setTimeLeft] = useState(300); // 5 minutes
     const [paymentStatus, setPaymentStatus] = useState<'pending' | 'processing' | 'success' | 'failed'>('pending');
     const [cardValues, setCardValues] = useState({ number: '', name: '', expiry: '', cvc: '' });
+    const { mutateAsync: mockPaymentSuccess } = useMockPaymentSuccess();
 
     useEffect(() => {
         if (!open) return;
@@ -51,14 +53,20 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
         return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     };
 
-    const handleSimulatePayment = () => {
+    const handleSimulatePayment = async () => {
         setPaymentStatus('processing');
-        setTimeout(() => {
-            setPaymentStatus('success');
+        try {
+            await mockPaymentSuccess(bookingId);
             setTimeout(() => {
-                onSuccess();
-            }, 1500);
-        }, 2000);
+                setPaymentStatus('success');
+                setTimeout(() => {
+                    onSuccess();
+                }, 1500);
+            }, 1000);
+        } catch (error) {
+            console.error('Lỗi khi giả lập thanh toán:', error);
+            setPaymentStatus('failed');
+        }
     };
 
     const qrData = paymentMethod === 'momo'
