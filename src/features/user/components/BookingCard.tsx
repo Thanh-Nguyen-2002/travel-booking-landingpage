@@ -13,14 +13,24 @@ interface BookingCardProps {
 export const BookingCard: React.FC<BookingCardProps> = ({ booking, onOpenReview, onPayNow, isRedirecting }) => {
     const { mutate: updateStatus, isPending: isUpdating } = useUpdateBookingStatus();
 
-    const getStatusTag = (status: string) => {
+    const getBookingStatusTag = (status: string) => {
         switch (status) {
             case 'CONFIRMED': return <Tag color="blue" className="rounded-full px-3 py-1 font-bold border-0">Đã xác nhận</Tag>;
-            case 'PAID': return <Tag color="cyan" className="rounded-full px-3 py-1 font-bold border-0">Đã thanh toán</Tag>;
             case 'COMPLETED': return <Tag color="green" className="rounded-full px-3 py-1 font-bold border-0">Đã hoàn thành</Tag>;
             case 'CANCELLED': return <Tag color="error" className="rounded-full px-3 py-1 font-bold border-0">Đã hủy</Tag>;
-            case 'PENDING': return <Tag color="orange" className="rounded-full px-3 py-1 font-bold border-0">Chờ thanh toán</Tag>;
-            default: return <Tag className="rounded-full px-3 py-1 font-bold border-0">{status}</Tag>;
+            case 'REJECTED': return <Tag color="error" className="rounded-full px-3 py-1 font-bold border-0">Bị từ chối</Tag>;
+            case 'PENDING': return <Tag color="orange" className="rounded-full px-3 py-1 font-bold border-0">Chờ xác nhận</Tag>;
+            default: return <Tag className="rounded-full px-3 py-1 font-bold border-0">{status || 'PENDING'}</Tag>;
+        }
+    };
+
+    const getPaymentStatusTag = (status: string) => {
+        switch (status) {
+            case 'PAID': return <Tag color="cyan" className="rounded-full px-3 py-1 font-bold border-0">Đã thanh toán</Tag>;
+            case 'UNPAID': return <Tag color="default" className="rounded-full px-3 py-1 font-bold border-0">Chưa thanh toán</Tag>;
+            case 'REFUNDING': return <Tag color="orange" className="rounded-full px-3 py-1 font-bold border-0">Chờ hoàn tiền</Tag>;
+            case 'REFUNDED': return <Tag color="purple" className="rounded-full px-3 py-1 font-bold border-0">Đã hoàn tiền</Tag>;
+            default: return <Tag className="rounded-full px-3 py-1 font-bold border-0">{status || 'UNPAID'}</Tag>;
         }
     };
 
@@ -38,7 +48,10 @@ export const BookingCard: React.FC<BookingCardProps> = ({ booking, onOpenReview,
                         <div className="text-primary-600 font-medium mb-3">{booking.rooms && booking.rooms.length > 0 ? booking.rooms[0].roomName : 'Phòng tiêu chuẩn'}</div>
                     </div>
                     <div className="text-right shrink-0 flex flex-col items-end gap-2">
-                        {getStatusTag(booking.status)}
+                        <div className="flex gap-2">
+                            {getBookingStatusTag(booking.bookingStatus)}
+                            {getPaymentStatusTag(booking.paymentStatus)}
+                        </div>
                         <div className="bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100 text-center">
                             <div className="text-xs text-slate-500 uppercase font-bold tracking-wider mb-0.5">Mã Đặt Chỗ</div>
                             <div className="font-bold text-slate-700">{booking.id.substring(0, 8).toUpperCase()}</div>
@@ -49,11 +62,11 @@ export const BookingCard: React.FC<BookingCardProps> = ({ booking, onOpenReview,
                 <div className="flex flex-wrap gap-8 text-sm text-slate-600 mb-6">
                     <div className="flex items-center gap-2">
                         <Calendar size={16} className="text-slate-400" />
-                        <span><span className="font-medium text-slate-800">In:</span> {booking.checkIn}</span>
+                        <span><span className="font-medium text-slate-800">Ngày nhận phòng:</span> {booking.checkIn}</span>
                     </div>
                     <div className="flex items-center gap-2">
                         <Calendar size={16} className="text-slate-400" />
-                        <span><span className="font-medium text-slate-800">Out:</span> {booking.checkOut}</span>
+                        <span><span className="font-medium text-slate-800">Ngày trả phòng:</span> {booking.checkOut}</span>
                     </div>
                 </div>
 
@@ -63,12 +76,12 @@ export const BookingCard: React.FC<BookingCardProps> = ({ booking, onOpenReview,
                     </div>
 
                     <div className="flex items-center gap-3">
-                        {booking.status === 'COMPLETED' && (
+                        {booking.bookingStatus === 'COMPLETED' && (
                             <Button type="primary" onClick={() => onOpenReview(booking)} className="bg-amber-500 hover:!bg-amber-600 border-none rounded-lg font-semibold shadow-md shadow-amber-500/20 h-10 px-5">
                                 Viết Đánh Giá
                             </Button>
                         )}
-                        {(booking.status === 'CONFIRMED' || booking.status === 'PAID') && (
+                        {booking.bookingStatus === 'CONFIRMED' && (
                             <Popconfirm
                                 title="Xác nhận hoàn thành"
                                 description="Bạn có chắc chắn chuyến đi này đã hoàn tất?"
@@ -86,7 +99,7 @@ export const BookingCard: React.FC<BookingCardProps> = ({ booking, onOpenReview,
                                 </Button>
                             </Popconfirm>
                         )}
-                        {(booking.status === 'PENDING' || booking.status === 'CONFIRMED') && (
+                        {(booking.bookingStatus === 'PENDING' || booking.bookingStatus === 'CONFIRMED') && (
                             <Popconfirm
                                 title="Xác nhận hủy phòng"
                                 description="Bạn có chắc chắn muốn hủy đặt phòng này không? Hành động này không thể hoàn tác."
@@ -104,14 +117,14 @@ export const BookingCard: React.FC<BookingCardProps> = ({ booking, onOpenReview,
                                 </Button>
                             </Popconfirm>
                         )}
-                        {booking.status === 'PENDING' && (
+                        {booking.paymentStatus === 'UNPAID' && booking.bookingStatus !== 'CANCELLED' && booking.bookingStatus !== 'REJECTED' && (
                             <Button
                                 type="primary"
                                 loading={isRedirecting}
                                 onClick={() => onPayNow(booking)}
                                 className="bg-blue-600 hover:!bg-blue-700 border-none rounded-lg font-semibold shadow-md shadow-blue-600/20 !h-12 px-5"
                             >
-                                Thanh toán
+                                Thanh toán ngay
                             </Button>
                         )}
                     </div>
