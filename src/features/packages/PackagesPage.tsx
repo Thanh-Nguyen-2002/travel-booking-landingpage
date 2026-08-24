@@ -6,6 +6,7 @@ import { FallbackImage } from '../../components/common/FallbackImage';
 import { PackageCardSkeleton } from '../../components/common/skeletons';
 import { getCoverImage } from '../../utils/image';
 import { usePackages } from './queries/usePackages';
+import { useBanners } from '../home/queries/useBanners';
 import { ASSETS } from '../../config/assets';
 
 
@@ -17,16 +18,23 @@ export const PackagesPage: React.FC = () => {
 
     const packages = pageData?.data || [];
 
+    const { data: banners } = useBanners('PACKAGE_HEADER');
+    const banner = banners && banners.length > 0 ? banners[0] : null;
+
+    const bannerUrl = banner?.imageUrl || ASSETS.IMAGES.HERO_PACKAGES;
+    const bannerTitle = banner?.title || 'Khám Phá Các Tour Du Lịch';
+    const bannerDesc = banner?.description || 'Trải nghiệm những địa điểm đẹp nhất cùng gia đình và bạn bè qua các hành trình được thiết kế chi tiết.';
+
     return (
         <div className="bg-slate-50 min-h-screen pb-24">
             {/* Banner Section */}
             <div className="relative bg-slate-900 text-white py-24 overflow-hidden mb-12">
-                <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: `url(${ASSETS.IMAGES.HERO_PACKAGES})` }}></div>
+                <div className="absolute inset-0 bg-cover bg-center opacity-40 transition-all duration-1000" style={{ backgroundImage: `url(${bannerUrl})` }}></div>
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-slate-50 z-10"></div>
                 <div className="relative z-20 max-w-6xl mx-auto px-4 text-center">
                     <span className="inline-block px-3 py-1 bg-primary-500/20 text-primary-400 text-sm font-bold rounded-full mb-4 border border-primary-500/30 uppercase tracking-widest">Hành trình Tour</span>
-                    <h1 className="text-4xl md:text-5xl font-extrabold mb-4 font-display text-white">Khám Phá Các Tour Du Lịch</h1>
-                    <p className="text-lg text-slate-300 max-w-2xl mx-auto">Trải nghiệm những địa điểm đẹp nhất cùng gia đình và bạn bè qua các hành trình được thiết kế chi tiết.</p>
+                    <h1 className="text-4xl md:text-5xl font-extrabold mb-4 font-display text-white transition-all duration-500">{bannerTitle}</h1>
+                    <p className="text-lg text-slate-300 max-w-2xl mx-auto transition-all duration-500">{bannerDesc}</p>
                 </div>
             </div>
 

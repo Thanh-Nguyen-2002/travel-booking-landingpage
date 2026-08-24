@@ -2,27 +2,34 @@ import { AlertTriangle, CreditCard, FileText, ShieldCheck, UserCheck, XCircle } 
 import React from 'react';
 import { ASSETS } from '../../config/assets';
 import { useSettings } from '../../hooks/useSettings';
+import { useBanners } from '../home/queries/useBanners';
 
 export const TermsPage: React.FC = () => {
     const { data: settings } = useSettings();
     const termsContent = settings?.termsOfService;
 
+    const { data: banners } = useBanners('TERMS_HEADER');
+    const banner = banners && banners.length > 0 ? banners[0] : null;
+    const bannerUrl = banner?.imageUrl || ASSETS.IMAGES.HERO_TERMS;
+    const bannerTitle = banner?.title || 'Điều Khoản Dịch Vụ';
+    const bannerDesc = banner?.description || 'Quy định chi tiết về quyền lợi, trách nhiệm và nguyên tắc hoạt động nhằm mang lại trải nghiệm du lịch an toàn, minh bạch cho mọi khách hàng.';
+
     return (
         <div className="bg-slate-50 min-h-screen pb-24">
             {/* Hero Section */}
             <div className="relative bg-slate-900 py-32 text-center text-white overflow-hidden">
-                <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: `url(${ASSETS.IMAGES.HERO_TERMS})` }}></div>
+                <div className="absolute inset-0 bg-cover bg-center opacity-40 transition-all duration-1000" style={{ backgroundImage: `url(${bannerUrl})` }}></div>
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-50 z-10"></div>
 
                 <div className="container mx-auto px-4 relative z-20 flex flex-col items-center">
                     <span className="inline-block px-3 py-1 bg-primary-500/20 text-primary-400 text-sm font-bold rounded-full mb-4 border border-primary-500/30 uppercase tracking-widest">
                         Thỏa Thuận Sử Dụng
                     </span>
-                    <h1 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-white drop-shadow-sm">
-                        Điều Khoản Dịch Vụ
+                    <h1 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-white drop-shadow-sm transition-all duration-500">
+                        {bannerTitle}
                     </h1>
-                    <p className="text-slate-300 text-lg md:text-xl max-w-2xl font-medium leading-relaxed drop-shadow-sm">
-                        Quy định chi tiết về quyền lợi, trách nhiệm và nguyên tắc hoạt động nhằm mang lại trải nghiệm du lịch an toàn, minh bạch cho mọi khách hàng.
+                    <p className="text-slate-300 text-lg md:text-xl max-w-2xl font-medium leading-relaxed drop-shadow-sm transition-all duration-500">
+                        {bannerDesc}
                     </p>
                     <div className="mt-8 flex items-center gap-4 text-sm font-semibold text-slate-300 bg-black/20 py-2.5 px-6 rounded-lg border border-white/10 backdrop-blur-md">
                         <span>Cập nhật lần cuối: 15/08/2026</span>

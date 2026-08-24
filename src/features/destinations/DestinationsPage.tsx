@@ -6,6 +6,7 @@ import { FallbackImage } from '../../components/common/FallbackImage';
 import { DestinationCardSkeleton } from '../../components/common/skeletons';
 import { useDebounce } from '../../hooks/useDebounce';
 import { useDestinations } from './queries/useDestinations';
+import { useBanners } from '../home/queries/useBanners';
 import { ASSETS } from '../../config/assets';
 
 
@@ -17,22 +18,30 @@ export const DestinationsPage: React.FC = () => {
     // Fetch destinations with pagination (12 items per page)
     const { data: pageData, isLoading, isError } = useDestinations(page, 12, debouncedSearch);
 
+    // Fetch dynamic banner
+    const { data: banners } = useBanners('DESTINATION_HEADER');
+    const banner = banners && banners.length > 0 ? banners[0] : null;
+
+    const bannerUrl = banner?.imageUrl || ASSETS.IMAGES.HERO_DESTINATIONS;
+    const bannerTitle = banner?.title || 'Khám Phá Điểm Đến';
+    const bannerDesc = banner?.description || 'Từ những bãi biển hoang sơ đến những thành phố sôi động, hãy để chúng tôi dẫn lối cho chuyến đi tiếp theo của bạn.';
+
     return (
         <div className="bg-slate-50 min-h-screen pb-24">
             {/* Hero Header */}
             <div className="relative bg-slate-900 py-32 text-center text-white overflow-hidden">
-                <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: `url(${ASSETS.IMAGES.HERO_DESTINATIONS})` }}></div>
+                <div className="absolute inset-0 bg-cover bg-center opacity-40 transition-all duration-1000" style={{ backgroundImage: `url(${bannerUrl})` }}></div>
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-50 z-10"></div>
 
                 <div className="container mx-auto px-4 relative z-20 flex flex-col items-center">
                     <span className="inline-block px-3 py-1 bg-primary-500/20 text-primary-400 text-sm font-bold rounded-full mb-4 border border-primary-500/30 uppercase tracking-widest">
                         Điểm Đến Tuyệt Đẹp
                     </span>
-                    <h1 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-white drop-shadow-sm">
-                        Khám Phá Điểm Đến
+                    <h1 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-white drop-shadow-sm transition-all duration-500">
+                        {bannerTitle}
                     </h1>
-                    <p className="text-slate-300 text-lg md:text-xl max-w-2xl font-medium leading-relaxed drop-shadow-sm">
-                        Từ những bãi biển hoang sơ đến những thành phố sôi động, hãy để chúng tôi dẫn lối cho chuyến đi tiếp theo của bạn.
+                    <p className="text-slate-300 text-lg md:text-xl max-w-2xl font-medium leading-relaxed drop-shadow-sm transition-all duration-500">
+                        {bannerDesc}
                     </p>
                 </div>
             </div>

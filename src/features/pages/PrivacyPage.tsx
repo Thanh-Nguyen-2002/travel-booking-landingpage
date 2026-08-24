@@ -1,28 +1,35 @@
 import React from 'react';
 import { useSettings } from '../../hooks/useSettings';
-import { Database, LockKeyhole, Share2, UserCog, BadgeCheck, AlertCircle } from 'lucide-react';
+import { AlertCircle, BadgeCheck, Database, LockKeyhole, Share2, UserCog } from 'lucide-react';
 import { ASSETS } from '../../config/assets';
+import { useBanners } from '../home/queries/useBanners';
 
 export const PrivacyPage: React.FC = () => {
     const { data: settings } = useSettings();
     const privacyContent = settings?.privacyPolicy;
 
+    const { data: banners } = useBanners('PRIVACY_HEADER');
+    const banner = banners && banners.length > 0 ? banners[0] : null;
+    const bannerUrl = banner?.imageUrl || ASSETS.IMAGES.HERO_PRIVACY;
+    const bannerTitle = banner?.title || 'Chính Sách Bảo Mật';
+    const bannerDesc = banner?.description || 'Cam kết tuyệt đối trong việc bảo vệ thông tin cá nhân của bạn. Mọi dữ liệu đều được mã hóa chuẩn quốc tế và quản lý minh bạch.';
+
     return (
         <div className="bg-slate-50 min-h-screen pb-24">
             {/* Hero Section */}
             <div className="relative bg-slate-900 py-32 text-center text-white overflow-hidden">
-                <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: `url(${ASSETS.IMAGES.HERO_PRIVACY})` }}></div>
+                <div className="absolute inset-0 bg-cover bg-center opacity-40 transition-all duration-1000" style={{ backgroundImage: `url(${bannerUrl})` }}></div>
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-50 z-10"></div>
 
                 <div className="container mx-auto px-4 relative z-20 flex flex-col items-center">
                     <span className="inline-block px-3 py-1 bg-primary-500/20 text-primary-400 text-sm font-bold rounded-full mb-4 border border-primary-500/30 uppercase tracking-widest">
                         Quyền Riêng Tư
                     </span>
-                    <h1 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-white drop-shadow-sm">
-                        Chính Sách Bảo Mật
+                    <h1 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-white drop-shadow-sm transition-all duration-500">
+                        {bannerTitle}
                     </h1>
-                    <p className="text-slate-300 text-lg md:text-xl max-w-2xl font-medium leading-relaxed drop-shadow-sm">
-                        Cam kết tuyệt đối trong việc bảo vệ thông tin cá nhân của bạn. Mọi dữ liệu đều được mã hóa chuẩn quốc tế và quản lý minh bạch.
+                    <p className="text-slate-300 text-lg md:text-xl max-w-2xl font-medium leading-relaxed drop-shadow-sm transition-all duration-500">
+                        {bannerDesc}
                     </p>
                     <div className="mt-8 flex items-center gap-4 text-sm font-semibold text-slate-300 bg-black/20 py-2.5 px-6 rounded-lg border border-white/10 backdrop-blur-md">
                         <span>Cập nhật lần cuối: 15/08/2026</span>

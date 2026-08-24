@@ -4,6 +4,7 @@ import { MapPin, Phone, Mail, Send } from 'lucide-react';
 import { CmsForm, CmsInput, CmsButton } from '../../components/common';
 import { toast } from 'sonner';
 import { ASSETS } from '../../config/assets';
+import { useBanners } from '../home/queries/useBanners';
 
 export const ContactPage: React.FC = () => {
     const { data: settings } = useSettings();
@@ -11,6 +12,12 @@ export const ContactPage: React.FC = () => {
     const email = settings?.contactEmail || 'support@travelbooking.com';
     const address = settings?.address || 'Hà Nội, Việt Nam';
     const [form] = CmsForm.useForm();
+
+    const { data: banners } = useBanners('CONTACT_HEADER');
+    const banner = banners && banners.length > 0 ? banners[0] : null;
+    const bannerUrl = banner?.imageUrl || ASSETS.IMAGES.HERO_CONTACT;
+    const bannerTitle = banner?.title || 'Liên Hệ Với Chúng Tôi';
+    const bannerDesc = banner?.description || 'Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn mọi lúc, mọi nơi để đảm bảo bạn có chuyến đi hoàn hảo nhất.';
 
     const onFinish = () => {
         toast.success("Cảm ơn bạn! Lời nhắn của bạn đã được gửi đi. Chúng tôi sẽ phản hồi sớm nhất có thể.");
@@ -21,18 +28,18 @@ export const ContactPage: React.FC = () => {
         <div className="bg-slate-50 min-h-screen pb-16">
             {/* Hero Section */}
             <div className="relative bg-slate-900 py-32 text-center text-white overflow-hidden">
-                <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: `url(${ASSETS.IMAGES.HERO_CONTACT})` }}></div>
+                <div className="absolute inset-0 bg-cover bg-center opacity-40 transition-all duration-1000" style={{ backgroundImage: `url(${bannerUrl})` }}></div>
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-50 z-10"></div>
 
                 <div className="container mx-auto px-4 relative z-20 flex flex-col items-center">
                     <span className="inline-block px-3 py-1 bg-primary-500/20 text-primary-400 text-sm font-bold rounded-full mb-4 border border-primary-500/30 uppercase tracking-widest">
                         Liên Hệ Hỗ Trợ
                     </span>
-                    <h1 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-white drop-shadow-sm">
-                        Liên Hệ Với Chúng Tôi
+                    <h1 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-white drop-shadow-sm transition-all duration-500">
+                        {bannerTitle}
                     </h1>
-                    <p className="text-slate-300 text-lg md:text-xl max-w-2xl font-medium leading-relaxed drop-shadow-sm">
-                        Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn mọi lúc, mọi nơi để đảm bảo bạn có chuyến đi hoàn hảo nhất.
+                    <p className="text-slate-300 text-lg md:text-xl max-w-2xl font-medium leading-relaxed drop-shadow-sm transition-all duration-500">
+                        {bannerDesc}
                     </p>
                 </div>
             </div>

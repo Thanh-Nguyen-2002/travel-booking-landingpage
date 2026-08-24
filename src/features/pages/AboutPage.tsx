@@ -1,29 +1,36 @@
 import React from 'react';
 import { useSettings } from '../../hooks/useSettings';
-import { Map, Telescope, Target, HeartHandshake, Users, Quote } from 'lucide-react';
+import { HeartHandshake, Map, Quote, Target, Telescope, Users } from 'lucide-react';
 import { ASSETS } from '../../config/assets';
+import { useBanners } from '../home/queries/useBanners';
 
 export const AboutPage: React.FC = () => {
     const { data: settings } = useSettings();
     const siteName = settings?.siteName || 'Travel Booking';
     const aboutUsContent = settings?.aboutUs;
 
+    const { data: banners } = useBanners('ABOUT_HEADER');
+    const banner = banners && banners.length > 0 ? banners[0] : null;
+    const bannerUrl = banner?.imageUrl || ASSETS.IMAGES.HERO_ABOUT;
+    const bannerTitle = banner?.title || `Về ${siteName}`;
+    const bannerDesc = banner?.description || 'Hành trình của chúng tôi là mang thế giới đến gần bạn hơn, biến mỗi chuyến đi thành một kỷ niệm vô giá khắc sâu trong tâm trí.';
+
     return (
         <div className="bg-slate-50 min-h-screen pb-24">
             {/* Hero Section */}
             <div className="relative bg-slate-900 py-32 text-center text-white overflow-hidden">
-                <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: `url(${ASSETS.IMAGES.HERO_ABOUT})` }}></div>
+                <div className="absolute inset-0 bg-cover bg-center opacity-40 transition-all duration-1000" style={{ backgroundImage: `url(${bannerUrl})` }}></div>
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-50 z-10"></div>
 
                 <div className="container mx-auto px-4 relative z-20 flex flex-col items-center">
                     <span className="inline-block px-3 py-1 bg-primary-500/20 text-primary-400 text-sm font-bold rounded-full mb-4 border border-primary-500/30 uppercase tracking-widest">
                         Câu Chuyện Thương Hiệu
                     </span>
-                    <h1 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-white drop-shadow-sm">
-                        Về {siteName}
+                    <h1 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-white drop-shadow-sm transition-all duration-500">
+                        {bannerTitle}
                     </h1>
-                    <p className="text-slate-300 text-lg md:text-xl max-w-2xl font-medium leading-relaxed drop-shadow-sm">
-                        Hành trình của chúng tôi là mang thế giới đến gần bạn hơn, biến mỗi chuyến đi thành một kỷ niệm vô giá khắc sâu trong tâm trí.
+                    <p className="text-slate-300 text-lg md:text-xl max-w-2xl font-medium leading-relaxed drop-shadow-sm transition-all duration-500">
+                        {bannerDesc}
                     </p>
                     <div className="mt-8 flex items-center gap-4 text-sm font-semibold text-slate-300 bg-black/20 py-2.5 px-6 rounded-lg border border-white/10 backdrop-blur-md">
                         <span>Thành lập: 2026</span>

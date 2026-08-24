@@ -7,6 +7,7 @@ import { HotelCardSkeleton } from '../../components/common/skeletons';
 import { useDebounce } from '../../hooks/useDebounce';
 import { getCoverImage } from '../../utils/image';
 import { useHotels } from './queries/useHotels';
+import { useBanners } from '../home/queries/useBanners';
 import { ASSETS } from '../../config/assets';
 
 
@@ -17,22 +18,29 @@ export const HotelsPage: React.FC = () => {
 
     const { data: pageData, isLoading, isError } = useHotels(page, 12, debouncedSearch);
 
+    const { data: banners } = useBanners('HOTEL_HEADER');
+    const banner = banners && banners.length > 0 ? banners[0] : null;
+
+    const bannerUrl = banner?.imageUrl || ASSETS.IMAGES.HERO_HOTELS;
+    const bannerTitle = banner?.title || 'Danh Sách Khách Sạn';
+    const bannerDesc = banner?.description || 'Khám phá hàng ngàn khách sạn, resort đẳng cấp với mức giá ưu đãi nhất cho chuyến đi của bạn.';
+
     return (
         <div className="bg-slate-50 min-h-screen pb-24">
             {/* Hero Header */}
             <div className="relative bg-slate-900 py-32 text-center text-white overflow-hidden">
-                <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: `url(${ASSETS.IMAGES.HERO_HOTELS})` }}></div>
+                <div className="absolute inset-0 bg-cover bg-center opacity-40 transition-all duration-1000" style={{ backgroundImage: `url(${bannerUrl})` }}></div>
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-50 z-10"></div>
 
                 <div className="container mx-auto px-4 relative z-20 flex flex-col items-center">
                     <span className="inline-block px-3 py-1 bg-primary-500/20 text-primary-400 text-sm font-bold rounded-full mb-4 border border-primary-500/30 uppercase tracking-widest">
                         Khách Sạn & Lưu Trú
                     </span>
-                    <h1 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-white drop-shadow-sm">
-                        Danh Sách Khách Sạn
+                    <h1 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-white drop-shadow-sm transition-all duration-500">
+                        {bannerTitle}
                     </h1>
-                    <p className="text-slate-300 text-lg md:text-xl max-w-2xl font-medium leading-relaxed drop-shadow-sm">
-                        Khám phá hàng ngàn khách sạn, resort đẳng cấp với mức giá ưu đãi nhất cho chuyến đi của bạn.
+                    <p className="text-slate-300 text-lg md:text-xl max-w-2xl font-medium leading-relaxed drop-shadow-sm transition-all duration-500">
+                        {bannerDesc}
                     </p>
                 </div>
             </div>

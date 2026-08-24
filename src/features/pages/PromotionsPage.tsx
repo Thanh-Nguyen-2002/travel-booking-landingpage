@@ -3,10 +3,17 @@ import { Tag, Calendar, AlertCircle, Sparkles } from 'lucide-react';
 import { usePromotions, type Promotion } from '../../hooks/usePromotions';
 import { PromoCardSkeleton } from '../../components/common/skeletons';
 import { ASSETS } from '../../config/assets';
+import { useBanners } from '../home/queries/useBanners';
 
 
 export const PromotionsPage: React.FC = () => {
     const { data: promotions, isLoading, isError } = usePromotions();
+
+    const { data: banners } = useBanners('PROMOTION_HEADER');
+    const banner = banners && banners.length > 0 ? banners[0] : null;
+    const bannerUrl = banner?.imageUrl || ASSETS.IMAGES.HERO_PROMOTIONS;
+    const bannerTitle = banner?.title || 'Khuyến Mãi & Ưu Đãi';
+    const bannerDesc = banner?.description || 'Săn ngay các deal du lịch cực hời chỉ có tại nền tảng của chúng tôi. Chuyến đi trong mơ nay rẻ bất ngờ!';
 
     const renderPromoCard = (promo: Promotion) => (
         <div key={promo.id} className="group bg-white rounded-lg shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 overflow-hidden hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] transition-all duration-300 flex flex-col h-full">
@@ -43,18 +50,18 @@ export const PromotionsPage: React.FC = () => {
         <div className="bg-slate-50 min-h-screen pb-16">
             {/* Hero Section */}
             <div className="relative bg-slate-900 py-32 text-center text-white overflow-hidden">
-                <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: `url(${ASSETS.IMAGES.HERO_PROMOTIONS})` }}></div>
+                <div className="absolute inset-0 bg-cover bg-center opacity-40 transition-all duration-1000" style={{ backgroundImage: `url(${bannerUrl})` }}></div>
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-50 z-10"></div>
 
                 <div className="container mx-auto px-4 relative z-20 flex flex-col items-center">
                     <span className="inline-block px-3 py-1 bg-primary-500/20 text-primary-400 text-sm font-bold rounded-full mb-4 border border-primary-500/30 uppercase tracking-widest">
                         Ưu Đãi Đặc Quyền
                     </span>
-                    <h1 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-white drop-shadow-sm">
-                        Khuyến Mãi & Ưu Đãi
+                    <h1 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-white drop-shadow-sm transition-all duration-500">
+                        {bannerTitle}
                     </h1>
-                    <p className="text-slate-300 text-lg md:text-xl max-w-2xl font-medium leading-relaxed drop-shadow-sm">
-                        Săn ngay các deal du lịch cực hời chỉ có tại nền tảng của chúng tôi. Chuyến đi trong mơ nay rẻ bất ngờ!
+                    <p className="text-slate-300 text-lg md:text-xl max-w-2xl font-medium leading-relaxed drop-shadow-sm transition-all duration-500">
+                        {bannerDesc}
                     </p>
                 </div>
             </div>
