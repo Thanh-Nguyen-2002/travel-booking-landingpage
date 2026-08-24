@@ -26,6 +26,7 @@ import { ContactPage } from './features/pages/ContactPage';
 import { TermsPage } from './features/pages/TermsPage';
 import { PrivacyPage } from './features/pages/PrivacyPage';
 import { PromotionsPage } from './features/pages/PromotionsPage';
+import { NotFoundPage } from './features/pages/NotFoundPage';
 import { LoginPage } from './features/auth/LoginPage';
 import { RegisterPage } from './features/auth/RegisterPage';
 import { ForgotPasswordPage } from './features/auth/ForgotPasswordPage';
@@ -67,6 +68,7 @@ function App() {
                         <Route path="profile" element={<ProfilePage />} />
                         <Route path="bookings" element={<BookingsPage />} />
                         {/* More routes will go here */}
+                        <Route path="*" element={<NotFoundPage />} />
                     </Route>
                 </Routes>
             </Router>
