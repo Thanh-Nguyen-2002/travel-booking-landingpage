@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
-import { DateRange, RangeKeyDict } from 'react-date-range';
+import { DateRange, type RangeKeyDict } from 'react-date-range';
 import { vi } from 'date-fns/locale';
-import 'react-date-range/dist/styles.css'; 
+import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import { addDays, format, isBefore, startOfDay } from 'date-fns';
 import { useRoomAvailability } from '../queries/useRoomAvailability';
@@ -80,7 +80,7 @@ export const RoomBookingCalendar: React.FC<RoomBookingCalendarProps> = ({ roomId
     return (
         <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm p-4 w-full flex flex-col items-center">
             {isLoading && <div className="text-sm text-slate-500 mb-2">Đang tải trạng thái phòng...</div>}
-            
+
             <div className="w-full max-w-full overflow-x-auto custom-scrollbar flex justify-center">
                 <DateRange
                     ranges={[selectionRange]}
@@ -97,7 +97,7 @@ export const RoomBookingCalendar: React.FC<RoomBookingCalendarProps> = ({ roomId
                     disabledDates={Array.from(fullyBookedDates).map(d => new Date(d))}
                 />
             </div>
-            
+
             <div className="mt-4 flex gap-4 text-xs">
                 <div className="flex items-center gap-1.5">
                     <div className="w-3 h-3 bg-white border border-slate-300 rounded-full"></div>
