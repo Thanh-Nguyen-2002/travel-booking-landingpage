@@ -54,7 +54,7 @@ export const Header: React.FC = () => {
                                 className: "w-52 shadow-[0_8px_30px_rgb(0,0,0,0.12)] rounded-xl p-2 font-medium text-slate-700"
                             }} placement="bottomRight">
                                 <div className="flex items-center gap-2 cursor-pointer hover:text-primary-100 transition-colors">
-                                    <Avatar size="small" src={user.avatar} icon={!user.avatar && <User size={14} />} className="bg-primary-400" />
+                                    <Avatar size="small" src={user.avatarUrl} icon={!user.avatarUrl && <User size={14} />} className="bg-primary-400" />
                                     <span className="font-medium text-sm hidden md:inline">{user.fullName}</span>
                                 </div>
                             </Dropdown>

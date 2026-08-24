@@ -5,6 +5,7 @@ import type { User } from '../../../types/auth';
 export interface UpdateProfileRequest {
     fullName: string;
     phone?: string;
+    avatarUrl?: string;
 }
 
 export interface ChangePasswordRequest {
