@@ -93,7 +93,7 @@ export const RoomBookingCalendar: React.FC<RoomBookingCalendarProps> = ({ roomId
                     showDateDisplay={false}
                     showMonthAndYearPickers={false}
                     dayContentRenderer={customDayContent}
-                    rangeColors={['#0f172a']} // Slate 900
+                    rangeColors={['#0284c7']} // Primary 600
                     disabledDates={Array.from(fullyBookedDates).map(d => new Date(d))}
                 />
             </div>

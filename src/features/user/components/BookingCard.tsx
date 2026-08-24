@@ -77,7 +77,7 @@ export const BookingCard: React.FC<BookingCardProps> = ({ booking, onOpenReview,
 
                     <div className="flex items-center gap-3">
                         {booking.bookingStatus === 'COMPLETED' && (
-                            <Button type="primary" onClick={() => onOpenReview(booking)} className="bg-amber-500 hover:!bg-amber-600 border-none rounded-lg font-semibold shadow-md shadow-amber-500/20 h-10 px-5">
+                            <Button type="primary" onClick={() => onOpenReview(booking)} className="bg-amber-500 hover:!bg-amber-600 border-none rounded-lg font-semibold shadow-md shadow-amber-500/20 !h-12 px-5">
                                 Viết Đánh Giá
                             </Button>
                         )}

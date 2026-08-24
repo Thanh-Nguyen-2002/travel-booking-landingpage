@@ -20,10 +20,10 @@ interface RoomListProps {
 export const RoomList: React.FC<RoomListProps> = ({ hotel, roomsData, isLoadingRooms }) => {
     const navigate = useNavigate();
     const setBookingInfo = useBookingStore((state: any) => state.setBookingInfo);
-    
+
     // Lưu trạng thái mở/đóng lịch cho từng phòng
     const [expandedRoomId, setExpandedRoomId] = React.useState<string | null>(null);
-    
+
     // State lưu ngày đã chọn
     const [selectionRange, setSelectionRange] = React.useState({
         startDate: new Date(),
@@ -33,9 +33,9 @@ export const RoomList: React.FC<RoomListProps> = ({ hotel, roomsData, isLoadingR
 
     const handleConfirmBooking = (room: RoomResponse) => {
         if (!hotel || !room) return;
-        
+
         const roomCover = getCoverImage(room.images, 'https://images.unsplash.com/photo-1598928506311-c55dd71360fa?q=80&w=1000');
-        
+
         setBookingInfo({
             hotelId: hotel.id,
             hotelName: hotel.name,
@@ -46,7 +46,7 @@ export const RoomList: React.FC<RoomListProps> = ({ hotel, roomsData, isLoadingR
             checkIn: format(selectionRange.startDate, 'yyyy-MM-dd'),
             checkOut: format(selectionRange.endDate, 'yyyy-MM-dd'),
         });
-        
+
         navigate('/checkout');
     };
 
@@ -93,67 +93,13 @@ export const RoomList: React.FC<RoomListProps> = ({ hotel, roomsData, isLoadingR
                                             <div className="text-2xl font-bold text-primary-600">{room.price.toLocaleString()}đ</div>
                                             <div className="text-slate-500 text-sm">/ đêm</div>
                                         </div>
-                                        {room.quantity > 0 && room.status === 'ACTIVE' ? (
-                                            <button
-                                                onClick={() => {
-                                                    if (expandedRoomId === room.id) {
-                                                        setExpandedRoomId(null);
-                                                    } else {
-                                                        setExpandedRoomId(room.id);
-                                                        setSelectionRange({
-                                                            startDate: new Date(),
-                                                            endDate: new Date(),
-                                                            key: 'selection'
-                                                        });
-                                                    }
-                                                }}
-                                                className={`px-6 py-2.5 font-semibold rounded-lg shadow-sm transition-all duration-300 ${expandedRoomId === room.id ? 'bg-slate-200 text-slate-700' : 'bg-slate-900 text-white hover:bg-primary-600 hover:shadow-primary-500/30'}`}
-                                            >
-                                                {expandedRoomId === room.id ? 'Đóng lịch' : 'Chọn ngày'}
-                                            </button>
-                                        ) : (
-                                            <button
-                                                disabled
-                                                className="px-6 py-2.5 bg-slate-200 text-slate-500 font-semibold rounded-lg cursor-not-allowed"
-                                            >
-                                                Hết phòng
-                                            </button>
-                                        )}
+                                        <button
+                                            onClick={() => navigate(`/rooms/${room.id}`)}
+                                            className="px-6 py-2.5 font-semibold hover:cursor-pointer rounded-lg shadow-sm transition-all duration-300 bg-slate-900 text-white hover:bg-primary-600 hover:shadow-primary-500/30"
+                                        >
+                                            Xem chi tiết & Đặt phòng
+                                        </button>
                                     </div>
-                                    
-                                    {/* Calendar Inline Section */}
-                                    {expandedRoomId === room.id && (
-                                        <div className="mt-6 pt-6 border-t border-slate-100 flex flex-col md:flex-row gap-6 items-start">
-                                            <div className="w-full md:w-2/3">
-                                                <RoomBookingCalendar
-                                                    roomId={room.id}
-                                                    selectionRange={selectionRange}
-                                                    setSelectionRange={setSelectionRange}
-                                                    onDateSelect={() => {}}
-                                                />
-                                            </div>
-                                            <div className="w-full md:w-1/3 bg-slate-50 p-5 rounded-xl border border-slate-100">
-                                                <h4 className="font-bold text-slate-800 mb-4">Chi tiết đặt phòng</h4>
-                                                <div className="space-y-3 mb-6 text-sm">
-                                                    <div className="flex justify-between">
-                                                        <span className="text-slate-500">Nhận phòng:</span>
-                                                        <span className="font-medium text-slate-800">{selectionRange.startDate ? format(selectionRange.startDate, 'dd/MM/yyyy') : '-'}</span>
-                                                    </div>
-                                                    <div className="flex justify-between">
-                                                        <span className="text-slate-500">Trả phòng:</span>
-                                                        <span className="font-medium text-slate-800">{selectionRange.endDate ? format(selectionRange.endDate, 'dd/MM/yyyy') : '-'}</span>
-                                                    </div>
-                                                </div>
-                                                <button
-                                                    disabled={!selectionRange.startDate || !selectionRange.endDate || format(selectionRange.startDate, 'yyyy-MM-dd') === format(selectionRange.endDate, 'yyyy-MM-dd')}
-                                                    onClick={() => handleConfirmBooking(room)}
-                                                    className="w-full py-3 bg-primary-600 hover:bg-primary-700 disabled:bg-slate-300 disabled:text-slate-500 text-white font-bold rounded-lg shadow-md transition-all"
-                                                >
-                                                    Xác nhận Đặt phòng
-                                                </button>
-                                            </div>
-                                        </div>
-                                    )}
                                 </div>
                             </div>
                         );

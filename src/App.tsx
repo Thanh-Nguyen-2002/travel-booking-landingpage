@@ -36,6 +36,7 @@ import { ProfilePage } from './features/user/ProfilePage';
 import { BookingsPage } from './features/user/BookingsPage';
 import { ScrollToTop } from './components/common/ScrollToTop';
 import { Toaster } from 'sonner';
+import { RoomDetailPage } from './features/rooms/RoomDetailPage';
 
 function App() {
     return (
@@ -56,6 +57,7 @@ function App() {
                         <Route path="hotels/:id" element={<HotelDetailPage />} />
                         <Route path="packages" element={<PackagesPage />} />
                         <Route path="packages/:id" element={<PackageDetailPage />} />
+                        <Route path="rooms/:id" element={<RoomDetailPage />} />
                         <Route path="blogs" element={<BlogsPage />} />
                         <Route path="blogs/:idOrSlug" element={<BlogDetailPage />} />
                         <Route path="promotions" element={<PromotionsPage />} />
