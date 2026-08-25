@@ -2,6 +2,7 @@ import React from 'react';
 import { Tag, Button, Popconfirm } from 'antd';
 import { Calendar } from 'lucide-react';
 import { useUpdateBookingStatus } from '../queries/useUpdateBookingStatus';
+import { getCoverImage } from '../../../utils/image';
 
 interface BookingCardProps {
     booking: any;
@@ -36,10 +37,18 @@ export const BookingCard: React.FC<BookingCardProps> = ({ booking, onOpenReview,
 
     return (
         <div className="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 overflow-hidden flex flex-col md:flex-row transition-all hover:shadow-md">
-            <div className="w-full md:w-72 h-48 md:h-auto shrink-0 relative bg-slate-200">
-                <div className="absolute inset-0 flex items-center justify-center text-slate-400">
-                    <Calendar size={48} className="opacity-20" />
-                </div>
+            <div className="w-full md:w-72 h-48 md:h-auto shrink-0 relative bg-slate-200 overflow-hidden">
+                {booking.packageImage || (booking.rooms && booking.rooms.length > 0 && booking.rooms[0].roomImage) ? (
+                    <img 
+                        src={getCoverImage(booking.packageImage || booking.rooms[0].roomImage)} 
+                        alt="Booking" 
+                        className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                    />
+                ) : (
+                    <div className="absolute inset-0 flex items-center justify-center text-slate-400">
+                        <Calendar size={48} className="opacity-20" />
+                    </div>
+                )}
             </div>
             <div className="p-6 flex flex-col grow">
                 <div className="flex justify-between items-start mb-2">

@@ -3,6 +3,7 @@ export interface BookingRoomResponse {
     roomId: string;
     hotelId?: string;
     roomName: string;
+    roomImage?: string;
     quantity: number;
     price: number;
 }
@@ -14,6 +15,7 @@ export interface BookingResponse {
     promotionCode?: string;
     packageId?: string;
     packageName?: string;
+    packageImage?: string;
     customerName: string;
     customerPhone: string;
     customerEmail: string;
