@@ -19,15 +19,20 @@ export const RoomBookingCalendar: React.FC<RoomBookingCalendarProps> = ({ roomId
 
     const { data: availability, isLoading } = useRoomAvailability(roomId, startDateStr, endDateStr);
 
-    const fullyBookedDates = useMemo(() => {
-        if (!availability) return new Set<string>();
+    const { fullyBookedDates, availableDatesMap } = useMemo(() => {
         const booked = new Set<string>();
+        const availableMap = new Map<string, number>();
+        
+        if (!availability) return { fullyBookedDates: booked, availableDatesMap: availableMap };
+        
         availability.forEach((a) => {
-            if (a.totalQuantity <= a.bookedQuantity) {
+            const remaining = Math.max(0, a.totalQuantity - a.bookedQuantity);
+            availableMap.set(a.targetDate, remaining);
+            if (remaining <= 0) {
                 booked.add(a.targetDate);
             }
         });
-        return booked;
+        return { fullyBookedDates: booked, availableDatesMap: availableMap };
     }, [availability]);
 
     const handleSelect = (ranges: RangeKeyDict) => {
@@ -64,13 +69,19 @@ export const RoomBookingCalendar: React.FC<RoomBookingCalendarProps> = ({ roomId
         const isPast = isBefore(day, startOfDay(new Date()));
         const isBooked = fullyBookedDates.has(dateStr);
         const isDisabled = isPast || isBooked;
+        
+        const remaining = availableDatesMap.get(dateStr);
 
         return (
             <div className={`relative w-full h-full flex flex-col items-center justify-center transition-all ${isDisabled ? 'text-slate-300' : 'text-slate-700 font-medium hover:text-primary-700'}`}>
                 <span>{format(day, 'd')}</span>
-                {isBooked && !isPast && (
+                {!isPast && (
                     <div className="absolute bottom-1 w-full flex justify-center">
-                        <div className="w-1 h-1 rounded-full bg-rose-500"></div>
+                        {isBooked ? (
+                            <span className="text-[10px] font-bold text-rose-500 bg-rose-50 px-1 rounded">Hết</span>
+                        ) : remaining !== undefined && remaining > 0 ? (
+                            <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-1 rounded">Còn {remaining}</span>
+                        ) : null}
                     </div>
                 )}
             </div>
@@ -213,7 +224,10 @@ export const RoomBookingCalendar: React.FC<RoomBookingCalendarProps> = ({ roomId
                     showMonthAndYearPickers={false}
                     dayContentRenderer={customDayContent}
                     rangeColors={['#0284c7']} // Primary 600
-                    disabledDates={Array.from(fullyBookedDates).map(d => new Date(d))}
+                    disabledDates={Array.from(fullyBookedDates).map(d => {
+                        const [year, month, day] = d.split('-').map(Number);
+                        return new Date(year, month - 1, day);
+                    })}
                 />
             </div>
 
