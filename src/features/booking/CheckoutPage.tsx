@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react';
-import { Form, Input, Button, Steps, Divider, Radio } from 'antd';
+import { Form, Button, Steps, Divider } from 'antd';
 import { toast } from 'sonner';
-import { CreditCard, User, Mail, Phone, ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/useAuthStore';
 import { useBookingStore } from '../../store/useBookingStore';
@@ -12,6 +12,8 @@ import { EmptyBooking } from './components/EmptyBooking';
 import { SuccessStep } from './components/SuccessStep';
 import { OrderSummary } from './components/OrderSummary';
 import { PaymentModal } from './components/PaymentModal';
+import { ContactInfoForm } from './components/ContactInfoForm';
+import { PaymentMethodSelector } from './components/PaymentMethodSelector';
 import apiClient from '../../services/api-client';
 
 export const CheckoutPage: React.FC = () => {
@@ -130,20 +132,6 @@ export const CheckoutPage: React.FC = () => {
                     {/* Left Column: Form */}
                     <div className="lg:col-span-2">
                         <div className="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 p-8">
-                            <h2 className="text-2xl font-bold text-slate-800 mb-6">Thông tin liên hệ</h2>
-
-                            {!isAuthenticated && (
-                                <div className="bg-primary-50 text-primary-700 p-4 rounded-xl mb-8 flex items-center justify-between border border-primary-100">
-                                    <div className="flex items-center gap-3">
-                                        <User size={20} className="text-primary-600" />
-                                        <span className="font-medium">Bạn đã có tài khoản? Đăng nhập để thanh toán nhanh hơn.</span>
-                                    </div>
-                                    <Link to="/login" className="px-4 py-1.5 bg-white text-primary-600 font-bold rounded-lg shadow-sm border border-primary-100 hover:bg-primary-600 hover:text-white transition-colors">
-                                        Đăng nhập
-                                    </Link>
-                                </div>
-                            )}
-
                             <Form
                                 form={form}
                                 layout="vertical"
@@ -155,60 +143,11 @@ export const CheckoutPage: React.FC = () => {
                                 }}
                                 requiredMark={false}
                             >
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <Form.Item
-                                        label={<span className="font-medium text-slate-700">Họ và Tên</span>}
-                                        name="fullName"
-                                        rules={[{ required: true, message: 'Vui lòng nhập họ tên' }]}
-                                    >
-                                        <Input size="large" prefix={<User className="text-slate-400 mr-2" size={18} />} className="rounded-xl border-slate-200" />
-                                    </Form.Item>
-
-                                    <Form.Item
-                                        label={<span className="font-medium text-slate-700">Email</span>}
-                                        name="email"
-                                        rules={[{ required: true, type: 'email', message: 'Vui lòng nhập email hợp lệ' }]}
-                                    >
-                                        <Input size="large" prefix={<Mail className="text-slate-400 mr-2" size={18} />} className="rounded-xl border-slate-200" />
-                                    </Form.Item>
-
-                                    <Form.Item
-                                        label={<span className="font-medium text-slate-700">Số điện thoại</span>}
-                                        name="phone"
-                                        rules={[{ required: true, message: 'Vui lòng nhập số điện thoại' }]}
-                                    >
-                                        <Input size="large" prefix={<Phone className="text-slate-400 mr-2" size={18} />} className="rounded-xl border-slate-200" />
-                                    </Form.Item>
-                                </div>
+                                <ContactInfoForm isAuthenticated={isAuthenticated} />
 
                                 <Divider className="my-8" />
 
-                                <h2 className="text-2xl font-bold text-slate-800 mb-6">Phương thức thanh toán</h2>
-                                <Form.Item name="paymentMethod" initialValue="vnpay">
-                                    <Radio.Group className="w-full space-y-4">
-                                        <div 
-                                            className="flex items-center justify-between p-4 border border-slate-200 rounded-xl hover:border-primary-400 cursor-pointer transition-colors bg-white"
-                                            onClick={() => form.setFieldValue('paymentMethod', 'credit_card')}
-                                        >
-                                            <Radio value="credit_card" className="font-medium text-slate-800">Thẻ Tín dụng / Ghi nợ (Credit/Debit Card)</Radio>
-                                            <CreditCard size={24} className="text-slate-400" />
-                                        </div>
-                                        <div 
-                                            className="flex items-center justify-between p-4 border border-slate-200 rounded-xl hover:border-primary-400 cursor-pointer transition-colors bg-white"
-                                            onClick={() => form.setFieldValue('paymentMethod', 'momo')}
-                                        >
-                                            <Radio value="momo" className="font-medium text-slate-800">Ví MoMo</Radio>
-                                            <div className="w-6 h-6 bg-pink-500 rounded-full flex items-center justify-center text-white text-xs font-bold">M</div>
-                                        </div>
-                                        <div 
-                                            className="flex items-center justify-between p-4 border border-slate-200 rounded-xl hover:border-primary-400 cursor-pointer transition-colors bg-white"
-                                            onClick={() => form.setFieldValue('paymentMethod', 'vnpay')}
-                                        >
-                                            <Radio value="vnpay" className="font-medium text-slate-800">VNPay</Radio>
-                                            <div className="text-blue-600 font-bold text-sm">VNPay</div>
-                                        </div>
-                                    </Radio.Group>
-                                </Form.Item>
+                                <PaymentMethodSelector form={form} />
 
                                 <div className="mt-8">
                                     <Button
@@ -216,7 +155,7 @@ export const CheckoutPage: React.FC = () => {
                                         htmlType="submit"
                                         size="large"
                                         loading={isPending}
-                                        className="w-full !bg-primary-600 hover:!bg-primary-700 h-14 text-lg font-bold rounded-xl shadow-lg shadow-primary-500/30"
+                                        className="w-full !bg-primary-600 hover:!bg-primary-700 h-14 text-lg font-lg font-bold rounded-xl shadow-lg shadow-primary-500/30"
                                     >
                                         {isPending ? 'Đang xử lý...' : (
                                             <span className="flex items-center justify-center gap-2">
