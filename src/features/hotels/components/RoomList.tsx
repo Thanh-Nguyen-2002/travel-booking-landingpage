@@ -57,7 +57,7 @@ export const RoomList: React.FC<RoomListProps> = ({ roomsData, isLoadingRooms })
                                     <div className="mt-auto flex items-end justify-between pt-4 border-t border-slate-100">
                                         <div>
                                             <div className="text-2xl font-bold text-primary-600">{room.price.toLocaleString()}đ</div>
-                                            <div className="text-slate-500 text-sm">/ đêm</div>
+                                            <div className="text-slate-500 text-sm">/ ngày</div>
                                         </div>
                                         <button
                                             onClick={() => navigate(`/rooms/${room.id}`)}

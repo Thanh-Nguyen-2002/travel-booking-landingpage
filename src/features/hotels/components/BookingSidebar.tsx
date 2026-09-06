@@ -10,7 +10,7 @@ export const BookingSidebar: React.FC<BookingSidebarProps> = ({ hotel }) => {
     return (
         <div className="sticky top-24 bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 p-6">
             <div className="text-slate-500 mb-1">Giá thấp nhất từ</div>
-            <div className="text-3xl font-bold text-primary-600 mb-6">{hotel.priceFrom ? hotel.priceFrom.toLocaleString() : 0}đ <span className="text-base font-normal text-slate-500">/ đêm</span></div>
+            <div className="text-3xl font-bold text-primary-600 mb-6">{hotel.priceFrom ? hotel.priceFrom.toLocaleString() : 0}đ <span className="text-base font-normal text-slate-500">/ ngày</span></div>
 
             <hr className="border-slate-100 mb-6" />
 

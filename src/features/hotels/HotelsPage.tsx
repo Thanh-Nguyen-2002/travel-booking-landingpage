@@ -123,7 +123,7 @@ export const HotelsPage: React.FC = () => {
                                                 <span className="text-slate-500 text-sm">Chỉ từ</span>
                                                 <div className="text-right">
                                                     <span className="text-lg font-bold text-primary-600">{hotel.priceFrom ? hotel.priceFrom.toLocaleString() : 0}đ</span>
-                                                    <span className="text-slate-500 text-xs ml-1">/ đêm</span>
+                                                    <span className="text-slate-500 text-xs ml-1">/ ngày</span>
                                                 </div>
                                             </div>
                                         </div>

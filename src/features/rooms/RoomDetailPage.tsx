@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { format, addDays } from 'date-fns';
 import { ArrowLeft } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -20,7 +20,7 @@ export const RoomDetailPage = () => {
 
     const [selectionRange, setSelectionRange] = useState({
         startDate: new Date(),
-        endDate: new Date(),
+        endDate: addDays(new Date(), 1),
         key: 'selection'
     });
 

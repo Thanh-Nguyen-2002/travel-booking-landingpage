@@ -47,7 +47,7 @@ export const RoomHeroSection: React.FC<RoomHeroSectionProps> = ({ room, roomCove
 
                     <div className="pt-6 border-t border-slate-100 flex items-end justify-between">
                         <div>
-                            <p className="text-slate-500 mb-1">Giá mỗi đêm từ</p>
+                            <p className="text-slate-500 mb-1">Giá mỗi ngày từ</p>
                             <div className="text-3xl font-black text-primary-600">
                                 {room.price.toLocaleString()}đ
                             </div>

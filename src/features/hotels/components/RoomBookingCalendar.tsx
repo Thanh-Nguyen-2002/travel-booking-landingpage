@@ -19,12 +19,12 @@ export const RoomBookingCalendar: React.FC<RoomBookingCalendarProps> = ({ roomId
 
     const { data: availability, isLoading } = useRoomAvailability(roomId, startDateStr, endDateStr);
 
-    const { fullyBookedDates, availableDatesMap } = useMemo(() => {
+    const { fullyBookedDates } = useMemo(() => {
         const booked = new Set<string>();
         const availableMap = new Map<string, number>();
-        
+
         if (!availability) return { fullyBookedDates: booked, availableDatesMap: availableMap };
-        
+
         availability.forEach((a) => {
             const remaining = Math.max(0, a.totalQuantity - a.bookedQuantity);
             availableMap.set(a.targetDate, remaining);
@@ -37,12 +37,22 @@ export const RoomBookingCalendar: React.FC<RoomBookingCalendarProps> = ({ roomId
 
     const handleSelect = (ranges: RangeKeyDict) => {
         const { selection } = ranges;
-        setSelectionRange(selection);
-        if (selection.startDate && selection.endDate && selection.startDate !== selection.endDate) {
+        let startDate = selection.startDate;
+        let endDate = selection.endDate;
+
+        if (startDate && endDate) {
+            // If user clicked a single date (startDate === endDate), default to 1 night stay (endDate = startDate + 1 day)
+            if (format(startDate, 'yyyy-MM-dd') === format(endDate, 'yyyy-MM-dd')) {
+                endDate = addDays(startDate, 1);
+            }
+
+            const updatedRange = { ...selection, startDate, endDate };
+            setSelectionRange(updatedRange);
+
             // Check if any date in between is fully booked
             let isInvalid = false;
-            let current = new Date(selection.startDate);
-            while (current < selection.endDate) {
+            let current = new Date(startDate);
+            while (current < endDate) {
                 if (fullyBookedDates.has(format(current, 'yyyy-MM-dd'))) {
                     isInvalid = true;
                     break;
@@ -54,13 +64,13 @@ export const RoomBookingCalendar: React.FC<RoomBookingCalendarProps> = ({ roomId
                 alert('Có ngày trong khoảng thời gian bạn chọn đã hết phòng. Vui lòng chọn lại!');
                 setSelectionRange({
                     startDate: new Date(),
-                    endDate: new Date(),
+                    endDate: addDays(new Date(), 1),
                     key: 'selection'
                 });
                 return;
             }
 
-            onDateSelect(selection.startDate, selection.endDate);
+            onDateSelect(startDate, endDate);
         }
     };
 
@@ -69,19 +79,15 @@ export const RoomBookingCalendar: React.FC<RoomBookingCalendarProps> = ({ roomId
         const isPast = isBefore(day, startOfDay(new Date()));
         const isBooked = fullyBookedDates.has(dateStr);
         const isDisabled = isPast || isBooked;
-        
-        const remaining = availableDatesMap.get(dateStr);
+
+        // const remaining = availableDatesMap.get(dateStr);
 
         return (
             <div className={`relative w-full h-full flex flex-col items-center justify-center transition-all ${isDisabled ? 'text-slate-300' : 'text-slate-700 font-medium hover:text-primary-700'}`}>
                 <span>{format(day, 'd')}</span>
-                {!isPast && (
+                {!isPast && isBooked && (
                     <div className="absolute bottom-1 w-full flex justify-center">
-                        {isBooked ? (
-                            <span className="text-[10px] font-bold text-rose-500 bg-rose-50 px-1 rounded">Hết</span>
-                        ) : remaining !== undefined && remaining > 0 ? (
-                            <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-1 rounded">Còn {remaining}</span>
-                        ) : null}
+                        <span className="text-[10px] font-bold text-rose-500 bg-rose-50 px-1 rounded">Hết</span>
                     </div>
                 )}
             </div>

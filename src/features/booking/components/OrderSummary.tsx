@@ -88,7 +88,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({ bookingInfo }) => {
                 <Divider className="my-4" />
 
                 <div className="flex justify-between items-center mb-2">
-                    <span className="text-slate-600">{isPackage ? 'Giá vé (1 khách)' : 'Giá phòng (1 đêm)'}</span>
+                    <span className="text-slate-600">{isPackage ? 'Giá vé (1 khách)' : 'Giá phòng (1 ngày)'}</span>
                     <span className="font-medium">{bookingInfo.price.toLocaleString()}đ</span>
                 </div>
                 {isPackage ? (
@@ -99,7 +99,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({ bookingInfo }) => {
                 ) : (
                     <div className="flex justify-between items-center mb-2">
                         <span className="text-slate-600">Thời gian lưu trú</span>
-                        <span className="font-medium text-primary-600">{numberOfNights} đêm</span>
+                        <span className="font-medium text-primary-600">{numberOfNights} ngày</span>
                     </div>
                 )}
                 <div className="flex justify-between items-center mb-4 text-emerald-600">
