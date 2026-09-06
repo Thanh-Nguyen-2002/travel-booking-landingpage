@@ -21,7 +21,7 @@ export const HeroBanner: React.FC = () => {
 
     if (isLoading) {
         return (
-            <div className="w-full h-[550px] md:h-[650px] bg-slate-900 animate-pulse flex items-center justify-center">
+            <div className="w-full h-[calc(100vh-109px)] bg-slate-900 animate-pulse flex items-center justify-center">
                 <div className="text-center space-y-4">
                     <div className="w-16 h-16 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
                     <span className="text-slate-400 font-medium block">Đang tải trải nghiệm...</span>
@@ -33,7 +33,7 @@ export const HeroBanner: React.FC = () => {
     // Default premium travel hero if no banner exists in DB
     if (!banners || banners.length === 0) {
         return (
-            <div className="relative w-full h-[550px] md:h-[650px] overflow-hidden bg-slate-950 flex items-center">
+            <div className="relative w-full h-[calc(100vh-109px)] overflow-hidden bg-slate-950 flex items-center">
                 {/* Background Image with Zoom Animation */}
                 <div className="absolute inset-0 z-0">
                     <img
@@ -81,7 +81,7 @@ export const HeroBanner: React.FC = () => {
     }
 
     return (
-        <div className="relative w-full h-[550px] md:h-[650px] overflow-hidden bg-slate-950">
+        <div className="relative w-full h-[calc(100vh-109px)] overflow-hidden bg-slate-950">
             {banners.map((banner, index) => {
                 const isActive = index === currentIndex;
                 return (
@@ -106,7 +106,7 @@ export const HeroBanner: React.FC = () => {
                         </div>
 
                         {/* Content */}
-                        <div className="relative z-20 max-w-6xl mx-auto px-4 h-full flex items-center text-white">
+                        <div className="relative z-20 max-w-[1600px] mx-auto px-4 h-full flex items-center text-white">
                             <div className="max-w-2xl space-y-6">
                                 <h1 className="text-4xl md:text-6xl font-black tracking-tight leading-[1.1] transition-all duration-700 transform translate-y-0 text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-slate-300 drop-shadow-sm">
                                     {banner.title}

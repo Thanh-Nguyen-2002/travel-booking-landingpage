@@ -19,7 +19,7 @@ export const Footer: React.FC = () => {
     const phone = settings?.hotline || '1900 1234 (Tổng đài hỗ trợ 24/7)';
     const email = settings?.contactEmail || 'support@travelbooking.com';
     const address = settings?.address || 'Hà Nội, Việt Nam';
-    const siteName = settings?.siteName || '---------';
+    const siteName = settings?.siteName || 'Travel Booking';
     const logoUrl = settings?.logoUrl;
 
     const fbLink = settings?.facebookUrl || '#';
@@ -58,26 +58,26 @@ export const Footer: React.FC = () => {
                             Khám phá thế giới cùng chúng tôi. Mang đến những trải nghiệm du lịch tuyệt vời nhất cho bạn.
                         </p>
                         <div className="flex space-x-4">
-                            <a 
-                                href={fbLink || '#'} 
-                                target={fbLink && fbLink !== '#' ? "_blank" : undefined} 
-                                rel={fbLink && fbLink !== '#' ? "noreferrer" : undefined} 
+                            <a
+                                href={fbLink || '#'}
+                                target={fbLink && fbLink !== '#' ? "_blank" : undefined}
+                                rel={fbLink && fbLink !== '#' ? "noreferrer" : undefined}
                                 className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors"
                             >
                                 <FaFacebookF size={18} />
                             </a>
-                            <a 
-                                href={twLink || '#'} 
-                                target={twLink && twLink !== '#' ? "_blank" : undefined} 
-                                rel={twLink && twLink !== '#' ? "noreferrer" : undefined} 
+                            <a
+                                href={twLink || '#'}
+                                target={twLink && twLink !== '#' ? "_blank" : undefined}
+                                rel={twLink && twLink !== '#' ? "noreferrer" : undefined}
                                 className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-sky-500 hover:text-white transition-colors"
                             >
                                 <FaTwitter size={18} />
                             </a>
-                            <a 
-                                href={igLink || '#'} 
-                                target={igLink && igLink !== '#' ? "_blank" : undefined} 
-                                rel={igLink && igLink !== '#' ? "noreferrer" : undefined} 
+                            <a
+                                href={igLink || '#'}
+                                target={igLink && igLink !== '#' ? "_blank" : undefined}
+                                rel={igLink && igLink !== '#' ? "noreferrer" : undefined}
                                 className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-pink-600 hover:text-white transition-colors"
                             >
                                 <FaInstagram size={18} />
