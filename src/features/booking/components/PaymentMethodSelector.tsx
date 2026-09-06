@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Radio, FormInstance } from 'antd';
+import { Form, Radio, type FormInstance } from 'antd';
 import { CreditCard } from 'lucide-react';
 
 interface PaymentMethodSelectorProps {
