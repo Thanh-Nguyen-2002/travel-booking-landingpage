@@ -5,6 +5,7 @@ import { User, Mail, Lock, Phone, UserPlus, ArrowRight, ArrowLeft } from 'lucide
 import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { authService } from './services/auth.service';
+import { IMAGES } from '../../assets/images';
 
 export const RegisterPage: React.FC = () => {
     const navigate = useNavigate();
@@ -40,7 +41,7 @@ export const RegisterPage: React.FC = () => {
             <div className="absolute inset-0 z-0">
                 <div className="absolute inset-0 bg-slate-900/60 z-10 backdrop-blur-sm"></div>
                 <img
-                    src="https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=2000"
+                    src={IMAGES.registerBg}
                     alt="Register Travel"
                     className="w-full h-full object-cover"
                 />

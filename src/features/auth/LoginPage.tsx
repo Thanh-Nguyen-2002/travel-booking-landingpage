@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { authService } from './services/auth.service';
 import { useAuthStore } from '../../store/useAuthStore';
+import { IMAGES } from '../../assets/images';
 
 export const LoginPage: React.FC = () => {
     const navigate = useNavigate();
@@ -42,7 +43,7 @@ export const LoginPage: React.FC = () => {
             <div className="absolute inset-0 z-0">
                 <div className="absolute inset-0 bg-slate-900/60 z-10 backdrop-blur-[2px]"></div>
                 <img
-                    src="https://images.unsplash.com/photo-1530789253388-582c481c54b0?q=80&w=2000"
+                    src={IMAGES.loginBg}
                     alt="Travel"
                     className="w-full h-full object-cover"
                 />
