@@ -3,13 +3,9 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FallbackImage } from '../../../components/common/FallbackImage';
 import { RoomCardSkeleton } from '../../../components/common/skeletons';
-import { useBookingStore } from '../../../store/useBookingStore';
 import type { HotelResponse } from '../../../types/hotel';
 import type { RoomResponse } from '../../../types/room';
 import { getCoverImage } from '../../../utils/image';
-import { RoomBookingCalendar } from './RoomBookingCalendar';
-import { format } from 'date-fns';
-
 
 interface RoomListProps {
     hotel: HotelResponse;
@@ -17,38 +13,8 @@ interface RoomListProps {
     isLoadingRooms: boolean;
 }
 
-export const RoomList: React.FC<RoomListProps> = ({ hotel, roomsData, isLoadingRooms }) => {
+export const RoomList: React.FC<RoomListProps> = ({ roomsData, isLoadingRooms }) => {
     const navigate = useNavigate();
-    const setBookingInfo = useBookingStore((state: any) => state.setBookingInfo);
-
-    // Lưu trạng thái mở/đóng lịch cho từng phòng
-    const [expandedRoomId, setExpandedRoomId] = React.useState<string | null>(null);
-
-    // State lưu ngày đã chọn
-    const [selectionRange, setSelectionRange] = React.useState({
-        startDate: new Date(),
-        endDate: new Date(),
-        key: 'selection'
-    });
-
-    const handleConfirmBooking = (room: RoomResponse) => {
-        if (!hotel || !room) return;
-
-        const roomCover = getCoverImage(room.images, 'https://images.unsplash.com/photo-1598928506311-c55dd71360fa?q=80&w=1000');
-
-        setBookingInfo({
-            hotelId: hotel.id,
-            hotelName: hotel.name,
-            roomId: room.id,
-            roomName: room.name,
-            price: room.price,
-            coverImage: roomCover,
-            checkIn: format(selectionRange.startDate, 'yyyy-MM-dd'),
-            checkOut: format(selectionRange.endDate, 'yyyy-MM-dd'),
-        });
-
-        navigate('/checkout');
-    };
 
     return (
         <div className="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100/50 p-8">
